@@ -102,7 +102,7 @@ console.log(params?.width ?? [])
                 <div className="custom-select-wrapper">
                     <Dropdown
                         value={params.is_spike?.find(item => item.id === filterTires.params.is_spike)}
-                        onChange={(e) => setParamFilterTires({type: 'is_spike', value: Boolean(e.value.id)})}
+                        onChange={(e) => setParamFilterTires({type: 'is_spike', value: e.value.id == null ? e.value.id :Boolean(e.value.id)})}
                         options={[{ id: null, name: 'Любой' }, ...(params?.is_spike ?? [])]}
                         optionLabel="name"
                         placeholder="Тип шин"
@@ -124,9 +124,27 @@ console.log(params?.width ?? [])
                     <Dropdown
                         value={params.vendor?.find(item => item.id === filterTires.params.vendor)}
                         onChange={(e) => setParamFilterTires({type: 'vendor', value: e.value.id})}
-                        options={[{ id: null, name: 'Любой' }, ...(params?.vendor ?? [])]}
+                        options={[{id: null, name: 'Любой'}, ...(params?.vendor ?? [])]}
                         optionLabel="name"
                         placeholder="Производитель"
+                        className="custom-select"
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                    />
+                </div>
+                <div className="custom-select-wrapper">
+                    <Dropdown
+                        value={params.country?.find(item => item.id === filterTires.params.country)}
+                        onChange={(e) => setParamFilterTires({type: 'country', value: e.value.id})}
+                        options={[{id: null, name: 'Любая'}, ...(params?.country ?? [])]}
+                        optionLabel="name"
+                        placeholder="Страна"
                         className="custom-select"
                         dropdownIcon={() => (
                             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
