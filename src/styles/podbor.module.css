@@ -1,0 +1,164 @@
+.totalCount {
+    color: gray;
+    font-size: 18px;
+}
+.filterTitle {
+    color:gold;
+}
+
+.selectedDisabled {
+    background-color: #ededed;
+}
+
+.groupedItems {
+    border-bottom: 15px solid #ededed;
+    padding-bottom: 15px;
+}
+
+.paginationBlock {
+    margin: auto;
+}
+
+.paginationLink {
+    margin-right: 15px;
+}
+
+.paginationLinkActive{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.selected {
+    background-color: #ededed;
+    color: black;
+}
+
+.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: rgba(0,0,0,.1);
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.filterMenu {
+    overflow-y:scroll
+}
+
+.mainFilterSelect {
+    padding-right: 10px;
+}
+
+.horisontalItem h2 {
+    width: 80%;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 599px) {
+    .cartPopup {
+        width: 100% !important;
+
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .cartPopup {
+        width: 600px !important;
+
+    }
+}
+
+.cartPopupTitle {
+    font-size: 24px;
+    font-weight: bold;
+}
+.cartPopupImg {
+
+}
+
+.cartPopupImg img {
+    width: 30%;
+}
+.cartPopupName {
+    font-size: 18px;
+}
+.cartPopupPrice {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cartDisabled {
+    background: gainsboro !important
+}
+
+.cartProduct {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.cartImg {
+    width: 20%;
+    float: left;
+}
+
+.cartImg img{
+    width: 80%;
+}
+
+.cartTitle {
+    width: 40%;
+    float: left;
+    font-size: 18px;
+}
+
+.cartCount {
+    width: 5%;
+    float: left;
+}
+
+.cartPrice {
+    width: 10%;
+    float: left;
+}
+
+.cartProductArticle {
+    width: 20%;
+    float: left;
+    font-weight: bold;
+}
+
+.cartPriceFull {
+    width: 10%;
+    float: left;
+}
+
+.cartInfo {
+    width: 60%;
+    float: left;
+}
+.cartAction {
+    width: 20%;
+    float: left;
+}
+.cartAction button{
+    margin-right: 20px;
+    padding: 5px;
+
+}
+
+.podborTitle {
+    float: left;
+    padding-right: 5px;
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
+
+
+
