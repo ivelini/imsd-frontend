@@ -83,7 +83,7 @@ const FilterComponent = () => {
                     <LocationComponent />
 
                 </div>
-                <TireFilter/>
+                <AutoFilter type={switcher.type}/>
                 {/*{switcher.param === SWCAR*/}
                 {/*    ? <AutoFilter/>*/}
                 {/*    : (switcher.type === SWTIRES*/}

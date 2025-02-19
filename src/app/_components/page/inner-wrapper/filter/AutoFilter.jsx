@@ -1,46 +1,142 @@
 import {useEffect, useState} from "react";
+import {Dropdown} from "primereact/dropdown";
+import BackendApi from "@/utils/BackendApi";
+import {useStore} from "@/store/useStore";
 
-const AutoFilter = () => {
-    // Объект параметров запроса для вывода фильтра
-    const [query, setQuery] = useState({})
-    // Объект параметров для вывода фильтра
-    const [params, setParams] = useState({})
+const AutoFilter = ({ type }) => {
+    const {filterTires, filterWheels, setCarFilterTires, setCarFilterWheels} = useStore()
 
-    // Запуск получения параметров фильтра при изменении запроса для вывода фильтра
+    /**
+     * Параметры запроса
+     *
+     * @var {Object|null} queryParams
+     * @var {string} queryParams.vendor
+     * @var {string} queryParams.model
+     * @var {string} queryParams.year
+     * @var {string} queryParams.modification
+     */
+    const [queryParams, setQueryParams] = useState({})
+    const [params, setParams] = useState({})            // Объект параметров для вывода фильтра
+
     useEffect(() => {
         getParams()
-    }, [query])
+    }, [queryParams])
 
-    // Метод получения параметров для вывода фильтра
     async function getParams() {
+        let response = await BackendApi.get('/api/list/filter/vehicle/car/info', queryParams)
 
-        let url = import.meta.env.VITE_APP_URL + '/api/list/filter/vehicle/car/info'
-        let params = new URLSearchParams(query).toString()
-
-        url += params.length > 0 ? '?' + params : ''
-
-        let res = await fetch(url, {headers: {'Accept': 'application/json'}})
-        let resdata = await res.json()
-
-        if(res.ok) {
-            setParams(resdata.data)
+        if(response.code === 200) {
+            setParams(await response.data)
         }
     }
 
-    return (<>
-        <div className="filter-content-item auto">
-            <div className="select-row">
-                {Object.keys(params).length > 0 && (<>
-                    <SelectVehicle className={styles.mainFilterSelect} key="vendor" name="Марка" type="vendor"/>
-                    <SelectVehicle key={query.model != null ? query.model : 'model'} name="Модель" type="model"/>
-                </>)}
-            </div>
+    const handleVendorChange = (data) => {
+        setCarFilterTires({type: 'vendor', value: data.name})
+        setCarFilterTires({type: 'model', value: null})
+        setCarFilterTires({type: 'year', value: null})
+        setCarFilterTires({type: 'modification', value: null})
 
+        setQueryParams({vendor: data.name})
+    }
+
+    const handleModelChange = (data) => {
+        setCarFilterTires({type: 'model', value: data.name})
+        setCarFilterTires({type: 'year', value: null})
+        setCarFilterTires({type: 'modification', value: null})
+
+        setQueryParams({vendor: queryParams.vendor, model: data.name})
+    }
+
+    const handleYearChange = (data) => {
+        setCarFilterTires({type: 'year', value: data.name})
+        setCarFilterTires({type: 'modification', value: null})
+
+        setQueryParams({vendor: queryParams.vendor, model: queryParams.model, year: data.name})
+    }
+
+    const handleModificationChange = (data) => {
+        setCarFilterTires({type: 'modification', value: data.name})
+
+        setQueryParams({vendor: queryParams.vendor, model: queryParams.model, year: queryParams.year, modification: data.name})
+    }
+
+    return (<>
+        <div className="filter-content-item auto" style={{"display": "block"}}>
             <div className="select-row">
-                {Object.keys(params).length > 0 && (<>
-                    <SelectVehicle className={styles.mainFilterSelect} key={query.year != null ? query.year : 'year'} name="Год выпуска" type="year"/>
-                    <SelectVehicle key={query.modification != null ? query.modification : 'modification'} name="Модификация" type="modification"/>
-                </>)}
+                <div className="custom-select-wrapper">
+                    <Dropdown
+                        value={params.vendor?.find(item => item.name === filterTires.car.vendor)}
+                        onChange={(e) => handleVendorChange(e.value)}
+                        options={params.vendor}
+                        optionLabel="name"
+                        placeholder="Производитель"
+                        className="custom-select"
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                    />
+                </div>
+                <div className="custom-select-wrapper">
+                    <Dropdown
+                        value={params.model?.find(item => item.name === filterTires.car.model)}
+                        onChange={(e) => handleModelChange(e.value)}
+                        options={params.model}
+                        optionLabel="name"
+                        placeholder="Модель"
+                        className="custom-select"
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                    />
+                </div>
+            </div>
+            <div className="select-row">
+                <div className="custom-select-wrapper">
+                    <Dropdown
+                        value={params.year?.find(item => item.name === filterTires.car.year)}
+                        onChange={(e) => handleYearChange(e.value)}
+                        options={params.year}
+                        optionLabel="name"
+                        placeholder="Год выпуска"
+                        className="custom-select"
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                    />
+                </div>
+                <div className="custom-select-wrapper">
+                    <Dropdown
+                        value={params.modification?.find(item => item.name === filterTires.car.modification)}
+                        onChange={(e) => handleModificationChange(e.value)}
+                        options={params.modification}
+                        optionLabel="name"
+                        placeholder="Модификация"
+                        className="custom-select"
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                    />
+                </div>
             </div>
         </div>
     </>)
