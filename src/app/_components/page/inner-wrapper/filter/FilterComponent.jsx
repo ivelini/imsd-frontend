@@ -34,7 +34,9 @@ const FilterComponent = () => {
         <section className="filter-block">
             <div className="container filter-block-menu">
                 <div className={`filter-item for-wheels ${switcher.type !== SWTIRES && 'inactive'}`} onClick={() => {
-                    if (switcher.type !== SWTIRES) setSwitcher({...switcher, type: SWTIRES})
+                    if (switcher.type !== SWTIRES) {
+                        setSwitcher({type: SWTIRES, param: SWPARAMS})
+                    }
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="24" viewBox="0 0 38 24" fill="none">
                         <path
@@ -45,7 +47,9 @@ const FilterComponent = () => {
                     <p>Шины</p>
                 </div>
                 <div className={`filter-item for-disk ${switcher.type !== SWDISKS && 'inactive'}`} onClick={() => {
-                    if (switcher.type !== SWDISKS) setSwitcher({...switcher, type: SWDISKS})
+                    if (switcher.type !== SWDISKS) {
+                        setSwitcher({type: SWDISKS, param: SWPARAMS})
+                    }
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
@@ -83,14 +87,14 @@ const FilterComponent = () => {
                     <LocationComponent />
 
                 </div>
-                <AutoFilter type={switcher.type}/>
-                {/*{switcher.param === SWCAR*/}
-                {/*    ? <AutoFilter/>*/}
-                {/*    : (switcher.type === SWTIRES*/}
-                {/*        ? <TireFilter/>*/}
-                {/*        : <DiskFilter/>*/}
-                {/*    )*/}
-                {/*}*/}
+
+                {switcher.param === SWCAR
+                    ? <AutoFilter type={switcher.type}/>
+                    : (switcher.type === SWTIRES
+                        ? <TireFilter />
+                        : <DiskFilter />
+                    )
+                }
 
                 <button className={`get-result ${buttonIsActive === false && styles.disabled}`}
                         onClick={() => console.log('click')}

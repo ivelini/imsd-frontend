@@ -4,7 +4,7 @@ import BackendApi from "@/utils/BackendApi";
 import {useStore} from "@/store/useStore";
 
 const AutoFilter = ({ type }) => {
-    const {filterTires, filterWheels, setCarFilterTires, setCarFilterWheels} = useStore()
+    const {filterTires, filterWheels, setCarFilterTires, setCarFilterWheels, clearFilter} = useStore()
 
     /**
      * Параметры запроса
@@ -19,8 +19,14 @@ const AutoFilter = ({ type }) => {
     const [params, setParams] = useState({})            // Объект параметров для вывода фильтра
 
     useEffect(() => {
+        clearFilter({entity: 'filterTires', param: 'car'})
+        clearFilter({entity: 'filterWheels', param: 'car'})
+    },[])
+
+    useEffect(() => {
         getParams()
     }, [queryParams])
+
 
     async function getParams() {
         let response = await BackendApi.get('/api/list/filter/vehicle/car/info', queryParams)
@@ -30,32 +36,41 @@ const AutoFilter = ({ type }) => {
         }
     }
 
+    const setCarFilter = (dataFilter) => {
+
+        if(type === 'SWTIRES') {
+            setCarFilterTires(dataFilter)
+        } else if(type === 'SWDISKS') {
+            setCarFilterWheels(dataFilter)
+        }
+    }
+
     const handleVendorChange = (data) => {
-        setCarFilterTires({type: 'vendor', value: data.name})
-        setCarFilterTires({type: 'model', value: null})
-        setCarFilterTires({type: 'year', value: null})
-        setCarFilterTires({type: 'modification', value: null})
+        setCarFilter({type: 'vendor', value: data.name})
+        setCarFilter({type: 'model', value: null})
+        setCarFilter({type: 'year', value: null})
+        setCarFilter({type: 'modification', value: null})
 
         setQueryParams({vendor: data.name})
     }
 
     const handleModelChange = (data) => {
-        setCarFilterTires({type: 'model', value: data.name})
-        setCarFilterTires({type: 'year', value: null})
-        setCarFilterTires({type: 'modification', value: null})
+        setCarFilter({type: 'model', value: data.name})
+        setCarFilter({type: 'year', value: null})
+        setCarFilter({type: 'modification', value: null})
 
         setQueryParams({vendor: queryParams.vendor, model: data.name})
     }
 
     const handleYearChange = (data) => {
-        setCarFilterTires({type: 'year', value: data.name})
-        setCarFilterTires({type: 'modification', value: null})
+        setCarFilter({type: 'year', value: data.name})
+        setCarFilter({type: 'modification', value: null})
 
         setQueryParams({vendor: queryParams.vendor, model: queryParams.model, year: data.name})
     }
 
     const handleModificationChange = (data) => {
-        setCarFilterTires({type: 'modification', value: data.name})
+        setCarFilter({type: 'modification', value: data.name})
 
         setQueryParams({vendor: queryParams.vendor, model: queryParams.model, year: queryParams.year, modification: data.name})
     }
@@ -65,7 +80,7 @@ const AutoFilter = ({ type }) => {
             <div className="select-row">
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={params.vendor?.find(item => item.name === filterTires.car.vendor)}
+                        value={params.vendor?.find(item => item.name === (type === 'SWTIRES' ? filterTires.car.vendor : filterWheels.car.vendor))}
                         onChange={(e) => handleVendorChange(e.value)}
                         options={params.vendor}
                         optionLabel="name"
@@ -83,7 +98,7 @@ const AutoFilter = ({ type }) => {
                 </div>
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={params.model?.find(item => item.name === filterTires.car.model)}
+                        value={params.model?.find(item => item.name === (type === 'SWTIRES' ? filterTires.car.model : filterWheels.car.model))}
                         onChange={(e) => handleModelChange(e.value)}
                         options={params.model}
                         optionLabel="name"
@@ -103,7 +118,7 @@ const AutoFilter = ({ type }) => {
             <div className="select-row">
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={params.year?.find(item => item.name === filterTires.car.year)}
+                        value={params.year?.find(item => item.name === (type === 'SWTIRES' ? filterTires.car.year : filterWheels.car.year))}
                         onChange={(e) => handleYearChange(e.value)}
                         options={params.year}
                         optionLabel="name"
@@ -121,7 +136,7 @@ const AutoFilter = ({ type }) => {
                 </div>
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={params.modification?.find(item => item.name === filterTires.car.modification)}
+                        value={params.modification?.find(item => item.name === (type === 'SWTIRES' ? filterTires.car.modification : filterWheels.car.modification))}
                         onChange={(e) => handleModificationChange(e.value)}
                         options={params.modification}
                         optionLabel="name"

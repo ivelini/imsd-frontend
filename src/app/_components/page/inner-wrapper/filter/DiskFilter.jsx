@@ -24,7 +24,7 @@ const DiskFilter = () => {
                     <Dropdown
                         value={{id: filterWheels.params?.diameter, name: filterWheels.params?.diameter}}
                         onChange={(e) => setParamFilterWheels({type: 'diameter', value: e.value.id})}
-                        options={[{id: null, name: 'Любой'}, ...(params?.width ?? [])]}
+                        options={[{id: null, name: 'Любой'}, ...(params?.diameter ?? [])]}
                         optionLabel="name"
                         placeholder="Диаметр"
                         className="custom-select"
@@ -63,7 +63,7 @@ const DiskFilter = () => {
                     <Dropdown
                         value={{id: filterWheels.params?.pcd, name: filterWheels.params?.pcd}}
                         onChange={(e) => setParamFilterWheels({type: 'pcd', value: e.value.id})}
-                        options={[{id: null, name: 'Любой'}, ...(params?.width ?? [])]}
+                        options={[{id: null, name: 'Любой'}, ...(params?.pcd ?? [])]}
                         optionLabel="name"
                         placeholder="Крепеж (PCD)"
                         className="custom-select"

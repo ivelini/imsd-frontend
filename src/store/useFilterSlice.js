@@ -86,4 +86,19 @@ export const useFilterSlice = (set) => ({
 
                 return  {...state, filterWheels: {...state.filterWheels, car: newCar}}
         }),
+
+        /**
+         * Обнуляем параметр сущности
+         * @param {Object} payload - Объект с данными для обновления фильтра.
+         * @param {string} payload.entity - Сущность filterTires, filterWheels.
+         * @param {string} payload.param - Параметр сущности params, car.
+         *
+         */
+        clearFilter: (payload) => set((state) => ({
+                ...state,
+                [payload.entity]: {
+                        ...state[payload.entity],
+                        [payload.param]: {}
+                }
+        })),
 });

@@ -17,9 +17,8 @@ const TireFilter = () => {
                 setParams(await response.data)
             }
         })()
-
     }, [])
-console.log(params?.width ?? [])
+
     return (<>
         <div className="filter-content-item disk" style={{"display": "block"}}>
             <div className="select-row">
