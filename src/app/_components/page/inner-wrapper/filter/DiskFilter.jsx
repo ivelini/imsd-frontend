@@ -3,7 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import BackendApi from "@/utils/BackendApi";
 import {useStore} from "@/store/useStore";
 const DiskFilter = () => {
-    const {filterWheels, setParamFilterWheels} = useStore()
+    const {filterWheels, setParamFilterWheels, clearFilter} = useStore()
     const [params, setParams] = useState({})    // Параметры для показа фильтра
 
 
@@ -15,6 +15,7 @@ const DiskFilter = () => {
                 setParams(await response.data)
             }
         })()
+        clearFilter()
     }, [])
 
     return (<>

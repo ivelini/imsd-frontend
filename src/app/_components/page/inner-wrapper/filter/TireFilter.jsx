@@ -5,7 +5,7 @@ import {useStore} from "@/store/useStore";
 
 
 const TireFilter = () => {
-    const {filterTires, filterWheels, setParamFilterTires} = useStore()
+    const {filterTires, filterWheels, setParamFilterTires, clearFilter} = useStore()
 
     const [params, setParams] = useState({})    // Параметры для показа фильтра
 
@@ -17,6 +17,7 @@ const TireFilter = () => {
                 setParams(await response.data)
             }
         })()
+        clearFilter()
     }, [])
 
     return (<>

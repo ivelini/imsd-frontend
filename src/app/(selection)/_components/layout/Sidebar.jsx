@@ -1,9 +1,9 @@
 import Filter from "./Filter";
 import MobileHeader from "./MobileHeader";
 
-export default function SidebarComponent() {
+export default function Sidebar({type, collback}) {
     return (<>
         <MobileHeader />
-        <Filter />
+        <Filter type={type} collback={collback}/>
     </>)
 }

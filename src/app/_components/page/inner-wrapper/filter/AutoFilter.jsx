@@ -19,8 +19,7 @@ const AutoFilter = ({ type }) => {
     const [params, setParams] = useState({})            // Объект параметров для вывода фильтра
 
     useEffect(() => {
-        clearFilter({entity: 'filterTires', param: 'car'})
-        clearFilter({entity: 'filterWheels', param: 'car'})
+        clearFilter()
     },[])
 
     useEffect(() => {

@@ -21,15 +21,15 @@ export const useFilterSlice = (set) => ({
          * @param {string} payload.value - Значение параметра.
          */
         setParamFilterTires: (payload) => set((state) => {
-                let newParams = {...state.filterTires.params}
+                let newParams = { ...state.filterTires.params }
 
-                if(payload.value !== null) {
+                if (payload.value !== null) {
                         newParams[payload.type] = payload.value
                 } else {
                         delete newParams[payload.type]
                 }
 
-                return  {...state, filterTires: {...state.filterTires, params: newParams}}
+                return { ...state, filterTires: { ...state.filterTires, params: newParams } }
 
         }),
 
@@ -40,16 +40,24 @@ export const useFilterSlice = (set) => ({
          * @param {string} payload.value - Значение параметра.
          */
         setParamFilterWheels: (payload) => set((state) => {
-                let newParams = {...state.filterWheels.params}
+                let newParams = { ...state.filterWheels.params }
 
-                if(payload.value !== null) {
+                if (payload.value !== null) {
                         newParams[payload.type] = payload.value
                 } else {
                         delete newParams[payload.type]
                 }
 
-                return  {...state, filterWheels: {...state.filterWheels, params: newParams}}
+                return { ...state, filterWheels: { ...state.filterWheels, params: newParams } }
         }),
+
+        setRangeFilterTires: (payload) => set((state) => ({
+                ...state,
+                filterTires: {
+                        ...state.filterTires,
+                        range: payload
+                }
+        })),
 
         /**
          * Обновляет параметры автомобиля для шин.
@@ -58,15 +66,15 @@ export const useFilterSlice = (set) => ({
          * @param {string} payload.value - Значение параметра.
          */
         setCarFilterTires: (payload) => set((state) => {
-                let newCar = {...state.filterTires.car}
+                let newCar = { ...state.filterTires.car }
 
-                if(payload.value !== null) {
+                if (payload.value !== null) {
                         newCar[payload.type] = payload.value
                 } else {
                         delete newCar[payload.type]
                 }
 
-                return  {...state, filterTires: {...state.filterTires, car: newCar}}
+                return { ...state, filterTires: { ...state.filterTires, car: newCar } }
         }),
 
         /**
@@ -76,15 +84,15 @@ export const useFilterSlice = (set) => ({
          * @param {string} payload.value - Значение параметра.
          */
         setCarFilterWheels: (payload) => set((state) => {
-                let newCar = {...state.filterWheels.car}
+                let newCar = { ...state.filterWheels.car }
 
-                if(payload.value !== null) {
+                if (payload.value !== null) {
                         newCar[payload.type] = payload.value
                 } else {
                         delete newCar[payload.type]
                 }
 
-                return  {...state, filterWheels: {...state.filterWheels, car: newCar}}
+                return { ...state, filterWheels: { ...state.filterWheels, car: newCar } }
         }),
 
         /**
@@ -96,9 +104,7 @@ export const useFilterSlice = (set) => ({
          */
         clearFilter: (payload) => set((state) => ({
                 ...state,
-                [payload.entity]: {
-                        ...state[payload.entity],
-                        [payload.param]: {}
-                }
+                filterTires: INITIAL_FILTER_WHEELS,
+                filterWheels: INITIAL_FILTER_WHEELS
         })),
 });

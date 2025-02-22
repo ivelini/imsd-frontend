@@ -6,10 +6,12 @@ import AutoFilter from "./AutoFilter.jsx";
 import LocationComponent from "@/components/ui/LocationComponent";
 import {useStore} from "@/store/useStore";
 import styles from '@/styles/podbor.module.css'
+import { useRouter } from "next/navigation.js";
 
 
 const FilterComponent = () => {
     const {filterTires, filterWheels} = useStore()
+    const router = useRouter()
 
     const SWTIRES = 'SWTIRES' // Выбор шины
     const SWDISKS = 'SWDISKS' // Выбор дисков
@@ -28,6 +30,14 @@ const FilterComponent = () => {
     if(switcher.type === SWDISKS) {
         buttonIsActive = switcher.param === SWPARAMS && Object.keys(filterWheels.params).length > 0 ||
             switcher.param === SWCAR && Object.keys(filterWheels.car).length === 4;
+    }
+
+    const handleClick = () => {
+        if(switcher.type == 'SWTIRES') {
+            router.push('/tires_selection')
+
+        }
+
     }
 
     return (<>
@@ -97,7 +107,7 @@ const FilterComponent = () => {
                 }
 
                 <button className={`get-result ${buttonIsActive === false && styles.disabled}`}
-                        onClick={() => console.log('click')}
+                        onClick={handleClick}
                         disabled={!buttonIsActive}
                 >Подобрать
                 </button>
