@@ -1,4 +1,4 @@
-import Filter from "./Filter";
+import Filter from "./filter/Filter";
 import MobileHeader from "./MobileHeader";
 
 export default function Sidebar({type, collback}) {

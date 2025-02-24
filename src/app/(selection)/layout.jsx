@@ -1,4 +1,4 @@
-import Sidebar from "./_components/layout/Sidebar";
+import Sidebar from "./_components/page/Sidebar";
 
 export default function SelectionLayout({ children }) {
     return (<>

@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import LocationComponent from "@/components/ui/LocationComponent";
-import { TireFilter } from "./filter/TireFilter";
+import { TireFilter } from "@/app/(selection)/_components/page/filter/TireFilter";
 import { useStore } from "@/store/useStore";
 
 export default function Filter({ type, collback }) {

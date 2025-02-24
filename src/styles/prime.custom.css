@@ -13,3 +13,27 @@
     line-height: normal;
     margin: 10px !important;
 }
+/* Стили для линии (трека) ползунка */
+.p-slider .p-slider-range {
+    background-color: red; /* Красный цвет линии */
+    height: 4px; /* Высота линии */
+}
+
+/* Стили для ползунка (thumb) */
+.p-slider .p-slider-handle {
+    width: 6px;
+    height: 18px;
+    background-color: red;
+    border-radius: 0;
+    border: 2px solid darkred;
+    transform: translateY(-50%);
+}
+
+.p-slider .p-slider-handle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.3);
+}
+
+/* Стили для фона трека */
+.p-slider {
+    background-color: lightgray;
+}

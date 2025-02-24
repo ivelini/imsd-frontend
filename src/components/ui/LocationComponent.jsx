@@ -78,7 +78,7 @@ export default function LocationComponent() {
                                         title={city.name}
                                         data-id={city.id}
                                         onClick={() => {
-                                            setCity({ id: city.id, name: city.name })
+                                            setCity({ id: city.id, name: city.name, name_en: city.name_en})
                                             setVisible(false)
                                         }}
                                     >

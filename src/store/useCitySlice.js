@@ -1,6 +1,7 @@
 const INITIAL_CITY = {
     id: 1042,
-    name: 'Челябинск'
+    name: 'Челябинск',
+    name_en: 'Chelyabinsk'
 }
 
 export const useCitySlice = (set) => ({
@@ -10,6 +11,7 @@ export const useCitySlice = (set) => ({
      * Установка города
      * @param {int} payload.id
      * @param {string} payload.name
+     * @param {string} payload.name_en
      */
     setCity: (payload) => set(state => ({
         ...state,

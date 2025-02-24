@@ -3,6 +3,7 @@ import BackendApi from "@/utils/BackendApi";
 import { Dropdown } from "primereact/dropdown";
 import { useState, useEffect } from "react";
 import { Slider } from "primereact/slider";
+import {RangeComponent} from "@/app/(selection)/_components/page/filter/RangeComponent";
 
 export function TireFilter({ collback }) {
     const { filterTires, filterWheels, setParamFilterTires, setRangeFilterTires, clearFilter } = useStore()
@@ -154,23 +155,8 @@ export function TireFilter({ collback }) {
                 />
             </div>
 
-            <div className="filter-price">
-                <label htmlFor="priceRange">Цена:</label>
-                <div className="input-filters">
-                    <div className="price-inputs">
-                        <span>От:</span>
-                        <input type="text" id="priceMin" />
-                    </div>
-                    <div className="price-inputs">
-                        <span>До:</span>
-                        <input type="text" id="priceMax" />
-                    </div>
-                </div>
-                <Slider
-                    value={filterTires.range}
-                    onChange={(e) => setRangeFilterTires(e.value)}
-                    range />
-            </div>
+            <RangeComponent type="TIRES" />
+
             <div className="delivery-checkbox-group">
                 <h3 className="delivery-title-cat">Способ получения</h3>
 

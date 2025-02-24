@@ -1,13 +1,19 @@
 const INITIAL_FILTER_TIRES = {
         params: {},
         car: {},
-        range: [],
+        range: {
+                current: [],
+                all: []
+        }
 };
 
 const INITIAL_FILTER_WHEELS = {
         params: {},
         car: {},
-        range: [],
+        range: {
+                current: [],
+                all: []
+        }
 };
 
 export const useFilterSlice = (set) => ({
@@ -51,11 +57,37 @@ export const useFilterSlice = (set) => ({
                 return { ...state, filterWheels: { ...state.filterWheels, params: newParams } }
         }),
 
+        /**
+         * Обновляет прайс по шинам
+         * @param {Object} payload
+         * @param {string} payload.type
+         * @param {array} payload.value
+         */
         setRangeFilterTires: (payload) => set((state) => ({
                 ...state,
                 filterTires: {
                         ...state.filterTires,
-                        range: payload
+                        range: {
+                                ...state.filterTires.range,
+                                [payload.type]: payload.value
+                        }
+                }
+        })),
+
+        /**
+         * Обновляет прайс по дискам
+         * @param {Object} payload
+         * @param {string} payload.type
+         * @param {array} payload.value
+         */
+        setRangeFilterWheels: (payload) => set((state) => ({
+                ...state,
+                filterTires: {
+                        ...state.filterWheels,
+                        range: {
+                                ...state.filterWheels.range,
+                                [payload.type]: payload.value
+                        }
                 }
         })),
 
