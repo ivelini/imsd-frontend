@@ -71,8 +71,9 @@ export default function TiresSelection() {
     <div className="main-content-catalog">
       <Sidebar type="TIRES" collback={getItems} />
       <div className="catalog-with-products">
-        {items.length == 0 && <div style={{ "margin": '0 auto' }}>
-          {loading == true
+
+        {items.length === 0 && <div style={{ "margin": '0 auto' }}>
+          {loading === true
               ? <ProgressSpinner/>
               : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
           </div>}
