@@ -134,9 +134,22 @@ export const useFilterSlice = (set) => ({
          * @param {string} payload.param - Параметр сущности params, car.
          *
          */
-        clearFilter: (payload) => set((state) => ({
-                ...state,
-                filterTires: INITIAL_FILTER_WHEELS,
-                filterWheels: INITIAL_FILTER_WHEELS
-        })),
+        clearFilter: (payload) => set((state) => {
+                if (typeof payload == 'undefined') {
+                        return {
+                                ...state,
+                                filterTires: INITIAL_FILTER_WHEELS,
+                                filterWheels: INITIAL_FILTER_WHEELS
+                        }
+                } else {
+                        return {
+                                ...state,
+                                [payload.entity]: {
+                                        ...state[payload.entity],
+                                        [payload.param]: {}
+                                }
+                        }
+                }
+                
+        }),
 });

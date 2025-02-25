@@ -18,6 +18,7 @@ export function TireFilter({ collback }) {
                 setParams(await response.data)
             }
         })()
+        clearFilter({entity: 'filterTires', param: 'car'})
     }, [])
 
     return (<>
@@ -181,6 +182,6 @@ export function TireFilter({ collback }) {
             </div>
         </div>
 
-        <button className="get-result" type="button" onClick={collback}>Подобрать</button>
+        <button className="get-result" type="button" onClick={() => collback('PARAM')}>Подобрать</button>
     </>)
 }
