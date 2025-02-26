@@ -685,7 +685,7 @@ input[type="checkbox"] {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    max-width: 430px;
+    max-width: 600px;
 }
 .catalog-product-prices {
     display: flex;

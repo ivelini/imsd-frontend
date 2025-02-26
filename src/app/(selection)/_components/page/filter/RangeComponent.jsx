@@ -1,30 +1,69 @@
-import {Slider} from "primereact/slider";
-import {useStore} from "@/store/useStore";
-import {useEffect} from "react";
+import { Slider } from "primereact/slider";
+import { useStore } from "@/store/useStore";
+import { useState, useEffect } from "react";
 
 export function RangeComponent({ type }) {
-    const { filterTires, filterWheels, setRangeFilterTires, setRangeFilterWheels } = useStore()
+    const { filterTires, filterWheels, setRangeFilterTires, setRangeFilterWheels } = useStore();
 
+    const filterData = type === "TIRES" ? filterTires : filterWheels;
+    const setRangeFilter = type === "TIRES" ? setRangeFilterTires : setRangeFilterWheels;
 
-    return (<>
+    // Локальное состояние для ручного ввода
+    const [minValue, setMinValue] = useState(filterData?.range.current[0] || 100);
+    const [maxValue, setMaxValue] = useState(filterData?.range.current[1] || 10000);
+
+    // Обновление локального состояния при изменении данных в store
+    useEffect(() => {
+        setMinValue(filterData?.range.current[0] || 100);
+        setMaxValue(filterData?.range.current[1] || 10000);
+    }, [filterData?.range.current]);
+
+    const handleSliderChange = (e) => {
+        setRangeFilter({ type: "current", value: e.value });
+    };
+
+    const handleMinChange = (e) => {
+        const value = Number(e.target.value);
+        setMinValue(value);
+        setRangeFilter({ type: "current", value: [value, maxValue] });
+    };
+
+    const handleMaxChange = (e) => {
+        const value = Number(e.target.value);
+        setMaxValue(value);
+        setRangeFilter({ type: "current", value: [minValue, value] });
+    };
+
+    return (
         <div className="filter-price">
             <label htmlFor="priceRange">Цена:</label>
             <div className="input-filters">
                 <div className="price-inputs">
                     <span>От:</span>
-                    <input type="text" id="priceMin" value={type === 'TIRES' ? filterTires.range.current[0] : filterWheels.range.current[0]}/>
+                    <input
+                        type="number"
+                        id="priceMin"
+                        value={minValue}
+                        onChange={handleMinChange}
+                    />
                 </div>
                 <div className="price-inputs">
                     <span>До:</span>
-                    <input type="text" id="priceMax" value={type === 'TIRES' ? filterTires.range.current[1] : filterWheels.range.current[1]}/>
+                    <input
+                        type="number"
+                        id="priceMax"
+                        value={maxValue}
+                        onChange={handleMaxChange}
+                    />
                 </div>
             </div>
             <Slider
-                value={type === 'TIRES' ? filterTires.range.current : filterWheels.range.current}
-                onChange={(e) => type === 'TIRES' ? setRangeFilterTires({type: 'current', value: e.value}) : setRangeFilterWheels({type: 'current', value: e.value})}
-                min={type === 'TIRES' ? filterTires.range.all[0] : filterWheels.range.all[0]}
-                max={type === 'TIRES' ? filterTires.range.all[1] : filterWheels.range.all[1]}
-                range/>
+                value={[minValue, maxValue]}
+                onChange={handleSliderChange}
+                min={filterData?.range.all[0] || 100}
+                max={filterData?.range.all[1] || 10000}
+                range
+            />
         </div>
-    </>)
+    );
 }

@@ -19,8 +19,8 @@ export default function Filter({ type, collback }) {
             </div>
             <div className="catalog-filter-cont">
                 <LocationComponent />
-                {type == 'TIRES' && switcher == 'PARAM' && <TireFilter collback={collback} />}
-                {type == 'TIRES' && switcher == 'CAR' && <AutoFilter type="SWTIRES" collback={collback} />}
+                {type === 'TIRES' && switcher === 'PARAM' && <TireFilter collback={collback} />}
+                {type === 'TIRES' && switcher === 'CAR' && <AutoFilter type="SWTIRES" collback={collback} />}
                 
                 <a href="#" className="remove-filters help" onClick={() => clearFilter()}>Сбросить все фильтры</a>
             </div>

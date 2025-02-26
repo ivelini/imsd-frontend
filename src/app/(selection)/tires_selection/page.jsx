@@ -2,18 +2,23 @@
 import { useState, useEffect } from "react";
 import BackendApi from "@/utils/BackendApi";
 import Sidebar from "../_components/page/Sidebar";
-import HorisontalItem from "../_components/page/param/HorisontalItem";
 import { useStore } from "@/store/useStore";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ParamItem from "../_components/page/param/ParamItem";
+import { Paginator } from 'primereact/paginator';
 
+const INITIAL_PAGINATOR = {
+  first: 0,
+  rows: 0,
+  total: 0
+}
 
 export default function TiresSelection() {
   const { filterTires, setRangeFilterTires } = useStore()
   const [items, setItems] = useState([])
-  const [total, setTotal] = useState(0)
   const [filterType, setFilterType] = useState('PARAM')
   const [loading, setLoading] = useState(true)
+  const [paginator, setPaginator] = useState(INITIAL_PAGINATOR)
 
   useEffect(() => {
     if (Object.keys(filterTires.params).length == 0) {
@@ -30,9 +35,8 @@ export default function TiresSelection() {
     }
 
   }
-}
 
-const getParamItems = async () => {
+const getParamItems = async (page = null) => {
   let queryString = ''
 
   //Если присутствует запрос из пагинации
@@ -49,6 +53,10 @@ const getParamItems = async () => {
       : ';price|'
 
     queryString += filterTires.range.current[0] + ',' + filterTires.range.current[1]
+  }
+
+  if(page != null) {
+    queryString += '&page=' + page
   }
 
   let response = await BackendApi.get('/api/catalog/tire' + queryString)
@@ -73,14 +81,29 @@ const getParamItems = async () => {
 
     setRangeFilterTires({ type: 'all', value: data.meta.range_price.all })
     setItems(data.data)
-    setTotal(data.meta.total)
+    setPaginator({
+      first: data.meta.from,
+      rows:  data.meta.per_page,
+      total: data.meta.total
+    })
+
     setTimeout(() => setLoading(false), 3000)
   }
 }
 
 
+const onPageChange = (data) => {
+    if(filterType === 'PARAM') {
+      getParamItems(data.page + 1)
+    }
+
+  setTimeout(() => {
+    window.scrollTo({top: 0, behavior: "smooth"})
+  }, 50)
+}
+
 return (<>
-  <h2>Подбор шин {total > 0 && <span style={{ 'color': 'gray', 'fontSize': '18px' }}>Найдено {total} товаров </span>}</h2>
+  <h2>Подбор шин {paginator.total > 0 && <span style={{ 'color': 'gray', 'fontSize': '18px' }}>Найдено {paginator.total} товаров </span>}</h2>
   <div className="main-content-catalog">
     <Sidebar type="TIRES" collback={getItems} />
     <div className="catalog-with-products">
@@ -91,8 +114,10 @@ return (<>
           : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
       </div>}
 
-      {filterType == 'PARAM' && <ParamItem items={items} />}
+      {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
+      <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
     </div>
   </div>
 </>)
 }
+
