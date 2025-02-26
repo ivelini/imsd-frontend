@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LocationComponent from "@/components/ui/LocationComponent";
+import CartComponent from "@/app/_components/layout/CartComponent";
 
 export default function HeaderSection() {
     return (<>
@@ -79,11 +80,7 @@ export default function HeaderSection() {
                             <img src="/assets/img/login.svg" alt=""/>
                             <p className="header-icon-and-btn-text">Войти</p>
                         </div>
-                        <div className="cart header-icon-and-btn" id="busket">
-                            <img src="/assets/img/busket.svg" alt=""/>
-                            <p className="header-icon-and-btn-text">Корзина</p>
-                            <span id="count-in-busket">2</span>
-                        </div>
+                        <CartComponent />
                     </div>
                 </div>
             </div>
