@@ -23,7 +23,7 @@ const DiskFilter = () => {
             <div className="select-row">
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterWheels.params?.diameter, name: filterWheels.params?.diameter}}
+                        value={params.diameter?.find(item => item.id === filterWheels.params.diameter)}
                         onChange={(e) => setParamFilterWheels({type: 'diameter', value: e.value.id})}
                         options={[{id: null, name: 'Любой'}, ...(params?.diameter ?? [])]}
                         optionLabel="name"
@@ -41,7 +41,7 @@ const DiskFilter = () => {
                 </div>
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterWheels.params?.width, name: filterWheels.params?.width}}
+                        value={params.width?.find(item => item.id === filterWheels.params.width)}
                         onChange={(e) => setParamFilterWheels({type: 'width', value: e.value.id})}
                         options={[{id: null, name: 'Любая'}, ...(params?.width ?? [])]}
                         optionLabel="name"
@@ -62,7 +62,7 @@ const DiskFilter = () => {
             <div className="select-row">
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterWheels.params?.pcd, name: filterWheels.params?.pcd}}
+                        value={params.pcd?.find(item => item.id === filterWheels.params.pcd)}
                         onChange={(e) => setParamFilterWheels({type: 'pcd', value: e.value.id})}
                         options={[{id: null, name: 'Любой'}, ...(params?.pcd ?? [])]}
                         optionLabel="name"
@@ -80,7 +80,7 @@ const DiskFilter = () => {
                 </div>
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterWheels.params?.et, name: filterWheels.params?.et}}
+                        value={params.et?.find(item => item.id === filterWheels.params.et)}
                         onChange={(e) => setParamFilterWheels({type: 'et', value: e.value.id})}
                         options={[{id: null, name: 'Любой'}, ...(params?.et ?? [])]}
                         optionLabel="name"
@@ -98,7 +98,7 @@ const DiskFilter = () => {
                 </div>
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterWheels.params?.dia, name: filterWheels.params?.dia}}
+                        value={params.dia?.find(item => item.id === filterWheels.params.dia)}
                         onChange={(e) => setParamFilterWheels({type: 'dia', value: e.value.id})}
                         options={[{id: null, name: 'Любая'}, ...(params?.dia ?? [])]}
                         optionLabel="name"

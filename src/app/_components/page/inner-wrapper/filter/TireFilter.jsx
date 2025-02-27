@@ -25,7 +25,7 @@ const TireFilter = () => {
             <div className="select-row">
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterTires.params?.width, name: filterTires.params?.width}}
+                        value={params.width?.find(item => item.id === filterTires.params.width)}
                         onChange={(e) => setParamFilterTires({type: 'width', value: e.value.id})}
                         options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
                         optionLabel="name"
@@ -42,7 +42,7 @@ const TireFilter = () => {
 
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterTires.params?.height, name: filterTires.params?.height}}
+                        value={params.height?.find(item => item.id === filterTires.params.height)}
                         onChange={(e) => setParamFilterTires({type: 'height', value: e.value.id})}
                         options={[{ id: null, name: 'Любой' }, ...(params?.height ?? [])]}
                         optionLabel="name"
@@ -61,7 +61,7 @@ const TireFilter = () => {
 
                 <div className="custom-select-wrapper">
                     <Dropdown
-                        value={{id: filterTires.params?.diameter, name: filterTires.params?.diameter}}
+                        value={params.diameter?.find(item => item.id === filterTires.params.diameter)}
                         onChange={(e) => setParamFilterTires({type: 'diameter', value: e.value.id})}
                         options={[{ id: null, name: 'Любой' }, ...(params?.diameter ?? [])]}
                         optionLabel="name"
