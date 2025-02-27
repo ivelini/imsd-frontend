@@ -25,12 +25,14 @@ export function TireFilter({ collback }) {
         <div className="calatog-select-col">
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={{ id: filterTires.params?.width, name: filterTires.params?.width }}
+                    value={params.width?.find(item => item.id === filterTires.params.width)}
                     onChange={(e) => setParamFilterTires({ type: 'width', value: e.value.id })}
                     options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
+                    
                     optionLabel="name"
                     placeholder="Ширина"
-                    className="custom-select"
+                    className={`custom-select ${filterTires.params?.width ? 'p-dropdown-selected' : ''}`}
+                
                     dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
                         <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
                     </svg>}
@@ -42,7 +44,7 @@ export function TireFilter({ collback }) {
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={{ id: filterTires.params?.height, name: filterTires.params?.height }}
+                    value={params.height?.find(item => item.id === filterTires.params.height)}
                     onChange={(e) => setParamFilterTires({ type: 'height', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.height ?? [])]}
                     optionLabel="name"
@@ -61,7 +63,7 @@ export function TireFilter({ collback }) {
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={{ id: filterTires.params?.diameter, name: filterTires.params?.diameter }}
+                    value={params.diameter?.find(item => item.id === filterTires.params.diameter)}
                     onChange={(e) => setParamFilterTires({ type: 'diameter', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.diameter ?? [])]}
                     optionLabel="name"

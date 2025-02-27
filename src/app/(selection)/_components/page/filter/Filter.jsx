@@ -18,6 +18,7 @@ export default function Filter({ type, collback }) {
                 <div className={`filter-item-catalog  ${switcher == 'PARAM' && 'inactive'}`} onClick={() => setSwitcher('CAR')}>По автомобилю</div>
             </div>
             <div className="catalog-filter-cont">
+                <br />
                 <LocationComponent />
                 {type === 'TIRES' && switcher === 'PARAM' && <TireFilter collback={collback} />}
                 {type === 'TIRES' && switcher === 'CAR' && <AutoFilter type="SWTIRES" collback={collback} />}

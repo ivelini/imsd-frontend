@@ -21,9 +21,7 @@ export default function TiresSelection() {
   const [paginator, setPaginator] = useState(INITIAL_PAGINATOR)
 
   useEffect(() => {
-    if (Object.keys(filterTires.params).length == 0) {
-      getItems()
-    }
+    getItems()
   }, [])
 
   const getItems = (type = 'PARAM') => {
@@ -36,88 +34,91 @@ export default function TiresSelection() {
 
   }
 
-const getParamItems = async (page = null) => {
-  let queryString = ''
+  const getParamItems = async (page = null) => {
+    let queryString = ''
 
-  //Если присутствует запрос из пагинации
-  for (const key in filterTires.params) {
-    queryString += key + '|' + filterTires.params[key] + ';'
+    //Если присутствует запрос из пагинации
+    for (const key in filterTires.params) {
+      queryString += key + '|' + filterTires.params[key] + ';'
+    }
+
+    queryString = '?filters=' + queryString.slice(0, queryString.length - 1)
+
+    if (filterTires.range.current.length > 0 && filterTires.range.current[0] !== 1 && filterTires.range.current[1] !== 2) {
+
+      queryString += (queryString === '?filters=')
+        ? 'price|'
+        : ';price|'
+
+      queryString += filterTires.range.current[0] + ',' + filterTires.range.current[1]
+    }
+
+    if (page != null) {
+      queryString += '&page=' + page
+    }
+
+    let response = await BackendApi.get('/api/catalog/tire' + queryString)
+
+    if (response.code === 200) {
+      let data = await response
+
+      setRangeFilterTires({
+        type: 'current',
+        value: [
+          data.meta.range_price.currentFilter[0] >= data.meta.range_price.all[0] &&
+            data.meta.range_price.currentFilter[0] < data.meta.range_price.all[1]
+            ? data.meta.range_price.currentFilter[0]
+            : data.meta.range_price.all[0],
+
+          data.meta.range_price.currentFilter[1] <= data.meta.range_price.all[1] &&
+            data.meta.range_price.currentFilter[1] > data.meta.range_price.all[0]
+            ? data.meta.range_price.currentFilter[1]
+            : data.meta.range_price.all[1]
+        ]
+      })
+
+      setRangeFilterTires({ type: 'all', value: data.meta.range_price.all })
+      setItems(data.data)
+      setPaginator({
+        first: data.meta.from,
+        rows: data.meta.per_page,
+        total: data.meta.total
+      })
+
+      setTimeout(() => setLoading(false), 3000)
+    }
   }
 
-  queryString = '?filters=' + queryString.slice(0, queryString.length - 1)
 
-  if (filterTires.range.current.length > 0 && filterTires.range.current[0] !== 1 && filterTires.range.current[1] !== 2) {
-
-    queryString += (queryString === '?filters=')
-      ? 'price|'
-      : ';price|'
-
-    queryString += filterTires.range.current[0] + ',' + filterTires.range.current[1]
-  }
-
-  if(page != null) {
-    queryString += '&page=' + page
-  }
-
-  let response = await BackendApi.get('/api/catalog/tire' + queryString)
-
-  if (response.code === 200) {
-    let data = await response
-
-    setRangeFilterTires({
-      type: 'current',
-      value: [
-        data.meta.range_price.currentFilter[0] >= data.meta.range_price.all[0] &&
-          data.meta.range_price.currentFilter[0] < data.meta.range_price.all[1]
-          ? data.meta.range_price.currentFilter[0]
-          : data.meta.range_price.all[0],
-
-        data.meta.range_price.currentFilter[1] <= data.meta.range_price.all[1] &&
-          data.meta.range_price.currentFilter[1] > data.meta.range_price.all[0]
-          ? data.meta.range_price.currentFilter[1]
-          : data.meta.range_price.all[1]
-      ]
-    })
-
-    setRangeFilterTires({ type: 'all', value: data.meta.range_price.all })
-    setItems(data.data)
-    setPaginator({
-      first: data.meta.from,
-      rows:  data.meta.per_page,
-      total: data.meta.total
-    })
-
-    setTimeout(() => setLoading(false), 3000)
-  }
-}
-
-
-const onPageChange = (data) => {
-    if(filterType === 'PARAM') {
+  const onPageChange = (data) => {
+    if (filterType === 'PARAM') {
       getParamItems(data.page + 1)
     }
 
-  setTimeout(() => {
-    window.scrollTo({top: 0, behavior: "smooth"})
-  }, 50)
-}
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }, 50)
+  }
 
-return (<>
-  <h2>Подбор шин {paginator.total > 0 && <span style={{ 'color': 'gray', 'fontSize': '18px' }}>Найдено {paginator.total} товаров </span>}</h2>
-  <div className="main-content-catalog">
-    <Sidebar type="TIRES" collback={getItems} />
-    <div className="catalog-with-products">
+  return (<>
+    <h2>Подбор шин {paginator.total > 0 && <span style={{ 'color': 'gray', 'fontSize': '18px' }}>Найдено {paginator.total} товаров </span>}</h2>
+    <div className="main-content-catalog">
+      <Sidebar type="TIRES" collback={getItems} />
+      <div className="catalog-with-products">
 
-      {items.length === 0 && <div style={{ "margin": '0 auto' }}>
-        {loading === true
-          ? <ProgressSpinner />
-          : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
-      </div>}
+        {items.length === 0 && <div style={{ "margin": '0 auto' }}>
+          {loading === true
+            ? <ProgressSpinner />
+            : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
+        </div>}
 
-      {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
-      <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
+        {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
+        
+        {paginator.total > paginator.rows &&
+          <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
+        }
+      </div>
     </div>
-  </div>
-</>)
+  </>)
 }
 

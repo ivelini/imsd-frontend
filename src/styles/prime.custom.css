@@ -13,6 +13,12 @@
     line-height: normal;
     margin: 10px !important;
 }
+/* Стили для Dropdown, когда значение не выбрано */
+.p-inputwrapper-filled {
+    background-color: #e9ecef; /* Серый цвет фона */
+    color: #6c757d; /* Серый цвет текста */
+}
+
 /* Стили для линии (трека) ползунка */
 .p-slider .p-slider-range {
     background-color: red; /* Красный цвет линии */
