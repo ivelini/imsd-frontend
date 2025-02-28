@@ -1,5 +1,5 @@
 export default function Catalog() {
     return (<>
-    Каталог
+    Здесь выведем каталог всех брендов шин и дисков
     </>)
 }

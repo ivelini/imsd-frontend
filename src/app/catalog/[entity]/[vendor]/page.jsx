@@ -5,7 +5,5 @@
  * @param {string} params.vendor
  */
 export default function Vendor({ params }) {
-    return (<>
-        Entity {params.entity + '/' + params.vendor}
-    </>)
+    
 }

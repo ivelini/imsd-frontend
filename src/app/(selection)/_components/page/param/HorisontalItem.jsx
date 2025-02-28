@@ -76,7 +76,7 @@ export default function HorisontalItem({ type, item }) {
             <div className="catalog-product-details">
                 <div className="catalog-product-info">
                     <h2 className="catalog-product-title">
-                        <Link href={item.url.replace(/https?:\/\/[^\/]+/, "http://localhost:3000")}>
+                        <Link href={item.url}>
                             {item.name}
                         </Link>
                     </h2>

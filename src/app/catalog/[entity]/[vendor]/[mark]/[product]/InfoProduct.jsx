@@ -1,4 +1,35 @@
-export default function InfoProduct() {
+import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/CostAndCartComponent";
+
+/**
+ *
+ * @param {Object} item
+ * @param {number} item.id
+ * @param {string} item.name
+ * @param {string} item.product_article
+ * @param {string} item.product_id
+ * @param {string} item.season.name
+ * @param {string} item.main_image.url
+ * @param {string} item.slug
+ * @param {array} item.parameters_to_front
+ * @param {number} item.width
+ * @param {number} item.height
+ * @param {string} item.diameter
+ * @param {boolean} item.is_spike
+ * @param {boolean} item.is_runflat
+ * @param {string} item.url
+ * @param {Object} item.price_stock_and_delivery
+ * @param {number} item.price_stock_and_delivery.count
+ * @param {number} item.price_stock_and_delivery.delivery_days
+ * @param {string} item.price_stock_and_delivery.people_name_delivery_cost
+ * @param {string} item.price_stock_and_delivery.people_name_delivery_days
+ * @param {string} item.price_stock_and_delivery.people_name_price
+ * @param {string} item.price_stock_and_delivery.people_name_price_percent_higher
+ *
+ */
+export default function InfoProduct({item}) {
+    console.log(item)
+
+
     return (<>
         <div className="container product-container">
             <div className="gallery">
@@ -13,80 +44,46 @@ export default function InfoProduct() {
                 <img src="https://aalyans74.ru/assets/img/tires/sailun_commercio_ice.jpg"></img>
             </div>
             <div className="details">
-                <h1 className="details-name">Viatti V-130 Strada Asimmetrico 185/60 R15 84H</h1>
+                <h1 className="details-name">{item.name}</h1>
 
                 <div className="product-info">
                     <div className="product-parameters">
                         <h2>Параметры</h2>
                         <ul className="parameters-list">
-                            <li className="parameter-item">
-                                <span className="parameter-name">Производитель:</span>
-                                <span className="parameter-value">Roadcruza</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Модель автошины:</span>
-                                <span className="parameter-value">RA3200</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Ширина профиля:</span>
-                                <span className="parameter-value">215</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Высота профиля:</span>
-                                <span className="parameter-value">75</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Посадочный диаметр:</span>
-                                <span className="parameter-value">R15</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Индекс нагрузки:</span>
-                                <span className="parameter-value"></span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Индекс скорости:</span>
-                                <span className="parameter-value">Q (до 160 км/ч)</span>
-                            </li>
-                            <li className="parameter-item">
-                                <span className="parameter-name">Сезонность:</span>
-                                <span className="parameter-value">Летние</span>
-                            </li>
+
+                            {Object.keys(item.parameters_to_front).map((key, index) => (<>
+                                <li key={index} className="parameter-item">
+                                    <span className="parameter-name">{key}:</span>
+                                    <span className="parameter-value">{item.parameters_to_front[key]}</span>
+                                </li>
+                            </>))}
                         </ul>
-                        <a href="#" className="show-more-parameters">
-                            Показать все параметры
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#303030" strokeLinecap="round"></path>
-                            </svg>
-                        </a>
                     </div>
 
                     <div className="price-payment-shipping">
                         <div className="price-info">
-                            <span className="current-price">29 999 ₽</span>
-                            <span className="old-price">32 200 ₽</span>
+                            <span className="current-price">{item.price_stock_and_delivery.people_name_price} ₽</span>
+                            <span className="old-price">{item.price_stock_and_delivery.people_name_price_percent_higher} ₽</span>
                         </div>
 
-                        <div className="options">
-                            <select id="quantity-select" className="quantity-select">
-                                <option className="quantity-select-option" value="4">129 999 ₽ - 4 шт.</option>
-                                <option className="quantity-select-option" value="8">259 999 ₽ - 8 шт.</option>
-                            </select>
-                        </div>
+                        <CostAndCartComponent>
+                            <div className="payment-info">
+                                <div className="payment-option">
+                                    <span className="payment-title">Оплата при получении</span>
+                                    <span
+                                        className="payment-details">Наличие {item.price_stock_and_delivery.count} шт.</span>
+                                    <span className="payment-details">Самовывоз <span
+                                        className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_days}</span></span>
+                                    <span className="payment-details">Доставка <span
+                                        className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_cost}</span></span>
+                                </div>
 
-                        <div className="payment-info">
-                            <div className="payment-option">
-                                <span className="payment-title">Оплата при получении</span>
-                                <span className="payment-details">Наличие &gt;12 шт.</span>
-                                <span className="payment-details">Самовывоз <span className="highlight-text">сегодня</span></span>
-                                <span className="payment-details">Доставка <span className="highlight-text">бесплатно</span></span>
+                                <div className="payment-option">
+                                    <span className="payment-title">Шиномонтаж в подарок</span>
+                                    <span className="payment-details">Расширенная гарантия</span>
+                                </div>
                             </div>
-
-                            <div className="payment-option">
-                                <span className="payment-title">Шиномонтаж в подарок</span>
-                                <span className="payment-details">Расширенная гарантия</span>
-                            </div>
-                        </div>
-                        <button className="add-to-cart-button primary-button">Добавить в корзину</button>
+                        </CostAndCartComponent>
                     </div>
                 </div>
             </div>

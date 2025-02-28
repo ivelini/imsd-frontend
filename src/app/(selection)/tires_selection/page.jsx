@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
-import BackendApi from "@/utils/BackendApi";
+import BackendApi from "@/lib/BackendApi";
 import Sidebar from "../_components/page/Sidebar";
 import { useStore } from "@/store/useStore";
 import { ProgressSpinner } from 'primereact/progressspinner';

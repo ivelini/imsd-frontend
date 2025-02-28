@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import { Dropdown } from 'primereact/dropdown';
-import BackendApi from "@/utils/BackendApi";
+import BackendApi from "@/lib/BackendApi";
 import {useStore} from "@/store/useStore";
 const DiskFilter = () => {
     const {filterWheels, setParamFilterWheels, clearFilter} = useStore()

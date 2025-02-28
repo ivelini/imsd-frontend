@@ -1,5 +1,5 @@
 import { useStore } from "@/store/useStore";
-import BackendApi from "@/utils/BackendApi";
+import BackendApi from "@/lib/BackendApi";
 import { Dropdown } from "primereact/dropdown";
 import { useState, useEffect } from "react";
 import { Slider } from "primereact/slider";

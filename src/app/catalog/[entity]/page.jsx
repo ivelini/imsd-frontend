@@ -1,4 +1,4 @@
-import { TypeProductEnum } from "@/utils/TypeProductEnum"
+import { TypeProductEnum } from "@/lib/TypeProductEnum"
 import { redirect } from "next/navigation"
 
 /**
