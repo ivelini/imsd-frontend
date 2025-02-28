@@ -1,3 +1,6 @@
+import ContentComponent from "./_components/ContentComponent";
+import HorisontalMenu from "./HorisontalMenu";
+import InfoProduct from "./InfoProduct";
 
 /**
  * @param {Object} params 
@@ -8,6 +11,13 @@
  */
 export default function Product({ params }) {
     return (<>
-        Entity {params.entity + '/' + params.vendor + '/' + params.mark + '/' + params.product}
+        <InfoProduct />
+        <HorisontalMenu menu={{
+            description: 'Описание',
+            availability: 'Наличие',
+            delivery: 'Доставка'
+        }}
+        />
+        <ContentComponent tag="description" title="Описание" content="Контент" />
     </>)
 }
