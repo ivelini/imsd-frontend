@@ -4,7 +4,7 @@ const INITIAL_CITY = {
     name_en: 'Chelyabinsk'
 }
 
-export const useCitySlice = (set) => ({
+export const useCitySlice = (set, get) => ({
     selectedCity: INITIAL_CITY,
 
     /**
@@ -16,5 +16,23 @@ export const useCitySlice = (set) => ({
     setCity: (payload) => set(state => ({
         ...state,
         selectedCity: payload
-    }))
+    })),
+
+    getSelectedCity: () => get().selectedCity,
+
+    getCityQueryParam: () => {
+        if (get().selectedCity.name_en !== 'Chelyabinsk') {
+            return {city_name: get().selectedCity.name_en}
+        }
+
+        return {}
+    },
+
+    getCityQueryParamString: () => {
+        if (get().selectedCity.name_en !== 'Chelyabinsk') {
+            return `&city_name=${get().selectedCity.name_en}`
+        }
+
+        return ''
+    },
 })

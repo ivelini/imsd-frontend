@@ -34,6 +34,6 @@ export default async function Product({ params }) {
             delivery: 'Доставка'
         }}
         />
-        <ContentComponent tag="description" title="Описание" content="Контент" />
+        <ContentComponent tag="description" title="Описание" content={item.description} />
     </>)
 }

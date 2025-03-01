@@ -17,6 +17,12 @@ export const useCartSlice = (set, get) => ({
     hasProductInCart: (product_article) => get().cart.items.some(item => item.product_article === product_article),
 
     /**
+     * Получить продукт из корзины по product_article
+     * @param {string} product_article
+     */
+    getProductFromCart: (product_article) => get().cart.items.filter(item => item.product_article === product_article),
+
+    /**
      * Добавление позиции в корзину
      * @param {Object} payload
      * @param {string} payload.product_article

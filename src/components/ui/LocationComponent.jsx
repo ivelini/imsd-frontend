@@ -6,7 +6,6 @@ import BackendApi from "@/lib/BackendApi";
 
 
 export default function LocationComponent() {
-
     const { selectedCity, setCity } = useStore()
     const [visible, setVisible] = useState(false);
 
@@ -29,7 +28,7 @@ export default function LocationComponent() {
     }
 
     return (<>
-        <a href="#" className="choice-city" onClick={() => {
+        <a className="choice-city" onClick={() => {
             getCities()
             setVisible(true)
         }}>
@@ -80,6 +79,7 @@ export default function LocationComponent() {
                                         onClick={() => {
                                             setCity({ id: city.id, name: city.name, name_en: city.name_en})
                                             setVisible(false)
+                                            setCityName('')
                                         }}
                                     >
                                         {city.name}

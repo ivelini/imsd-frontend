@@ -14,7 +14,7 @@ const INITIAL_PAGINATOR = {
 }
 
 export default function TiresSelection() {
-  const { filterTires, setRangeFilterTires } = useStore()
+  const { filterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
   const [items, setItems] = useState([])
   const [filterType, setFilterType] = useState('PARAM')
   const [loading, setLoading] = useState(true)
@@ -24,7 +24,12 @@ export default function TiresSelection() {
     getItems()
   }, [])
 
+  useEffect(() => {
+    getItems(filterType)
+  }, [getSelectedCity()])
+
   const getItems = (type = 'PARAM') => {
+    setItems([])
     setLoading(true)
     setFilterType(type)
 
@@ -56,6 +61,8 @@ export default function TiresSelection() {
     if (page != null) {
       queryString += '&page=' + page
     }
+
+    queryString += getCityQueryParamString()
 
     let response = await BackendApi.get('/api/catalog/tire' + queryString)
 
@@ -114,7 +121,7 @@ export default function TiresSelection() {
 
         {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
         
-        {paginator.total > paginator.rows &&
+        {items.length > 0 && paginator.total > paginator.rows &&
           <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
         }
       </div>
