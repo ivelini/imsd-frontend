@@ -11,22 +11,22 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
  * @param {string} params.product
  */
 export default async function Product({ params }) {
+    const {entity, product} = await params
 
-    let product = null
+    let item = null
     let response = null
 
     try {
-        if(params.entity === TypeProductEnum.TIRES) {
-            response = await fetch(process.env.BACKEND_URL + '/api/catalog/tire/' + params.product).then(res => res.json())
+        if(entity === TypeProductEnum.TIRES) {
+            response = await fetch(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`).then(res => res.json())
         }
     } catch (error) {}
 
-
-    product = response?.data
+    item = response?.data
 
     return (<>
 
-        <InfoProduct item={product}/>
+        <InfoProduct item={item}/>
 
         <HorisontalMenu menu={{
             description: 'Описание',
