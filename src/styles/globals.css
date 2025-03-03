@@ -687,6 +687,10 @@ input[type="checkbox"] {
     line-height: normal;
     max-width: 600px;
 }
+.catalog-product-title a{
+    color: #000;
+    text-decoration: none;
+} 
 .catalog-product-prices {
     display: flex;
     flex-direction: column;
@@ -708,6 +712,17 @@ input[type="checkbox"] {
     font-weight: 500;
     line-height: normal;
     text-decoration: line-through;
+}
+.breadcrumbs {
+    display: flex;
+    list-style: none;
+    margin-bottom: 10px;
+}
+.breadcrumbs li {
+    padding: 0 5px;
+}
+.breadcrumbs a {
+    color: #000000;
 }
 
 .app {
