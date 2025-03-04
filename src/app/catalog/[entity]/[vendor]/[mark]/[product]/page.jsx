@@ -1,7 +1,8 @@
 import ContentComponent from "./_components/ContentComponent";
+import LocationReloadComponent from "./_components/LocationReloadComponent";
 import HorisontalMenu from "./HorisontalMenu";
 import InfoProduct from "./InfoProduct";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
+import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
 /**
  * @param {Object} params 
@@ -10,23 +11,31 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
  * @param {string} params.mark
  * @param {string} params.product
  */
-export default async function Product({ params }) {
-    const {entity, product} = await params
+export default async function Product({ params, searchParams }) {
+    const { entity, product } = await params
+    const { city_name } = await searchParams
 
     let item = null
     let response = null
 
+    let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`)
+
+    if (city_name != null) {
+        url.searchParams.set('city_name', city_name)
+    }
+
     try {
-        if(entity === TypeProductEnum.TIRES) {
-            response = await fetch(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`).then(res => res.json())
+        if (entity === TypeProductEnum.TIRES) {
+            response = await fetch(url.toString()).then(res => res.json())
         }
-    } catch (error) {}
+    } catch (error) { }
 
     item = response?.data
 
     return (<>
 
-        <InfoProduct item={item}/>
+        <LocationReloadComponent />
+        <InfoProduct item={item} />
 
         <HorisontalMenu menu={{
             description: 'Описание',

@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from "react";
 import { Dialog } from 'primereact/dialog';
 import { useStore } from "@/store/useStore";
@@ -17,7 +18,7 @@ export default function LocationComponent() {
             getCities({ 'name': cityName })
         }
 
-    }, [cityName])
+    }, [cityName])    
 
     const getCities = async (params = null) => {
         let response = await BackendApi.get('/api/list/cities', params)
@@ -77,7 +78,7 @@ export default function LocationComponent() {
                                         title={city.name}
                                         data-id={city.id}
                                         onClick={() => {
-                                            setCity({ id: city.id, name: city.name, name_en: city.name_en})
+                                            setCity({ id: city.id, name: city.name, name_en: city.name_en })
                                             setVisible(false)
                                             setCityName('')
                                         }}

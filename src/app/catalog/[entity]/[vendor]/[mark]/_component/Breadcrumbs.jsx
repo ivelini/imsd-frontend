@@ -23,7 +23,7 @@ export default function Breadcrumbs({ entity, vendor, mark }) {
 
     return (<>
         <div className="container">
-            <ul class="breadcrumbs">
+            <ul className="breadcrumbs">
                 <li><a href="/">Главная</a></li>
                 <li>/</li>
                 <li>{entity === TypeProductEnum.TIRES
