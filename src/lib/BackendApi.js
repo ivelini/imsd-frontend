@@ -28,7 +28,7 @@ export default class BackendApi {
         if(params !== null) {
 
             for(let key in params) {
-                fullUrl.searchParams.set(key, params[key])
+                fullUrl.searchParams.append(key, params[key])
             }
         }
 

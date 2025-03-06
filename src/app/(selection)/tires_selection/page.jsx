@@ -16,11 +16,19 @@ const INITIAL_PAGINATOR = {
 export default function TiresSelection() {
   const { filterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
   const [items, setItems] = useState([])
-  const [filterType, setFilterType] = useState('PARAM')
+  const [filterType, setFilterType] = useState()
   const [loading, setLoading] = useState(true)
   const [paginator, setPaginator] = useState(INITIAL_PAGINATOR)
 
   useEffect(() => {
+    if (Object.keys(filterTires.params).length > 0) {
+      setFilterType('PARAM')
+    }
+
+    if (Object.keys(filterTires.car).length > 0) {
+      setFilterType('CAR')
+    }
+
     getItems()
   }, [])
 
@@ -28,12 +36,11 @@ export default function TiresSelection() {
     getItems(filterType)
   }, [getSelectedCity()])
 
-  const getItems = (type = 'PARAM') => {
+  const getItems = () => {
     setItems([])
     setLoading(true)
-    setFilterType(type)
 
-    if (type == 'PARAM') {
+    if (filterType == 'PARAM') {
       getParamItems()
     }
 
@@ -100,11 +107,11 @@ export default function TiresSelection() {
   const onPageChange = (data) => {
     if (filterType === 'PARAM') {
       getParamItems(data.page + 1)
-    }
 
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" })
-    }, 50)
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }, 50)
+    }
   }
 
   return (<>

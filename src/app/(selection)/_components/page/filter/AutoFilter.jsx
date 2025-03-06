@@ -19,7 +19,11 @@ const AutoFilter = ({ type, collback }) => {
     const [params, setParams] = useState({})            // Объект параметров для вывода фильтра
 
     useEffect(() => {
-        clearFilter()
+        clearFilter({entity: 'filterTires', param: 'params'})
+
+        if(Object.keys(filterTires.car).length == 4) {
+            setQueryParams(filterTires.car)
+        }
     }, [])
 
     useEffect(() => {
@@ -31,6 +35,7 @@ const AutoFilter = ({ type, collback }) => {
         let response = await BackendApi.get('/api/list/filter/vehicle/car/info', queryParams)
 
         if (response.code === 200) {
+            console.log(await response.data)
             setParams(await response.data)
         }
     }
@@ -45,6 +50,7 @@ const AutoFilter = ({ type, collback }) => {
     }
 
     const handleVendorChange = (data) => {
+        console.log('handleVendorChange')
         setCarFilter({ type: 'vendor', value: data.name })
         setCarFilter({ type: 'model', value: null })
         setCarFilter({ type: 'year', value: null })

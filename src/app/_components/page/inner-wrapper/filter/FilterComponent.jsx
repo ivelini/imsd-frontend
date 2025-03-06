@@ -35,9 +35,7 @@ const FilterComponent = () => {
     const handleClick = () => {
         if(switcher.type == 'SWTIRES') {
             router.push('/tires_selection')
-
         }
-
     }
 
     return (<>

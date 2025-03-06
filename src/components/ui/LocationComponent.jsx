@@ -18,7 +18,7 @@ export default function LocationComponent() {
             getCities({ 'name': cityName })
         }
 
-    }, [cityName])    
+    }, [cityName])
 
     const getCities = async (params = null) => {
         let response = await BackendApi.get('/api/list/cities', params)

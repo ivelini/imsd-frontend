@@ -10,6 +10,7 @@ export function TireFilter({ collback }) {
 
     const [params, setParams] = useState({})    // Параметры для показа фильтра
 
+ 
     useEffect(() => {
         (async () => {
             let response = await BackendApi.get('/api/list/filter/tire')

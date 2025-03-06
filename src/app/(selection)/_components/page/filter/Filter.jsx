@@ -1,14 +1,27 @@
 "use client"
 
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import LocationComponent from "@/components/ui/LocationComponent";
 import { TireFilter } from "@/app/(selection)/_components/page/filter/TireFilter";
 import { useStore } from "@/store/useStore";
 import AutoFilter from "./AutoFilter";
 
 export default function Filter({ type, collback }) {
-    const { clearFilter } = useStore()
-    const [switcher, setSwitcher] = useState('PARAM')
+    const { filterTires, filterWheels, clearFilter } = useStore()
+    const [switcher, setSwitcher] = useState()
+
+    useEffect(() => {
+        if (
+            Object.keys(filterTires.params).length > 0 ||
+            (Object.keys(filterTires.params).length == 0 && Object.keys(filterTires.car).length == 0)
+        ) {
+            setSwitcher('PARAM')
+        }
+
+        if (Object.keys(filterTires.car).length > 0) {
+            setSwitcher('CAR')
+        }
+    }, [])
 
 
     return (<>
@@ -22,7 +35,7 @@ export default function Filter({ type, collback }) {
                 <LocationComponent />
                 {type === 'TIRES' && switcher === 'PARAM' && <TireFilter collback={collback} />}
                 {type === 'TIRES' && switcher === 'CAR' && <AutoFilter type="SWTIRES" collback={collback} />}
-                
+
                 <a href="#" className="remove-filters help" onClick={() => clearFilter()}>Сбросить все фильтры</a>
             </div>
         </div>
