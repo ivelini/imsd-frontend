@@ -6,6 +6,7 @@ import { useStore } from "@/store/useStore";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ParamItem from "../_components/page/param/ParamItem";
 import { Paginator } from 'primereact/paginator';
+import SpecificationsContent from "../_components/page/car/SpecificationsContent";
 
 const INITIAL_PAGINATOR = {
   first: 0,
@@ -16,7 +17,8 @@ const INITIAL_PAGINATOR = {
 export default function TiresSelection() {
   const { filterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
   const [items, setItems] = useState([])
-  const [filterType, setFilterType] = useState()
+  const [specifications, setSpecifications] = useState({})
+  const [filterType, setFilterType] = useState('')
   const [loading, setLoading] = useState(true)
   const [paginator, setPaginator] = useState(INITIAL_PAGINATOR)
 
@@ -28,13 +30,11 @@ export default function TiresSelection() {
     if (Object.keys(filterTires.car).length > 0) {
       setFilterType('CAR')
     }
-
-    getItems()
   }, [])
 
   useEffect(() => {
-    getItems(filterType)
-  }, [getSelectedCity()])
+    getItems()
+  }, [filterType, getSelectedCity()])
 
   const getItems = () => {
     setItems([])
@@ -44,6 +44,11 @@ export default function TiresSelection() {
       getParamItems()
     }
 
+    if (filterType == 'CAR') {
+      getCarSpecification()
+    }
+
+    setTimeout(() => setLoading(false), 3000)
   }
 
   const getParamItems = async (page = null) => {
@@ -98,8 +103,14 @@ export default function TiresSelection() {
         rows: data.meta.per_page,
         total: data.meta.total
       })
+    }
+  }
 
-      setTimeout(() => setLoading(false), 3000)
+  const getCarSpecification = async () => {
+    let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', filterTires.car)
+
+    if (response.code === 200) {
+      setSpecifications((await response).data)
     }
   }
 
@@ -114,11 +125,17 @@ export default function TiresSelection() {
     }
   }
 
+  const setSwitcherFilter = (data) => {
+    setFilterType(data)
+  }
+
   return (<>
     <h2>Подбор шин {paginator.total > 0 && <span style={{ 'color': 'gray', 'fontSize': '18px' }}>Найдено {paginator.total} товаров </span>}</h2>
     <div className="main-content-catalog">
-      <Sidebar type="TIRES" collback={getItems} />
+      <Sidebar type="TIRES" collback={getItems} setSwitcherFilter={setSwitcherFilter} />
       <div className="catalog-with-products">
+
+        {filterType === 'CAR' && <SpecificationsContent specifications={specifications} />}
 
         {items.length === 0 && <div style={{ "margin": '0 auto' }}>
           {loading === true
@@ -127,7 +144,8 @@ export default function TiresSelection() {
         </div>}
 
         {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
-        
+
+
         {items.length > 0 && paginator.total > paginator.rows &&
           <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
         }

@@ -16,9 +16,21 @@ const INITIAL_FILTER_WHEELS = {
         }
 };
 
-export const useFilterSlice = (set) => ({
+export const useFilterSlice = (set, get) => ({
         filterTires: INITIAL_FILTER_TIRES,
         filterWheels: INITIAL_FILTER_WHEELS,
+
+        /**
+         * Параметры фильтрации по авто
+         *
+         * @return {Object|null} 
+         */
+        getFilterForCar: () => {
+                return Object.keys(get().filterTires.car).length > 0
+                        ? get().filterTires.car
+                        : get().filterWheels.car
+
+        },
 
         /**
          * Обновляет параметры фильтра для шин.
@@ -150,6 +162,6 @@ export const useFilterSlice = (set) => ({
                                 }
                         }
                 }
-                
+
         }),
 });

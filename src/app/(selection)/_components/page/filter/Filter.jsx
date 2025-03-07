@@ -6,7 +6,7 @@ import { TireFilter } from "@/app/(selection)/_components/page/filter/TireFilter
 import { useStore } from "@/store/useStore";
 import AutoFilter from "./AutoFilter";
 
-export default function Filter({ type, collback }) {
+export default function Filter({ type, collback, setSwitcherFilter }) {
     const { filterTires, filterWheels, clearFilter } = useStore()
     const [switcher, setSwitcher] = useState()
 
@@ -27,8 +27,14 @@ export default function Filter({ type, collback }) {
     return (<>
         <div className="catalog-filter" id="filter-in-catalog">
             <div className="catalog-filter-category">
-                <div className={`filter-item-catalog  ${switcher == 'CAR' && 'inactive'}`} onClick={() => setSwitcher('PARAM')}>По параметрам</div>
-                <div className={`filter-item-catalog  ${switcher == 'PARAM' && 'inactive'}`} onClick={() => setSwitcher('CAR')}>По автомобилю</div>
+                <div className={`filter-item-catalog  ${switcher == 'CAR' && 'inactive'}`} onClick={() => {
+                    setSwitcher('PARAM')
+                    setSwitcherFilter('PARAM')
+                }}>По параметрам</div>
+                <div className={`filter-item-catalog  ${switcher == 'PARAM' && 'inactive'}`} onClick={() => { 
+                    setSwitcher('CAR') 
+                    setSwitcherFilter('CAR')
+                    }}>По автомобилю</div>
             </div>
             <div className="catalog-filter-cont">
                 <br />
