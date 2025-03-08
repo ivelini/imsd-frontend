@@ -4,9 +4,11 @@ import BackendApi from "@/lib/BackendApi";
 import Sidebar from "../_components/page/Sidebar";
 import { useStore } from "@/store/useStore";
 import { ProgressSpinner } from 'primereact/progressspinner';
-import ParamItem from "../_components/page/param/ParamItem";
+import ParamItems from "../_components/page/param/ParamItems";
 import { Paginator } from 'primereact/paginator';
 import SpecificationsContent from "../_components/page/car/SpecificationsContent";
+import { TypeProductEnum } from "@/lib/TypeProductEnum";
+import SpecifiactionItems from "../_components/page/car/SpecificationItems";
 
 const INITIAL_PAGINATOR = {
   first: 0,
@@ -15,8 +17,9 @@ const INITIAL_PAGINATOR = {
 }
 
 export default function TiresSelection() {
-  const { filterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
-  const [items, setItems] = useState([])
+  const { filterTires, setCarFilterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
+  const [items, setItems] = useState([]) // Выборка шин по параметрам
+  const [itemsVehicle, setItemsVehicle] = useState([]) // Выборка шин по спецификации
   const [specifications, setSpecifications] = useState({})
   const [filterType, setFilterType] = useState('PARAM')
   const [loading, setLoading] = useState(true)
@@ -43,6 +46,11 @@ export default function TiresSelection() {
 
   }, [isStoreReady]);
 
+  // Получаем продукцию по спецификации
+  useEffect(() => {
+    getVehicleItems()
+  }, [filterTires.car.vehicleIds ?? []])
+
   // Загружаем данные при изменении filterType или города
   useEffect(() => {
     if (!isStoreReady || !filterType) return;
@@ -60,6 +68,22 @@ export default function TiresSelection() {
     }
 
     setTimeout(() => setLoading(false), 3000)
+  }
+
+  const getVehicleItems = async () => {
+    /** @var {array} vehicleIds  */
+    const vehicleIds = filterTires.car.vehicleIds ?? []
+
+    if (vehicleIds.length == 0) {
+      setItemsVehicle({})
+    } else {
+
+      const response = await BackendApi.get('/api/catalog/vehicle/tire?filters=vehicle|' + vehicleIds.join(','))
+
+      if (response.code === 200) {
+        setItemsVehicle((await response).data)
+      }
+    }
   }
 
   const getParamItems = async (page = null) => {
@@ -103,6 +127,8 @@ export default function TiresSelection() {
   }
 
   const getCarSpecification = async () => {
+    setCarFilterTires({ type: 'vehicleIds', value: [] })
+
     let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', filterTires.car);
     if (response.code === 200) {
       setSpecifications((await response).data);
@@ -118,29 +144,48 @@ export default function TiresSelection() {
   }
 
   return isStoreReady ? (
-      <>
-        <h2>
-          Подбор шин {paginator.total > 0 && (
-            <span style={{ color: 'gray', fontSize: '18px' }}>
+    <>
+      <h2>
+        Подбор шин {paginator.total > 0 && (
+          <span style={{ color: 'gray', fontSize: '18px' }}>
             Найдено {paginator.total} товаров
           </span>
         )}
-        </h2>
-        <div className="main-content-catalog">
-          <Sidebar type="TIRES" collback={getItems} setSwitcherFilter={setFilterType} />
-          <div className="catalog-with-products">
-            {filterType === 'CAR' && <SpecificationsContent specifications={specifications} />}
+      </h2>
+      <div className="main-content-catalog">
+        <Sidebar type="TIRES" collback={getItems} setSwitcherFilter={setFilterType} />
+        <div className="catalog-with-products">
+
+          {filterType === 'CAR' && (<>
+            <SpecificationsContent type={TypeProductEnum.TIRES} specifications={specifications} />
+
+            {Object.keys(itemsVehicle).length > 0 &&
+              <SpecifiactionItems type={TypeProductEnum.TIRES} itemsVehicle={itemsVehicle} />}
+
+            {Object.keys(itemsVehicle).length === 0 && (
+              <div style={{ margin: '0 auto' }}>
+                {loading ? <ProgressSpinner /> : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
+              </div>
+            )}
+          </>)}
+
+
+          {filterType === 'PARAM' && (<>
+
             {items.length === 0 && (
-                <div style={{ margin: '0 auto' }}>
-                  {loading ? <ProgressSpinner /> : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
-                </div>
+              <div style={{ margin: '0 auto' }}>
+                {loading ? <ProgressSpinner /> : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
+              </div>
             )}
-            {filterType === 'PARAM' && <ParamItem type="TIRES" items={items} />}
-            {items.length > 0 && filterType === 'PARAM' && paginator.total > paginator.rows && (
-                <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
+
+            <ParamItems type="TIRES" items={items} />
+            {items.length > 0 && paginator.total > paginator.rows && (
+              <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
             )}
-          </div>
+          </>)}
+
         </div>
-      </>
+      </div>
+    </>
   ) : <ProgressSpinner />;
 }
