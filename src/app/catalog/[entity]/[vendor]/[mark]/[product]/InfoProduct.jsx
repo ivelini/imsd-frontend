@@ -1,7 +1,7 @@
 import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/CostAndCartComponent";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import Image from "next/image";
-import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/GalleryImage";
+import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/Gallery/GalleryImage";
 
 /**
  *
