@@ -14,13 +14,11 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
     useEffect(() => {
         if (
             Object.keys(filterTires.params).length > 0 ||
-            (Object.keys(filterTires.params).length == 0 && Object.keys(filterTires.car).length == 0)
+            (Object.keys(filterTires.params).length === 0 && Object.keys(filterTires.car).length === 0)
         ) {
             setSwitcher('PARAM')
             setSwitcherFilter('PARAM')
-        }
-
-        if (Object.keys(filterTires.car).length > 0) {
+        } else if (Object.keys(filterTires.car).length > 0) {
             setSwitcher('CAR')
             setSwitcherFilter('CAR')
         }

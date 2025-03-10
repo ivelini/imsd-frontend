@@ -7,20 +7,6 @@ import { useEffect } from "react"
 
 
 export default function Breadcrumbs({ entity, vendor, mark }) {
-    const { setParamFilterTires, setParamFilterWheels, clearFilter } = useStore()
-
-    useEffect(() => {
-        clearFilter()
-
-        if (entity === TypeProductEnum.TIRES) {
-
-        }
-    }, [])
-
-    const getVendorId = async () => {
-        let response = await BackendApi.get()
-    }
-
     return (<>
         <div className="container">
             <ul className="breadcrumbs">

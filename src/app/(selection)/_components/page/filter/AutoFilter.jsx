@@ -6,7 +6,7 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
 const AutoFilter = ({ type, collback }) => {
 
-    const { getFilterForCar, setCarFilterTires, setCarFilterWheels, clearFilter } = useStore()
+    const { getFilterForCar, setCarFilterTires, setCarFilterWheels } = useStore()
 
     /**
      * Объект параметров для вывода фильтра

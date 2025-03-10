@@ -49,7 +49,7 @@ export default function TiresSelection() {
   // Получаем продукцию по спецификации
   useEffect(() => {
     getVehicleItems()
-  }, [filterTires.car.vehicleIds ?? []])
+  }, [filterTires.car?.vehicleIds])
 
   // Загружаем данные при изменении filterType или города
   useEffect(() => {
@@ -68,6 +68,11 @@ export default function TiresSelection() {
     }
 
     setTimeout(() => setLoading(false), 3000)
+  }
+
+  const handleGetItems = () => {
+    setCarFilterTires({ type: 'vehicleIds', value: [] })
+    getItems()
   }
 
   const getVehicleItems = async () => {
@@ -127,8 +132,6 @@ export default function TiresSelection() {
   }
 
   const getCarSpecification = async () => {
-    setCarFilterTires({ type: 'vehicleIds', value: [] })
-
     let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', filterTires.car);
     if (response.code === 200) {
       setSpecifications((await response).data);
@@ -153,7 +156,7 @@ export default function TiresSelection() {
         )}
       </h2>
       <div className="main-content-catalog">
-        <Sidebar type="TIRES" collback={getItems} setSwitcherFilter={setFilterType} />
+        <Sidebar type="TIRES" collback={handleGetItems} setSwitcherFilter={setFilterType} />
         <div className="catalog-with-products">
 
           {filterType === 'CAR' && (<>

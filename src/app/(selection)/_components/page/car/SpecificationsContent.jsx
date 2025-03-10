@@ -7,7 +7,6 @@ export default function SpecificationsContent({ type, specifications }) {
     const [isStoreReady, setIsStoreReady] = useState(false)
 
     useEffect(() => {
-        console.log(filterTires)
         if (filterTires) {
             setIsStoreReady(true);
         }
