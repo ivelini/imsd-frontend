@@ -43,3 +43,15 @@
 .p-slider {
     background-color: lightgray;
 }
+.p-galleria .p-galleria-item-nav {
+    color: rgb(216, 216, 216);
+}
+.p-galleria .p-galleria-indicators {
+    padding-top: 1rem !important
+}
+.p-galleria .p-galleria-indicators .p-galleria-indicator.p-highlight button {
+    background-color: red;
+}
+.p-galleria.p-galleria-indicators-bottom .p-galleria-indicator, .p-galleria.p-galleria-indicators-top .p-galleria-indicator {
+    margin-right: 5px;
+}

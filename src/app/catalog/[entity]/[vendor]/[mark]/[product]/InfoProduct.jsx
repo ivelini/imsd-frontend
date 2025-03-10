@@ -1,6 +1,7 @@
 import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/CostAndCartComponent";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import Image from "next/image";
+import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/GalleryImage";
 
 /**
  *
@@ -36,12 +37,7 @@ export default function InfoProduct({ item }) {
                 <div className="gallery-panel">
                     <SeasonIconComponent seasonName={item.season?.name} />
                 </div>
-                <Image
-                    src={item.main_image.url}
-                    fill
-                    alt={item.name}
-                    unoptimized
-                />
+                <GalleryImage images={[item.main_image]}/>
             </div>
             <div className="details">
                 <h1 className="details-name">{item.name}</h1>
