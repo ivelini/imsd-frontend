@@ -1,13 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useStore } from "@/store/useStore"
 import { TypeProductEnum } from "@/lib/TypeProductEnum"
 
 export default function SpecificationsContent({ type, specifications }) {
-    const { setCarFilterTires, setCarFilterWheels, getFilterForCar } = useStore()
+    const { filterTires, setCarFilterTires, setCarFilterWheels, getFilterForCar } = useStore()
+    const [isStoreReady, setIsStoreReady] = useState(false)
 
-    const getVehicleItems = async () => {
-
-    }
+    useEffect(() => {
+        console.log(filterTires)
+        if (filterTires) {
+            setIsStoreReady(true);
+        }
+    }, []);
 
     const handleChecked = (isChecked, vehicleId) => {
         const setEntity = type === TypeProductEnum.TIRES
@@ -30,7 +34,7 @@ export default function SpecificationsContent({ type, specifications }) {
     }
 
     function returnHtmlTypeSpecification(type, title) {
-        if (!specifications[type]?.length) return null;
+        if (!specifications[type]?.length || !isStoreReady) return null;
 
         return (
             <div>

@@ -19,7 +19,7 @@ export function TireFilter({ collback }) {
                 setParams(await response.data)
             }
         })()
-        clearFilter({entity: 'filterTires', param: 'car'})
+
     }, [])
 
     return (<>

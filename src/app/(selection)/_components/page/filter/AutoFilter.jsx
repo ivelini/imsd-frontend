@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import BackendApi from "@/lib/BackendApi";
 import { useStore } from "@/store/useStore";
+import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
 const AutoFilter = ({ type, collback }) => {
 
@@ -33,9 +34,9 @@ const AutoFilter = ({ type, collback }) => {
 
     const setCarFilter = (dataFilter) => {
 
-        if (type === 'SWTIRES') {
+        if (type === TypeProductEnum.TIRES) {
             setCarFilterTires(dataFilter)
-        } else if (type === 'SWDISKS') {
+        } else if (type === TypeProductEnum.DISKS) {
             setCarFilterWheels(dataFilter)
         }
     }

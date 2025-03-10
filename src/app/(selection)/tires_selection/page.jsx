@@ -78,7 +78,7 @@ export default function TiresSelection() {
       setItemsVehicle({})
     } else {
 
-      const response = await BackendApi.get('/api/catalog/vehicle/tire?filters=vehicle|' + vehicleIds.join(','))
+      const response = await BackendApi.get('/api/catalog/vehicle/tire?filters=vehicle|' + vehicleIds.join(',') + getCityQueryParamString())
 
       if (response.code === 200) {
         setItemsVehicle((await response).data)
