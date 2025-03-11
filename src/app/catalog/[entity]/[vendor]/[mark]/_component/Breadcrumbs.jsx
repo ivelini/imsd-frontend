@@ -1,12 +1,17 @@
 "use client"
-import BackendApi from "@/lib/BackendApi"
+
+import dynamic from "next/dynamic"
+
 import { TypeProductEnum } from "@/lib/TypeProductEnum"
-import { useStore } from "@/store/useStore"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useStore } from "@/store/useStore"
 
 
 export default function Breadcrumbs({ entity, vendor, mark }) {
+    const { getCityQueryParam } = useStore()
+
+    console.log(getCityQueryParam())
+
     return (<>
         <div className="container">
             <ul className="breadcrumbs">
@@ -18,11 +23,14 @@ export default function Breadcrumbs({ entity, vendor, mark }) {
                 }</li>
                 <li>/</li>
                 <li><Link href={{
-                        pathname: `\/${entity}_selection`,
-                        query: {vendor}
-                    }}>{vendor.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Link></li>
+                    pathname: `\/${entity}_selection`,
+                    query: { vendor }
+                }}>{vendor.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Link></li>
                 <li>/ </li>
-                <li><a href={`/catalog/${entity}/${vendor}/${mark}`}>{mark.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</a></li>
+                <Link href={{
+                    pathname: `\/catalog\/${entity}\/${vendor}\/${mark}`,
+                    query: getCityQueryParam()
+                }}>{mark.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}1111</Link>
             </ul>
         </div>
     </>)

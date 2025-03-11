@@ -5,44 +5,54 @@ import InfoProduct from "./InfoProduct";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
 /**
- * @param {Object} params 
- * @param {string} params.entity
- * @param {string} params.vendor
- * @param {string} params.mark
- * @param {string} params.product
+ * @param {Object} props
+ * @param {Object} props.params
+ * @param {Object} props.searchParams
+ * @param {string} props.params.entity
+ * @param {string} props.params.vendor
+ * @param {string} props.params.mark
+ * @param {string} props.params.product
  */
 export default async function Product({ params, searchParams }) {
-    const { entity, product } = await params
-    const { city_name } = await searchParams
+    const { entity, product } = params;
+    const { city_name } = searchParams;
 
-    let item = null
-    let response = null
+    let item = null;
+    let response = null;
 
-    let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`)
+    const url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`);
 
-    if (city_name != null) {
-        url.searchParams.set('city_name', city_name)
+    if (city_name) {
+        url.searchParams.set("city_name", city_name);
     }
 
     try {
         if (entity === TypeProductEnum.TIRES) {
-            response = await fetch(url.toString()).then(res => res.json())
+            response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json());
         }
-    } catch (error) { }
+    } catch (error) {
+        console.error("Ошибка загрузки данных:", error);
+    }
 
-    item = response?.data
+    item = response?.data ?? null;
 
-    return (<>
+    return (
+        <>
+            <LocationReloadComponent />
+            <InfoProduct item={item} />
 
-        <LocationReloadComponent />
-        <InfoProduct item={item} />
-
-        <HorisontalMenu menu={{
-            description: 'Описание',
-            availability: 'Наличие',
-            delivery: 'Доставка'
-        }}
-        />
-        <ContentComponent tag="description" title="Описание" content={item.description} />
-    </>)
+            <HorisontalMenu
+                menu={{
+                    description: "Описание",
+                    availability: "Наличие",
+                    delivery: "Доставка",
+                }}
+            />
+            <ContentComponent 
+                tag="description" 
+                title="Описание" 
+                content={item?.description ?? "Нет описания"} 
+            />
+        </>
+    );
 }
