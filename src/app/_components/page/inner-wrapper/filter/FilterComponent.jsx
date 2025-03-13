@@ -36,6 +36,10 @@ const FilterComponent = () => {
         if(switcher.type == 'SWTIRES') {
             router.push('/tires_selection')
         }
+
+        if(switcher.type == 'SWDISKS') {
+            router.push('/wheels_selection')
+        }
     }
 
     return (<>

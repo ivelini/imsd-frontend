@@ -1,3 +1,5 @@
+import { TypeProductEnum } from "@/lib/TypeProductEnum";
+
 const INITIAL_FILTER_TIRES = {
         params: {},
         car: {},
@@ -25,8 +27,8 @@ export const useFilterSlice = (set, get) => ({
          *
          * @return {Object|null} 
          */
-        getFilterForCar: () => {
-                return Object.keys(get().filterTires.car).length > 0
+        getFilterForCar: (type) => {
+                return type == TypeProductEnum.TIRES
                         ? get().filterTires.car
                         : get().filterWheels.car
 
@@ -96,7 +98,7 @@ export const useFilterSlice = (set, get) => ({
          */
         setRangeFilterWheels: (payload) => set((state) => ({
                 ...state,
-                filterTires: {
+                filterWheels: {
                         ...state.filterWheels,
                         range: {
                                 ...state.filterWheels.range,

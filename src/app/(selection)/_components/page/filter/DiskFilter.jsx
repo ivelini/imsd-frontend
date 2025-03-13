@@ -2,21 +2,21 @@ import { useStore } from "@/store/useStore";
 import BackendApi from "@/lib/BackendApi";
 import { Dropdown } from "primereact/dropdown";
 import { useState, useEffect } from "react";
-import { Slider } from "primereact/slider";
-import {RangeComponent} from "@/app/(selection)/_components/page/filter/RangeComponent";
+import { RangeComponent } from "@/app/(selection)/_components/page/filter/RangeComponent";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
-export function TireFilter({ collback }) {
-    const { filterTires, setParamFilterTires } = useStore()
+export function DiskFilter({ collback }) {
+    const { filterWheels, setParamFilterWheels } = useStore()
 
     const [params, setParams] = useState({})    // Параметры для показа фильтра
 
- 
+
     useEffect(() => {
         (async () => {
-            let response = await BackendApi.get('/api/list/filter/tire')
+            let response = await BackendApi.get('/api/list/filter/disk')
 
             if (response.code === 200) {
+                console.log(await response.data)
                 setParams(await response.data)
             }
         })()
@@ -25,48 +25,11 @@ export function TireFilter({ collback }) {
 
     return (<>
         <div className="calatog-select-col">
-            <div className="custom-select-wrapper custom-select-wrapper-cat">
-                <Dropdown
-                    value={params.width?.find(item => item.id === filterTires.params.width)}
-                    onChange={(e) => setParamFilterTires({ type: 'width', value: e.value.id })}
-                    options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
-                    
-                    optionLabel="name"
-                    placeholder="Ширина"
-                    className={`custom-select ${filterTires.params?.width ? 'p-dropdown-selected' : ''}`}
-                
-                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                    </svg>}
-                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                    </svg>}
-                />
-            </div>
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.height?.find(item => item.id === filterTires.params.height)}
-                    onChange={(e) => setParamFilterTires({ type: 'height', value: e.value.id })}
-                    options={[{ id: null, name: 'Любой' }, ...(params?.height ?? [])]}
-                    optionLabel="name"
-                    placeholder="Профиль"
-                    className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                />
-            </div>
-
-            <div className="custom-select-wrapper custom-select-wrapper-cat">
-                <Dropdown
-                    value={params.diameter?.find(item => item.id === filterTires.params.diameter)}
-                    onChange={(e) => setParamFilterTires({ type: 'diameter', value: e.value.id })}
+                    value={params.diameter?.find(item => item.id === filterWheels.params.diameter)}
+                    onChange={(e) => setParamFilterWheels({ type: 'diameter', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.diameter ?? [])]}
                     optionLabel="name"
                     placeholder="Диаметр"
@@ -82,14 +45,32 @@ export function TireFilter({ collback }) {
                 />
             </div>
 
+            <div className="custom-select-wrapper custom-select-wrapper-cat">
+                <Dropdown
+                    value={params.width?.find(item => item.id === filterWheels.params.width)}
+                    onChange={(e) => setParamFilterWheels({ type: 'width', value: e.value.id })}
+                    options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
+
+                    optionLabel="name"
+                    placeholder="Ширина"
+                    className={`custom-select ${filterWheels.params?.width ? 'p-dropdown-selected' : ''}`}
+
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                />
+            </div>
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.season?.find(item => item.id === filterTires.params.season)}
-                    onChange={(e) => setParamFilterTires({ type: 'season', value: e.value.id })}
-                    options={[{ id: null, name: 'Любая' }, ...(params?.season ?? [])]}
+                    value={params.pcd?.find(item => item.id === filterWheels.params.pcd)}
+                    onChange={(e) => setParamFilterWheels({ type: 'pcd', value: e.value.id })}
+                    options={[{ id: null, name: 'Любой' }, ...(params?.pcd ?? [])]}
                     optionLabel="name"
-                    placeholder="Сезонность"
+                    placeholder="PCD (крепеж)"
                     className="custom-select"
                     dropdownIcon={() => (
                         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
@@ -104,11 +85,30 @@ export function TireFilter({ collback }) {
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.is_spike?.find(item => item.id === filterTires.params.is_spike)}
-                    onChange={(e) => setParamFilterTires({ type: 'is_spike', value: e.value.id == null ? e.value.id : Boolean(e.value.id) })}
-                    options={[{ id: null, name: 'Любой' }, ...(params?.is_spike ?? [])]}
+                    value={params.et?.find(item => item.id === filterWheels.params.et)}
+                    onChange={(e) => setParamFilterWheels({ type: 'et', value: e.value.id })}
+                    options={[{ id: null, name: 'Любая' }, ...(params?.et ?? [])]}
                     optionLabel="name"
-                    placeholder="Тип шин"
+                    placeholder="ET (вылет)"
+                    className="custom-select"
+                    dropdownIcon={() => (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                        </svg>)}
+                    collapseIcon={() => (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                        </svg>)}
+                />
+            </div>
+
+            <div className="custom-select-wrapper custom-select-wrapper-cat">
+                <Dropdown
+                    value={params.dia?.find(item => item.id === filterWheels.params.dia)}
+                    onChange={(e) => setParamFilterWheels({ type: 'dia', value: e.value.id == null ? e.value.id : Boolean(e.value.id) })}
+                    options={[{ id: null, name: 'Любой' }, ...(params?.dia ?? [])]}
+                    optionLabel="name"
+                    placeholder="Ступица"
                     className="custom-select"
                     dropdownIcon={() => (
                         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
@@ -125,8 +125,26 @@ export function TireFilter({ collback }) {
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.vendor?.find(item => item.id === filterTires.params.vendor)}
-                    onChange={(e) => setParamFilterTires({ type: 'vendor', value: e.value.id })}
+                    value={params.type?.find(item => item.id === filterWheels.params.type)}
+                    onChange={(e) => setParamFilterWheels({ type: 'type', value: e.value.id })}
+                    options={[{ id: null, name: 'Любой' }, ...(params?.type ?? [])]}
+                    optionLabel="name"
+                    placeholder="Тип дисков"
+                    className="custom-select"
+                    dropdownIcon={() => (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                        </svg>)}
+                    collapseIcon={() => (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                        </svg>)}
+                />
+            </div>
+            <div className="custom-select-wrapper custom-select-wrapper-cat">
+                <Dropdown
+                    value={params.vendor?.find(item => item.id === filterWheels.params.vendor)}
+                    onChange={(e) => setParamFilterWheels({ type: 'vendor', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.vendor ?? [])]}
                     optionLabel="name"
                     placeholder="Производитель"
@@ -141,26 +159,8 @@ export function TireFilter({ collback }) {
                         </svg>)}
                 />
             </div>
-            <div className="custom-select-wrapper custom-select-wrapper-cat">
-                <Dropdown
-                    value={params.country?.find(item => item.id === filterTires.params.country)}
-                    onChange={(e) => setParamFilterTires({ type: 'country', value: e.value.id })}
-                    options={[{ id: null, name: 'Любая' }, ...(params?.country ?? [])]}
-                    optionLabel="name"
-                    placeholder="Страна"
-                    className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                />
-            </div>
 
-            <RangeComponent type={TypeProductEnum.TIRES} />
+            <RangeComponent type={TypeProductEnum.DISKS} />
 
             <div className="delivery-checkbox-group">
                 <h3 className="delivery-title-cat">Способ получения</h3>

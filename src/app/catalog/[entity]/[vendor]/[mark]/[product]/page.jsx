@@ -14,8 +14,8 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum";
  * @param {string} props.params.product
  */
 export default async function Product({ params, searchParams }) {
-    const { entity, product } = params;
-    const { city_name } = searchParams;
+    const { entity, product } = await params;
+    const { city_name } = await searchParams;
 
     let item = null;
     let response = null;

@@ -1,4 +1,5 @@
 "use client"
+
 import { useState, useEffect } from "react";
 import BackendApi from "@/lib/BackendApi";
 import Sidebar from "../_components/page/Sidebar";
@@ -16,9 +17,9 @@ const INITIAL_PAGINATOR = {
   total: 0
 }
 
-export default function TiresSelection() {
-  const { filterTires, setCarFilterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString } = useStore()
-  const [items, setItems] = useState([]) // Выборка шин по параметрам
+export default function WheelsSelection() {
+  const { filterWheels, setCarFilterWheels, setRangeFilterWheels, getSelectedCity, getCityQueryParamString } = useStore()
+  const [items, setItems] = useState([]) // Выборка дисков по параметрам
   const [itemsVehicle, setItemsVehicle] = useState([]) // Выборка шин по спецификации
   const [specifications, setSpecifications] = useState({})
   const [filterType, setFilterType] = useState('PARAM')
@@ -28,18 +29,18 @@ export default function TiresSelection() {
 
   // Дожидаемся загрузки Zustand
   useEffect(() => {
-    if (filterTires) {
+    if (filterWheels) {
       setIsStoreReady(true);
     }
-  }, [filterTires]);
+  }, [filterWheels]);
 
   // Устанавливаем тип фильтра
   useEffect(() => {
     if (!isStoreReady) return;
 
-    if (Object.keys(filterTires.params).length > 0) {
+    if (Object.keys(filterWheels.params).length > 0) {
       setFilterType('PARAM');
-    } else if (Object.keys(filterTires.car).length > 0) {
+    } else if (Object.keys(filterWheels.car).length > 0) {
       setFilterType('CAR');
     }
     getItems()
@@ -49,7 +50,7 @@ export default function TiresSelection() {
   // Получаем продукцию по спецификации
   useEffect(() => {
     getVehicleItems()
-  }, [filterTires.car?.vehicleIds])
+  }, [filterWheels.car?.vehicleIds])
 
   // Загружаем данные при изменении filterType или города
   useEffect(() => {
@@ -71,19 +72,19 @@ export default function TiresSelection() {
   }
 
   const handleGetItems = () => {
-    setCarFilterTires({ type: 'vehicleIds', value: [] })
+    setCarFilterWheels({ type: 'vehicleIds', value: [] })
     getItems()
   }
 
   const getVehicleItems = async () => {
     /** @var {array} vehicleIds  */
-    const vehicleIds = filterTires.car.vehicleIds ?? []
+    const vehicleIds = filterWheels.car.vehicleIds ?? []
 
     if (vehicleIds.length == 0) {
       setItemsVehicle({})
     } else {
 
-      const response = await BackendApi.get('/api/catalog/vehicle/tire?filters=vehicle|' + vehicleIds.join(',') + getCityQueryParamString())
+      const response = await BackendApi.get('/api/catalog/vehicle/disk?filters=vehicle|' + vehicleIds.join(',') + getCityQueryParamString())
 
       if (response.code === 200) {
         setItemsVehicle((await response).data)
@@ -93,14 +94,14 @@ export default function TiresSelection() {
 
   const getParamItems = async (page = null) => {
     let queryString = '?filters=';
-    for (const key in filterTires.params) {
-      queryString += `${key}|${filterTires.params[key]};`;
+    for (const key in filterWheels.params) {
+      queryString += `${key}|${filterWheels.params[key]};`;
     }
     queryString = queryString.slice(0, -1); // Убираем последнюю ";"
 
-    if (filterTires.range.current.length > 0 && filterTires.range.current[0] !== 1 && filterTires.range.current[1] !== 2) {
+    if (filterWheels.range.current.length > 0 && filterWheels.range.current[0] !== 1 && filterWheels.range.current[1] !== 2) {
       queryString += queryString === '?filters=' ? 'price|' : ';price|';
-      queryString += `${filterTires.range.current[0]},${filterTires.range.current[1]}`;
+      queryString += `${filterWheels.range.current[0]},${filterWheels.range.current[1]}`;
     }
 
     if (page) {
@@ -109,18 +110,18 @@ export default function TiresSelection() {
 
     queryString += getCityQueryParamString();
 
-    let response = await BackendApi.get('/api/catalog/tire' + queryString);
+    let response = await BackendApi.get('/api/catalog/disk' + queryString);
 
     if (response.code === 200) {
       let data = await response;
-      setRangeFilterTires({
+      setRangeFilterWheels({
         type: 'current',
         value: [
           Math.max(data.meta.range_price.currentFilter[0], data.meta.range_price.all[0]),
           Math.min(data.meta.range_price.currentFilter[1], data.meta.range_price.all[1])
         ]
       });
-      setRangeFilterTires({ type: 'all', value: data.meta.range_price.all });
+      setRangeFilterWheels({ type: 'all', value: data.meta.range_price.all });
       setItems(data.data);
       setPaginator({
         first: data.meta.from,
@@ -132,7 +133,7 @@ export default function TiresSelection() {
   }
 
   const getCarSpecification = async () => {
-    let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', filterTires.car);
+    let response = await BackendApi.get('/api/list/filter/vehicle/disk/specifications', filterWheels.car);
     if (response.code === 200) {
       setSpecifications((await response).data);
     }
@@ -149,21 +150,21 @@ export default function TiresSelection() {
   return isStoreReady ? (
     <>
       <h2>
-        Подбор шин {paginator.total > 0 && (
+        Подбор дисков {paginator.total > 0 && (
           <span style={{ color: 'gray', fontSize: '18px' }}>
             Найдено {paginator.total} товаров
           </span>
         )}
       </h2>
       <div className="main-content-catalog">
-        <Sidebar type={TypeProductEnum.TIRES} collback={handleGetItems} setSwitcherFilter={setFilterType} />
+        <Sidebar type={TypeProductEnum.DISKS} collback={handleGetItems} setSwitcherFilter={setFilterType} />
         <div className="catalog-with-products">
 
           {filterType === 'CAR' && (<>
-            <SpecificationsContent type={TypeProductEnum.TIRES} specifications={specifications} />
+            <SpecificationsContent type={TypeProductEnum.DISKS} specifications={specifications} />
 
             {Object.keys(itemsVehicle).length > 0 &&
-              <SpecifiactionItems type={TypeProductEnum.TIRES} itemsVehicle={itemsVehicle} />}
+              <SpecifiactionItems type={TypeProductEnum.DISKS} itemsVehicle={itemsVehicle} />}
 
             {Object.keys(itemsVehicle).length === 0 && (
               <div style={{ margin: '0 auto' }}>
@@ -181,7 +182,7 @@ export default function TiresSelection() {
               </div>
             )}
 
-            <ParamItems type="TIRES" items={items} />
+            <ParamItems type={TypeProductEnum.DISKS} items={items} />
             {items.length > 0 && paginator.total > paginator.rows && (
               <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
             )}

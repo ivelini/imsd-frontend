@@ -1,12 +1,13 @@
 import { Slider } from "primereact/slider";
 import { useStore } from "@/store/useStore";
 import { useState, useEffect } from "react";
+import { TypeProductEnum } from "@/lib/TypeProductEnum";
 
 export function RangeComponent({ type }) {
     const { filterTires, filterWheels, setRangeFilterTires, setRangeFilterWheels } = useStore();
 
-    const filterData = type === "TIRES" ? filterTires : filterWheels;
-    const setRangeFilter = type === "TIRES" ? setRangeFilterTires : setRangeFilterWheels;
+    const filterData = type === TypeProductEnum.TIRES ? filterTires : filterWheels;
+    const setRangeFilter = type === TypeProductEnum.TIRES ? setRangeFilterTires : setRangeFilterWheels;
 
     // Локальное состояние для ручного ввода
     const [minValue, setMinValue] = useState(filterData?.range.current[0] || 100);

@@ -21,7 +21,7 @@ const AutoFilter = ({ type, collback }) => {
 
     useEffect(() => {
         getParams()
-    }, [getFilterForCar()])
+    }, [getFilterForCar(type)])
 
 
     async function getParams() {

@@ -6,10 +6,9 @@ import Breadcrumbs from "./_component/Breadcrumbs"
  * @param {string} params.vendor
  * @param {string} params.mark
  */
-export default function MarkLayout({ children, params }) {
-    const { entity, vendor, mark } = params
-
-
+export default async function MarkLayout({ children, params }) {
+    const { entity, vendor, mark } = await params
+    
     return (<>
         <Breadcrumbs entity={entity} vendor={vendor} mark={mark} />
         {children}
