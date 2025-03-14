@@ -2,7 +2,6 @@ import GroupItems from "./GroupItems"
 import InlineItems from "./InlineItem"
 
 export default function GroupSpecificationItems({ title, items }) {
-    console.log(items)
     return (<>
         <div>{title}</div>
         {items

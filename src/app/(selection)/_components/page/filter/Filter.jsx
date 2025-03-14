@@ -16,9 +16,8 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
         let entityFilter = filterTires
 
         if(type === TypeProductEnum.DISKS) {
-            let entityFilter = filterWheels
+            entityFilter = filterWheels
         } 
-
 
         if (
             Object.keys(entityFilter.params).length > 0 ||

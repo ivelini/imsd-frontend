@@ -38,7 +38,8 @@ export default function WheelsSelection() {
   useEffect(() => {
     if (!isStoreReady) return;
 
-    if (Object.keys(filterWheels.params).length > 0) {
+    
+    if (Object.keys(filterWheels.params, ).length > 0) {
       setFilterType('PARAM');
     } else if (Object.keys(filterWheels.car).length > 0) {
       setFilterType('CAR');
