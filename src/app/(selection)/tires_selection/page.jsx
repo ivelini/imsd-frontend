@@ -149,11 +149,17 @@ export default function TiresSelection() {
   return isStoreReady ? (
     <>
       <h2>
-        Подбор шин {paginator.total > 0 && (
-          <span style={{ color: 'gray', fontSize: '18px' }}>
-            Найдено {paginator.total} товаров
-          </span>
-        )}
+        Подбор шин {paginator.total > 0 && filterType === 'PARAM'
+          ? (
+            <span style={{ color: 'gray', fontSize: '18px' }}>
+              Найдено {paginator.total} товаров
+            </span>
+          )
+          : (
+            <span>
+              по параметрам автомобиля
+            </span>
+          )}
       </h2>
       <div className="main-content-catalog">
         <Sidebar type={TypeProductEnum.TIRES} collback={handleGetItems} setSwitcherFilter={setFilterType} />

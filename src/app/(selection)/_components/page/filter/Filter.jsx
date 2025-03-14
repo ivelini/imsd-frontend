@@ -15,9 +15,9 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
     useEffect(() => {
         let entityFilter = filterTires
 
-        if(type === TypeProductEnum.DISKS) {
+        if (type === TypeProductEnum.DISKS) {
             entityFilter = filterWheels
-        } 
+        }
 
         if (
             Object.keys(entityFilter.params).length > 0 ||
@@ -31,6 +31,13 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
         }
     }, [])
 
+    const hamdleResetAllFilters = () => {
+        clearFilter()
+
+        setSwitcher('PARAM')
+        setSwitcherFilter('PARAM')
+    }
+
 
     return (<>
         <div className="catalog-filter" id="filter-in-catalog">
@@ -39,20 +46,20 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
                     setSwitcher('PARAM')
                     setSwitcherFilter('PARAM')
                 }}>По параметрам</div>
-                <div className={`filter-item-catalog  ${switcher == 'PARAM' && 'inactive'}`} onClick={() => { 
-                    setSwitcher('CAR') 
+                <div className={`filter-item-catalog  ${switcher == 'PARAM' && 'inactive'}`} onClick={() => {
+                    setSwitcher('CAR')
                     setSwitcherFilter('CAR')
-                    }}>По автомобилю</div>
+                }}>По автомобилю</div>
             </div>
             <div className="catalog-filter-cont">
                 <br />
                 <LocationComponent />
                 {type === TypeProductEnum.TIRES && switcher === 'PARAM' && <TireFilter collback={collback} />}
                 {type === TypeProductEnum.DISKS && switcher === 'PARAM' && <DiskFilter collback={collback} />}
-                
+
                 {switcher === 'CAR' && <AutoFilter type={type} collback={collback} />}
 
-                <a href="#" className="remove-filters help" onClick={() => clearFilter()}>Сбросить все фильтры</a>
+                <a href="#" className="remove-filters help" onClick={hamdleResetAllFilters}>Сбросить все фильтры</a>
             </div>
         </div>
     </>)

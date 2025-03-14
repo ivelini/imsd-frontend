@@ -38,8 +38,7 @@ export default function WheelsSelection() {
   useEffect(() => {
     if (!isStoreReady) return;
 
-    
-    if (Object.keys(filterWheels.params, ).length > 0) {
+    if (Object.keys(filterWheels.params,).length > 0) {
       setFilterType('PARAM');
     } else if (Object.keys(filterWheels.car).length > 0) {
       setFilterType('CAR');
@@ -151,11 +150,17 @@ export default function WheelsSelection() {
   return isStoreReady ? (
     <>
       <h2>
-        Подбор дисков {paginator.total > 0 && (
-          <span style={{ color: 'gray', fontSize: '18px' }}>
-            Найдено {paginator.total} товаров
-          </span>
-        )}
+        Подбор дисков {paginator.total > 0 && filterType === 'PARAM'
+          ? (
+            <span style={{ color: 'gray', fontSize: '18px' }}>
+              Найдено {paginator.total} товаров
+            </span>
+          )
+          : (
+            <span>
+              по параметрам автомобиля
+            </span>
+          )}
       </h2>
       <div className="main-content-catalog">
         <Sidebar type={TypeProductEnum.DISKS} collback={handleGetItems} setSwitcherFilter={setFilterType} />
