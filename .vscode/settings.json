@@ -1,4 +1,5 @@
 {
+    "css.styleSheets": ["src/**/*.css"],
     "editor.fontLigatures": false,
     "editor.fontFamily": "JetBrains Mono Light",
     "editor.fontSize": 13,

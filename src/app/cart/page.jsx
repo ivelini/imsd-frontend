@@ -1,15 +1,10 @@
 export default function CartPage() {
     return (<>
-        <section className="catalog-section container">
+        <section className="cart-section container">
             <h2>
                 Корзина
             </h2>
             <div class="main-content-catalog">
-
-                <div class="catalog-filter">
-
-                    
-                </div>
                 <div class="catalog-with-products">
                     <div class="catalog-product">
                         <div class="catalog-product-image">
@@ -50,6 +45,8 @@ export default function CartPage() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="catalog-filter">
                 </div>
             </div>
         </section>
