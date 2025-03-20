@@ -1,5 +1,5 @@
 import ContentComponent from "./_components/ContentComponent";
-import LocationReloadComponent from "./_components/LocationReloadComponent";
+import LocationReloadComponent from "../../../../../../components/LocationReloadComponent";
 import HorisontalMenu from "./HorisontalMenu";
 import InfoProduct from "./InfoProduct";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";

@@ -16,7 +16,7 @@ export default function GroupItems({groupingItemsGroup}) {
         <h2 className="catalog-product-title">{groupingItemsGroup.specification}</h2>
         {items.map((group) => (<>
             <div className="devider-group-items">
-                {group.map((item) => <HorisontalItem key={item.id} entity={entity} item={item}/>)}
+                {group.map((item) => <HorisontalItem key={item.id} item={item}/>)}
             </div>
         </>))}
     </>)

@@ -8,6 +8,7 @@ export default function CostAndCartComponent({ children, item }) {
 
     const handleAddProduct = () => {
         addCart({
+            type: item.product_type,
             id: item.id,
             product_article: item.product_article,
             name: item.name,

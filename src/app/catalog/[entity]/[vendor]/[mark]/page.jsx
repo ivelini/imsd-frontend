@@ -26,7 +26,7 @@ export default async function Mark({ params }) {
             {Object.keys(itemsGrouped).map(key =>
                 <div key={key} className="diameter">
                     <h2>{key}</h2>
-                    {itemsGrouped[key].map((item, index) => <HorisontalItem key={index} type={entity} item={item} />)}
+                    {itemsGrouped[key].map((item, index) => <HorisontalItem key={index} item={item} />)}
                 </div>
             )}
         </div>

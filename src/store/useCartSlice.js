@@ -5,6 +5,12 @@ export const useCartSlice = (set, get) => ({
     cart: INITIAL_CART,
 
     /**
+     * Получить все позиции из корзины
+     * @return array
+     */
+    getProductsInCart: () => get().cart.items,
+
+    /**
      * Количество продуктов в корзине
      * @return number
      */

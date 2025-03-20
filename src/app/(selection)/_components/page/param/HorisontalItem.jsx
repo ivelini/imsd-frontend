@@ -12,6 +12,7 @@ import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
  * @param {Object} item
  * @param {number} item.id
  * @param {string} item.name
+ * @param {string} item.product_type
  * @param {string} item.product_article
  * @param {string} item.product_id
  * @param {string} item.season.name
@@ -32,11 +33,12 @@ import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
  * @param {string} item.price_stock_and_delivery.people_name_price_percent_higher
  *
  */
-export default function HorisontalItem({ type, item }) {
+export default function HorisontalItem({ item }) {
     const { addCart, removeFromCart, hasProductInCart, getCityQueryParam } = useStore()
 
     const handleAddCart = () => {
         addCart({
+            type: item.product_type,
             id: item.id,
             product_article: item.product_article,
             name: item.name,

@@ -187,7 +187,7 @@ export default function TiresSelection() {
               </div>
             )}
 
-            <ParamItems type="TIRES" items={items} />
+            <ParamItems items={items} />
             {items.length > 0 && paginator.total > paginator.rows && (
               <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total} onPageChange={onPageChange} />
             )}

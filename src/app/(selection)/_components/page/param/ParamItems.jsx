@@ -1,7 +1,7 @@
 import HorisontalItem from "./HorisontalItem";
 
-export default function ParamItems({type, items}) {
+export default function ParamItems({items}) {
     return (<>
-        {items.map((item, index) => <HorisontalItem key={index} type={type} item={item} />)}
+        {items.map((item, index) => <HorisontalItem key={index} item={item}/>)}
     </>)
 }
