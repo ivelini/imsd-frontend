@@ -14,11 +14,11 @@ export default function Breadcrumbs({ entity, vendor, mark }) {
                 <li>/</li>
                 <li>{entity === TypeProductEnum.TIRES
                     ? <Link href="/tires_selection">Каталог шин</Link>
-                    : <Link href="/disk_selection">Каталог дисков</Link>
+                    : <Link href="/disks_selection">Каталог дисков</Link>
                 }</li>
                 <li>/</li>
                 <li><Link href={{
-                    pathname: `\/${entity}_selection`,
+                    pathname: `\/catalog\/${entity}\/${vendor}`,
                     query: { vendor }
                 }}>{vendor.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Link></li>
                 <li>/ </li>

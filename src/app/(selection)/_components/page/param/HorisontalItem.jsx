@@ -1,3 +1,5 @@
+"use client"
+
 import LocationComponent from "@/components/ui/LocationComponent";
 import Image from 'next/image';
 import { useStore } from "@/store/useStore";

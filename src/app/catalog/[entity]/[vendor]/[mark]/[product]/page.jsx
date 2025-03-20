@@ -17,21 +17,22 @@ export default async function Product({ params, searchParams }) {
     const { entity, product } = await params;
     const { city_name } = await searchParams;
 
-    let item = null;
-    let response = null;
-
-    const url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`);
+    let item = null
+    let response = null
+    let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}`)
 
     if (city_name) {
-        url.searchParams.set("city_name", city_name);
+        url.searchParams.set("city_name", city_name)
     }
 
     try {
-        if (entity === TypeProductEnum.TIRES) {
-            response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json());
+        if (entity === TypeProductEnum.DISKS) {
+            url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}`)
         }
+
+        response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
     } catch (error) {
-        console.error("Ошибка загрузки данных:", error);
+        console.error("Ошибка загрузки данных:", error)
     }
 
     item = response?.data ?? null;

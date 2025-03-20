@@ -5,9 +5,14 @@ import { redirect } from "next/navigation"
  * @param {Object} params 
  * @param {string} params.entity
  */
-export default function Entity({ params }) {
+export default async function Entity({ params }) {
+    const {entity} = await params
     
-    if (params.entity == TypeProductEnum.TIRES) {
+    if (entity == TypeProductEnum.TIRES) {
         redirect('/tires_selection')
+    }
+
+    if (entity == TypeProductEnum.DISKS) {
+        redirect('/disks_selection')
     }
 }

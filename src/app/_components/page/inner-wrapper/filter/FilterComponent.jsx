@@ -38,7 +38,7 @@ const FilterComponent = () => {
         }
 
         if(switcher.type == 'SWDISKS') {
-            router.push('/wheels_selection')
+            router.push('/disks_selection')
         }
     }
 
