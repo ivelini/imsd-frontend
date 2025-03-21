@@ -31,8 +31,8 @@ export default function CartItem({ item, isStub = false }) {
             <div className="cart_item_img">
                 <Image
                     src={item.image}
-                    width={172}
-                    height={172}
+                    width={100}
+                    height={100}
                     alt={item.name}
                     unoptimized
                 />
