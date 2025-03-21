@@ -13,8 +13,10 @@ export default function CostAndCartComponent({ children, item }) {
             product_article: item.product_article,
             name: item.name,
             count,
+            stock_count: item.price_stock_and_delivery.count,
             image: item.main_image.url,
-            slug: item.slug
+            slug: item.slug,
+            url: item.url
         })
     }
 

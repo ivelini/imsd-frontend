@@ -46,6 +46,18 @@ export const useCartSlice = (set, get) => ({
     })),
 
     /**
+     * Изменение информации о товаре
+     * @param {Object} payload 
+     * @param {string} payload.product_article
+     * @param {Record<string, string|number>} payload.data - Динамические параметры товара
+     * @returns 
+     */
+    changeProductInCart: (payload) => set(state => {
+
+        return state
+    }),
+
+    /**
      * Удаление позиции из корзины по product_article
      * @param {string} product_article
      */

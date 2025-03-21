@@ -43,11 +43,14 @@ export default function HorisontalItem({ item }) {
             product_article: item.product_article,
             name: item.name,
             count: 4,
-            image: item.main_image.path,
-            slug: item.slug
+            stock_count: item.price_stock_and_delivery.count,
+            image: item.main_image.url,
+            slug: item.slug,
+            url: item.url
         })
     }
 
+    console.log(item)
     return (<>
         <div className="catalog-product">
             <div className="catalog-product-image">
