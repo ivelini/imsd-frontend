@@ -11,6 +11,12 @@ export const useCartSlice = (set, get) => ({
     getProductsInCart: () => get().cart.items,
 
     /**
+     * Получить сумму всех позиций из корзины
+     * @returns number
+     */
+    getFullPriceInCart: () => get().cart.items.reduce((sum, item) => sum + item.price * item.count, 0),
+
+    /**
      * Количество продуктов в корзине
      * @return number
      */
@@ -49,12 +55,22 @@ export const useCartSlice = (set, get) => ({
      * Изменение информации о товаре
      * @param {Object} payload 
      * @param {string} payload.product_article
-     * @param {Record<string, string|number>} payload.data - Динамические параметры товара
+     * @param {Object} payload.params - Динамические параметры товара пример {count: 4}
      * @returns 
      */
     changeProductInCart: (payload) => set(state => {
 
-        return state
+        const nextState = { ...state }
+        const index = nextState.cart.items.findIndex(el => el.product_article === payload.product_article)
+
+        if (index !== -1) {
+            nextState.cart.items[index] = {
+                ...nextState.cart.items[index],
+                ...payload.params
+            };
+        }
+
+        return nextState
     }),
 
     /**

@@ -3559,9 +3559,9 @@ input[type="checkbox"] {
         margin:0;
     }
     .cart_item_img {
-        min-width: 60px;
-        width: 60px;
-        height: 60px;
+        min-width: 100px;
+        width: 100px;
+        height: 100px;
     }
     .cart_item_info_title {
         font-size: 14px;

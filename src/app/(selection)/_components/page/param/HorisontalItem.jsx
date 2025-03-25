@@ -25,6 +25,7 @@ import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
  * @param {boolean} item.is_runflat
  * @param {string} item.url
  * @param {Object} item.price_stock_and_delivery
+ * @param {string} item.price_stock_and_delivery.price
  * @param {number} item.price_stock_and_delivery.count
  * @param {number} item.price_stock_and_delivery.delivery_days
  * @param {string} item.price_stock_and_delivery.people_name_delivery_cost
@@ -46,7 +47,8 @@ export default function HorisontalItem({ item }) {
             stock_count: item.price_stock_and_delivery.count,
             image: item.main_image.url,
             slug: item.slug,
-            url: item.url
+            url: item.url,
+            price: item.price_stock_and_delivery.price,
         })
     }
 
