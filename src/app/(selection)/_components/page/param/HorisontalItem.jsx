@@ -39,7 +39,7 @@ export default function HorisontalItem({ item }) {
 
     const handleAddCart = () => {
         addCart({
-            type: item.product_type,
+            product_type: item.product_type,
             id: item.id,
             product_article: item.product_article,
             name: item.name,

@@ -5,10 +5,11 @@ import CartItem from "@/app/cart/_components/CartItem";
 import { useStore } from "@/store/useStore";
 import LocationReloadComponent from "@/components/LocationReloadComponent";
 import Link from "next/link";
+import BackendApi from "@/lib/BackendApi";
 
 
 export default function CartPage() {
-    const { getProductsInCart, countProductsInCart, getFullPriceInCart } = useStore()
+    const { getProductsInCart, countProductsInCart, getFullPriceInCart, changeProductInCart, getCityQueryParamString } = useStore()
     const [isStoreRedy, setIsStoreRedy] = useState(false)
 
     useEffect(() => {
@@ -19,6 +20,29 @@ export default function CartPage() {
 
     useEffect(() => {
         if (!isStoreRedy) return
+
+        (async () => {
+            let param = {
+                items: getProductsInCart()
+                    .map(item => ({ product_article: item.product_article, product_type: item.product_type }))
+            }
+
+            let response = await BackendApi.post('/api/cart' + getCityQueryParamString({ isFirst: true }), param)
+
+            if (response.code === 200) {
+                (await response).data
+                    .map(item => {
+                        changeProductInCart({
+                            product_article: item.product_article,
+                            params: {
+                                price: item.price,
+                                is_active: item.is_active,
+                                stock_count: item.count
+                            }
+                        })
+                    })
+            }
+        })()
 
     }, [isStoreRedy])
 

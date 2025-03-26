@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { Dialog } from 'primereact/dialog';
 import { useStore } from "@/store/useStore";
 import BackendApi from "@/lib/BackendApi";
+import { usePathname } from "next/navigation";
 
 
 export default function LocationComponent() {
     const { selectedCity, setCity } = useStore()
     const [visible, setVisible] = useState(false);
+    const pathName = usePathname()
 
     const [cities, setCities] = useState([])
     const [cityName, setCityName] = useState('')
@@ -30,8 +32,10 @@ export default function LocationComponent() {
 
     return (<>
         <a className="choice-city" onClick={() => {
-            getCities()
-            setVisible(true)
+            if(pathName !== '/cart/order') {
+                getCities()
+                setVisible(true)
+            }
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
                 <path
