@@ -3878,13 +3878,16 @@ input[type="checkbox"] {
     border:1px solid #929292;
     border-radius:5px;
     margin:0 0 12px;
+    opacity: 0.3;
 }
 .order_form_delivery_item:last-child {
     margin:0;
 }
 .order_form_delivery_item.active {
+    opacity: 1;
     border-color:#DD062A;
 }
+
 .order_form_delivery_item_img {
     width:30px;
     min-width:30px;

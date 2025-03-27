@@ -55,3 +55,26 @@
 .p-galleria.p-galleria-indicators-bottom .p-galleria-indicator, .p-galleria.p-galleria-indicators-top .p-galleria-indicator {
     margin-right: 5px;
 }
+
+.p-accordion-tab {
+    margin-bottom: 15px;
+}
+.p-accordion .p-accordion-header {
+    background: none !important; /* Убираем фон */
+    border: none !important; /* Убираем рамку */
+    margin-bottom: 5px;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+    background: none !important; /* Убираем фон у ссылки */
+    border: none !important; /* Убираем рамку у ссылки */
+    box-shadow: none !important; /* Убираем тени, если есть */
+}
+
+.p-accordion .p-accordion-content {
+    border: none !important; /* Убираем рамку у контента */
+    padding-left: 5%;
+}
+.p-accordion .p-accordion-content .order_total_list {
+    font-size: 12px
+}
