@@ -3,11 +3,32 @@
 import { useStore } from "@/store/useStore"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { InputText } from 'primereact/inputtext';
+import { InputMask } from 'primereact/inputmask';
 
-export default function OrderPage({ order }) {
+const INITIAL_ORDER = {
+    user: {
+        name: '',
+        surnemae: '',
+        patronimyc: '',
+        phone: '',
+        email: ''
+    },
+    description: '',
+    delivery: {
+        delivery_type: 'deliveryPoint',
+        delivery_point_id: null,
+        shipment_address: '',
+        shipment_transport_company: ''
+    },
+    products: []
+}
+
+export default function OrderPage() {
     const router = useRouter()
-    const { getProductsInCart, countProductsInCart, getFullPriceInCart } = useStore()
+    const { getProductsInCart, countProductsInCart, getFullPriceInCart, getSelectedCity } = useStore()
     const [isStoreReady, setIsStoreReady] = useState(false)
+    const [order, setOrder] = useState(INITIAL_ORDER)
 
     useEffect(() => {
         if (countProductsInCart() === 0) {
@@ -29,24 +50,48 @@ export default function OrderPage({ order }) {
                         <div className="order_form_subtitle">*поля являются обязательными для заполнения</div>
                         <div className="order_form_details_row">
                             <div className="order_form_details_input">
-                                <input type="text" placeholder="Фамилия" />
+                                <InputText
+                                    value={order.user.surnemae}
+                                    onChange={e => setOrder({ ...order, user: { ...order.user, surnemae: e.target.value } })}
+                                    placeholder="Фамилия"
+                                    className="p-inputtext-sm"
+                                />
                             </div>
                             <div className="order_form_details_input">
-                                <input type="text" placeholder="Имя*" />
+                                <InputText
+                                    value={order.user.name}
+                                    onChange={e => setOrder({ ...order, user: { ...order.user, name: e.target.value } })}
+                                    placeholder="Имя*"
+                                    className="p-inputtext-sm"
+                                />
                             </div>
                             <div className="order_form_details_input">
-                                <input type="text" placeholder="Отчество" />
+                                <InputText
+                                    value={order.user.patronimyc}
+                                    onChange={e => setOrder({ ...order, user: { ...order.user, patronimyc: e.target.value } })}
+                                    placeholder="Отчество"
+                                    className="p-inputtext-sm"
+                                />
                             </div>
                         </div>
                         <div className="order_form_details_input">
-                            <input type="text" value="+7(" />
+                            <InputMask
+                                value={order.user.phone}
+                                onChange={e => setOrder({ ...order, user: { ...order.user, phone: e.target.value } })}
+                                mask="+7(999)-999-99-99"
+                                placeholder="+7(___)-___-__-__"
+                            />
                             <div className="order_form_details_input_prompt">*Позвоним, что бы согласовать детали заказа (обязательно)</div>
                         </div>
                         <div className="order_form_details_input">
-                            <input type="text" placeholder="E-Mail" />
+                            <InputText
+                                value={order.user.email}
+                                onChange={e => setOrder({ ...order, user: { ...order.user, email: e.target.value } })}
+                                placeholder="Почта"
+                                className="p-inputtext-sm"
+                            />
                             <div className="order_form_details_input_prompt">Для отправки статуса заказа и документов (не обязательно)</div>
                         </div>
-
                     </div>
                     <div className="order_form_in order_form_delivery">
                         <div className="order_form_title"><span>2</span> Способ получения</div>
@@ -54,9 +99,9 @@ export default function OrderPage({ order }) {
                         <div className="order_form_delivery_town">
                             <img src="/assets/img/town.svg" alt="" />
                             <span>Ваш город</span>
-                            <b>Челябинск</b>
+                            <b>{getSelectedCity().name}</b>
                         </div>
-                        <div className="order_form_delivery_item active">
+                        <div className={`order_form_delivery_item ${order.delivery.delivery_type === 'deliveryPoint' && 'active'}`} >
                             <div className="order_form_delivery_item_img">
                                 <img src="/assets/img/delivery_1.svg" alt="" />
                             </div>
@@ -74,7 +119,7 @@ export default function OrderPage({ order }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="order_form_delivery_item">
+                        <div className={`order_form_delivery_item ${order.delivery.delivery_type === 'toClient' && 'active'}`}>
                             <div className="order_form_delivery_item_img">
                                 <img src="/assets/img/delivery_2.svg" alt="" />
                             </div>
@@ -86,7 +131,7 @@ export default function OrderPage({ order }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="order_form_delivery_item">
+                        <div className={`order_form_delivery_item ${order.delivery.delivery_type === 'toProductCompany' && 'active'}`}>
                             <div className="order_form_delivery_item_img">
                                 <img src="/assets/img/delivery_3.svg" alt="" />
                             </div>
@@ -113,7 +158,7 @@ export default function OrderPage({ order }) {
                             <a className="order_form_method_btn_submit" href="#">Оформить заказ</a>
                             <div className="order_form_method_btn_info">
                                 <img src="/assets/img/order_check_a.svg" alt="" />
-                                    <span>Продолжая оформление заказа, я соглашаюсь с условиями <a href="#">Политики конфиденциальности</a>&nbsp;и&nbsp;<a href="#">Публичной оферты</a>, включающей условия обработки персональных данных</span>
+                                <span>Продолжая оформление заказа, я соглашаюсь с условиями <a href="#">Политики конфиденциальности</a>&nbsp;и&nbsp;<a href="#">Публичной оферты</a>, включающей условия обработки персональных данных</span>
                             </div>
                         </div>
                     </div>
