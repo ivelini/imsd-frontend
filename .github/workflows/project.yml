@@ -42,3 +42,5 @@ jobs:
           npm run build
           rm -rf ${{ env.WORKDIR }}
           mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
+          cd ${{ env.WORKDIR }}
+          npm run start
