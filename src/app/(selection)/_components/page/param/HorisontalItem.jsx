@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useStore } from "@/store/useStore";
 import Link from "next/link";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
+import {useState} from "react";
+import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 
 
 /**
@@ -36,6 +38,7 @@ import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
  */
 export default function HorisontalItem({ item }) {
     const { addCart, removeFromCart, hasProductInCart, getCityQueryParam } = useStore()
+    const [isPopUppVisible, setIsPoUppVisible] = useState(false)
 
     const handleAddCart = () => {
         addCart({
@@ -50,10 +53,19 @@ export default function HorisontalItem({ item }) {
             url: item.url,
             price: item.price_stock_and_delivery.price,
         })
+
+        setIsPoUppVisible(true)
     }
 
-    console.log(item)
     return (<>
+        {isPopUppVisible && <ProductInCartSuccessComponent item={{
+            name: item.name,
+            count: 4,
+            price: item.price_stock_and_delivery.price,
+            image: item.main_image.url,
+
+        }} handleOnClose={() => setIsPoUppVisible(false)}/>}
+
         <div className="catalog-product">
             <div className="catalog-product-image">
                 <div className="catalog-product-image-panel">

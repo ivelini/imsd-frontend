@@ -31,17 +31,17 @@ export default function CaruselComponent({ items }) {
         return (<>
             <div className="section-product">
                 <div className="product-photo-blk">
-                    <img src="./assets/img/wheel-product.png" alt="Wheel Product Image"/>
+                    <img src="/assets/img/wheel-product.png" alt="Wheel Product Image"/>
                 </div>
                 <h3 className="product-title">Шина Viatti V-130 Strada Asimmetrico 185/60 R15 84H летняя</h3>
                 <div className="product-details">
                     <div className="icons">
-                        <img src="./assets/img/day.svg" alt=""/>
-                        <img src="./assets/img/snw.svg" alt=""/>
-                        <img src="./assets/img/sh.svg" alt=""/>
+                        <img src="/assets/img/day.svg" alt=""/>
+                        <img src="/assets/img/snw.svg" alt=""/>
+                        <img src="/assets/img/sh.svg" alt=""/>
                     </div>
                     <div className="star-rating">
-                        <img src="./assets/img/sm-star.svg" alt="Star" className="sm-star"/> <span
+                        <img src="/assets/img/sm-star.svg" alt="Star" className="sm-star"/> <span
                         className="rating-value">4.8</span>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export default function CaruselComponent({ items }) {
                 <div className="buy-button-blk">
                     <button className="buy-button" tabIndex="-1">
                         Купить <span>cейчас</span>
-                        <img src="./assets/img/bag.svg" alt=""/>
+                        <img src="/assets/img/bag.svg" alt=""/>
                     </button>
                 </div>
             </div>

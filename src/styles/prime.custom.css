@@ -95,3 +95,6 @@
     background-color: red;
     background: red;
 }
+.p-dialog .p-dialog-header-icons {
+    margin: 20px !important;
+}

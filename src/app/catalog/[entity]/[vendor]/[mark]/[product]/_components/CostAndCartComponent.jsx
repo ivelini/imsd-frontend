@@ -1,10 +1,12 @@
 "use client"
 import { useStore } from "@/store/useStore"
 import { useState } from "react"
+import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 
 export default function CostAndCartComponent({ children, item }) {
     const { hasProductInCart, getProductFromCart, addCart, removeFromCart } = useStore()
     const [count, setCount] = useState(getProductFromCart(item.product_article).count || 4)
+    const [isPopUppVisible, setIsPoUppVisible] = useState(false)
 
     const handleAddProduct = () => {
         addCart({
@@ -19,6 +21,8 @@ export default function CostAndCartComponent({ children, item }) {
             url: item.url,
             price: item.price_stock_and_delivery.price,
         })
+
+        setIsPoUppVisible(true)
     }
 
     const handleRemoveProduct = () => {
@@ -26,6 +30,13 @@ export default function CostAndCartComponent({ children, item }) {
     }
 
     return (<>
+        {isPopUppVisible && <ProductInCartSuccessComponent item={{
+            name: item.name,
+            count: count,
+            price:item.price_stock_and_delivery.price,
+            image: item.main_image.url,
+        }} handleOnClose={() => setIsPoUppVisible(false)}/>}
+
         <div className="options">
             <select id="quantity-select"
                 disabled={hasProductInCart(item.product_article)}

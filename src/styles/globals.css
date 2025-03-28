@@ -3683,7 +3683,7 @@ input[type="checkbox"] {
 .cart_popup_title {
     font-size: 24px;
     font-weight: bold;
-    margin: 0 0 20px;
+    margin: 30px 0 0 60px;
 }
 
 .cart_popup_item {

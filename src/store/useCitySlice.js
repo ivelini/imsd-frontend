@@ -36,7 +36,7 @@ export const useCitySlice = (set, get) => ({
      */
     getCityQueryParamString: (payload) => {
         if (get().selectedCity.name_en !== 'Chelyabinsk') {
-            return payload.isFirst ? `?city_name=${get().selectedCity.name_en}` : `&city_name=${get().selectedCity.name_en}`
+            return payload?.isFirst ? `?city_name=${get().selectedCity.name_en}` : `&city_name=${get().selectedCity.name_en}`
         }
 
         return ''

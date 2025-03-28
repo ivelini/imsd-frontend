@@ -85,4 +85,9 @@ export const useCartSlice = (set, get) => ({
             items: state.cart.items.filter(item => item.product_article !== product_article)
         }
     })),
+
+    /**
+     * Полная очистка корзины
+     */
+    clearCart: () => set(state => ({...state, cart: INITIAL_CART}))
 })

@@ -8,6 +8,7 @@ import { InputMask } from 'primereact/inputmask';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import { RadioButton } from "primereact/radiobutton";
 import BackendApi from "@/lib/BackendApi";
+import OrderStoreSuccess from "@/app/cart/order/_components/OrderStoreSuccess";
 
 const INITIAL_ORDER = {
     user: {
@@ -34,9 +35,11 @@ export default function OrderPage() {
         countProductsInCart,
         getFullPriceInCart,
         getSelectedCity,
-        getCityQueryParamString
+        getCityQueryParamString,
+        clearCart
     } = useStore()
     const [isStoreReady, setIsStoreReady] = useState(false)
+    const [isOrderSuccess, setIsOrderSuccess] =useState(false)
     const [order, setOrder] = useState(INITIAL_ORDER)
     const [deliveryPoints, setDeliveryPoints] = useState([])
 
@@ -61,6 +64,9 @@ export default function OrderPage() {
 
     }, [isStoreReady])
 
+    /**
+     * Валидация заказа
+     */
     const isFill = () => {
         let requiredFields = [
             'user.name',
@@ -72,15 +78,16 @@ export default function OrderPage() {
         if (order.delivery.delivery_type === 'toClient') requiredFields.push('delivery.shipment_address');
         if (order.delivery.delivery_type === 'toTransportCompany') requiredFields.push('delivery.shipment_transport_company');
 
+        //Разбираем массив обязательных полей
         for (let field of requiredFields) {
-            let keys = field.split('.')
+            let keys = field.split('.') //Разбираем поле на массив, например user.name
 
             let value = order
             for(let k of keys) {
                 value = value[k]
             }
 
-            console.log(value)
+            if(value === null || value === '') return false
         }
             
         return true
@@ -88,9 +95,26 @@ export default function OrderPage() {
 
     const handleStoreOrder = async () => {
 
+        order.user.phone = order.user.phone.replace(/^\+7/, '').replace(/[()\-\s]/g, '');
+        order.products = getProductsInCart()
+
+        let response = await BackendApi.post('/api/cart/order' + getCityQueryParamString({isFirst: true}), order)
+
+        if(response.code === 201) {
+            setIsOrderSuccess(true)
+        } else {
+            console.log(await response)
+        }
+    }
+
+    const clearOrder = () => {
+        clearCart()
+        router.push('/')
     }
 
     return isStoreReady && (<>
+        {isOrderSuccess && <OrderStoreSuccess handleOnClick={clearOrder}/>}
+
         <section className="order-section container">
             <h2>Оформление заказа</h2>
             <div className="order_row">
@@ -102,9 +126,9 @@ export default function OrderPage() {
                             <div className="order_form_details_input">
                                 <InputText
                                     value={order.user.surnemae}
-                                    onInput={e => setOrder({
+                                    onChange={e => setOrder({
                                         ...order,
-                                        user: { ...order.user, surnemae: e.target.value }
+                                        user: {...order.user, surnemae: e.target.value}
                                     })}
                                     placeholder="Фамилия"
                                     className="p-inputtext-sm"
@@ -113,7 +137,7 @@ export default function OrderPage() {
                             <div className="order_form_details_input">
                                 <InputText
                                     value={order.user.name}
-                                    onInput={e => setOrder({ ...order, user: { ...order.user, name: e.target.value } })}
+                                    onChange={e => setOrder({...order, user: {...order.user, name: e.target.value}})}
                                     placeholder="Имя*"
                                     className="p-inputtext-sm"
                                 />
@@ -121,9 +145,9 @@ export default function OrderPage() {
                             <div className="order_form_details_input">
                                 <InputText
                                     value={order.user.patronimyc}
-                                    onInput={e => setOrder({
+                                    onChange={e => setOrder({
                                         ...order,
-                                        user: { ...order.user, patronimyc: e.target.value }
+                                        user: {...order.user, patronimyc: e.target.value}
                                     })}
                                     placeholder="Отчество"
                                     className="p-inputtext-sm"
@@ -133,7 +157,7 @@ export default function OrderPage() {
                         <div className="order_form_details_input">
                             <InputMask
                                 value={order.user.phone}
-                                onInput={e => setOrder({ ...order, user: { ...order.user, phone: e.target.value } })}
+                                onChange={e => setOrder({...order, user: {...order.user, phone: e.target.value}})}
                                 mask="+7(999)-999-99-99"
                                 placeholder="+7(___)-___-__-__"
                             />
@@ -144,13 +168,22 @@ export default function OrderPage() {
                         <div className="order_form_details_input">
                             <InputText
                                 value={order.user.email}
-                                onInput={e => setOrder({ ...order, user: { ...order.user, email: e.target.value } })}
+                                onChange={e => setOrder({...order, user: {...order.user, email: e.target.value}})}
                                 placeholder="Почта"
                                 className="p-inputtext-sm"
                             />
                             <div className="order_form_details_input_prompt">Для отправки статуса заказа и документов
                                 (не обязательно)
                             </div>
+                        </div>
+                        <div className="order_form_details_input">
+                            <InputText
+                                value={order.description}
+                                onChange={e => setOrder({...order, description: e.target.value})}
+                                placeholder="Комментарий к заказу"
+                                className="p-inputtext-sm"
+                                style={{'maxWidth': '100%'}}
+                            />
                         </div>
                     </div>
                     <div className="order_form_in order_form_delivery">
@@ -159,7 +192,7 @@ export default function OrderPage() {
                             выбранного города
                         </div>
                         <div className="order_form_delivery_town">
-                            <img src="/assets/img/town.svg" alt="" />
+                            <img src="/assets/img/town.svg" alt=""/>
                             <span>Ваш город</span>
                             <b>{getSelectedCity().name}</b>
                         </div>

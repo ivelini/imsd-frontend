@@ -25,7 +25,7 @@ const AutoFilter = ({ type, collback }) => {
 
 
     async function getParams() {
-        let response = await BackendApi.get('/api/list/filter/vehicle/car/info', getFilterForCar())
+        let response = await BackendApi.get('/api/list/filter/vehicle/car/info', getFilterForCar(type))
 
         if (response.code === 200) {
             setParams(await response.data)
@@ -62,13 +62,13 @@ const AutoFilter = ({ type, collback }) => {
     const handleModificationChange = (data) => {
         setCarFilter({ type: 'modification', value: data.name })
     }
-
+    
     return (<>
         <div className="calatog-select-col">
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.vendor?.find(item => item.name === getFilterForCar().vendor)}
+                    value={params.vendor?.find(item => item.name === getFilterForCar(type).vendor)}
                     onChange={(e) => handleVendorChange(e.value)}
                     options={params.vendor}
                     optionLabel="name"
@@ -86,7 +86,7 @@ const AutoFilter = ({ type, collback }) => {
             </div>
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.model?.find(item => item.name === getFilterForCar().model)}
+                    value={params.model?.find(item => item.name === getFilterForCar(type).model)}
                     onChange={(e) => handleModelChange(e.value)}
                     options={params.model}
                     optionLabel="name"
@@ -106,7 +106,7 @@ const AutoFilter = ({ type, collback }) => {
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.year?.find(item => item.name === getFilterForCar().year)}
+                    value={params.year?.find(item => item.name === getFilterForCar(type).year)}
                     onChange={(e) => handleYearChange(e.value)}
                     options={params.year}
                     optionLabel="name"
@@ -124,7 +124,7 @@ const AutoFilter = ({ type, collback }) => {
             </div>
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
-                    value={params.modification?.find(item => item.name === getFilterForCar().modification)}
+                    value={params.modification?.find(item => item.name === getFilterForCar(type).modification)}
                     onChange={(e) => handleModificationChange(e.value)}
                     options={params.modification}
                     optionLabel="name"
