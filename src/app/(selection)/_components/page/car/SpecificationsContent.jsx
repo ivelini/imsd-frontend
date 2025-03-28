@@ -10,7 +10,7 @@ export default function SpecificationsContent({ type, specifications }) {
         if (filterTires) {
             setIsStoreReady(true);
         }
-    }, []);
+    }, [filterTires]);
 
     const handleChecked = (isChecked, vehicleId) => {
         const setEntity = type === TypeProductEnum.TIRES
