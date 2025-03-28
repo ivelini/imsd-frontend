@@ -102,8 +102,6 @@ export default function OrderPage() {
 
         if(response.code === 201) {
             setIsOrderSuccess(true)
-        } else {
-            console.log(await response)
         }
     }
 

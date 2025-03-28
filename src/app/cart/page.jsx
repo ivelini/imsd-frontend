@@ -9,8 +9,9 @@ import BackendApi from "@/lib/BackendApi";
 
 
 export default function CartPage() {
-    const { getProductsInCart, countProductsInCart, getFullPriceInCart, changeProductInCart, getCityQueryParamString } = useStore()
+    const { getProductsInCart, countProductsInCart, getFullPriceInCart, changeProductInCart, getCityQueryParamString, getSelectedCity } = useStore()
     const [isStoreRedy, setIsStoreRedy] = useState(false)
+    const [isCartReady, setIsCartReady] = useState(false)
 
     useEffect(() => {
         if (getProductsInCart()) {
@@ -41,12 +42,12 @@ export default function CartPage() {
                             }
                         })
                     })
+
+                setIsCartReady(true)
             }
         })()
 
-    }, [isStoreRedy])
-
-    console.log(getProductsInCart())
+    }, [isStoreRedy, getSelectedCity()])
 
     const themplateAddFreePack = () => {
 
@@ -67,8 +68,8 @@ export default function CartPage() {
         return isStoreRedy && (<>Ваша корзина пуста</>)
     }
 
-    return isStoreRedy && (<>
-        <LocationReloadComponent />
+    return isCartReady && (<>
+        {/*<LocationReloadComponent />*/}
         <section className="cart-section container">
             <h2>Корзина</h2>
             <div className="cart_row">
