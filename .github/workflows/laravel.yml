@@ -1,0 +1,44 @@
+name: Laravel
+
+on: push
+
+env:
+  SSH_HOST: 109.71.242.118
+  SSH_PORT: 22
+  SSH_USER: ilya
+  SSH_KEY: ${{ secrets.TIMEWEB2 }}
+  WORKDIR: /var/www/ilya/data/www/aalyans74.ru
+  BUILD_DIR: /var/www/ilya/data/www/aalyans74.ru_build
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ env.SSH_HOST }}
+        port: ${{ env.SSH_PORT }}
+        username: ${{ env.SSH_USER }}
+        key: ${{ env.SSH_KEY }}
+        source: ./*, !.gitignore, !.github, !.git, !.gitattributes, !./docker, !./docker-compose.yml, !./node_modules !./vendor !./resources/admin/.env
+        target: ${{ env.BUILD_DIR }}
+
+    - name: SSH run remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.SSH_HOST }}
+        port: ${{ env.SSH_PORT }}
+        username: ${{ env.SSH_USER }}
+        key: ${{ env.SSH_KEY }}
+        script: |
+          cd ${{ env.BUILD_DIR }}
+          cp /var/www/ilya/data/www/build/.env.shop.frontend ./.env
+          npm i
+          npm run build
+          rm -rf ${{ env.WORKDIR }}
+          mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
