@@ -1,11 +1,12 @@
 "use client"
 
-import {useStore} from "@/store/useStore"
-import {useRouter} from "next/navigation"
-import {useEffect, useState} from "react"
-import {InputText} from 'primereact/inputtext';
-import {InputMask} from 'primereact/inputmask';
-import {Accordion, AccordionTab} from 'primereact/accordion';
+import { useStore } from "@/store/useStore"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { InputText } from 'primereact/inputtext';
+import { InputMask } from 'primereact/inputmask';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { RadioButton } from "primereact/radiobutton";
 import BackendApi from "@/lib/BackendApi";
 
 const INITIAL_ORDER = {
@@ -51,7 +52,7 @@ export default function OrderPage() {
         if (!isStoreReady) return
 
         (async () => {
-            let response = await BackendApi.get('/api/list/order/delivery-point' + getCityQueryParamString({isFirst: true}))
+            let response = await BackendApi.get('/api/list/order/delivery-point' + getCityQueryParamString({ isFirst: true }))
 
             if (response.code === 200) {
                 setDeliveryPoints(response.data)
@@ -60,11 +61,34 @@ export default function OrderPage() {
 
     }, [isStoreReady])
 
-    useEffect(() => {
-        console.log("Order state changed:", order);
-    }, [order]);
+    const isFill = () => {
+        let requiredFields = [
+            'user.name',
+            'user.phone',
+            'delivery.delivery_type',
+        ];
 
-    if (!isStoreReady) return null // Чтобы не рендерить пустой экран до редиректа
+        if (order.delivery.delivery_type === 'deliveryPoint') requiredFields.push('delivery.delivery_point_id');
+        if (order.delivery.delivery_type === 'toClient') requiredFields.push('delivery.shipment_address');
+        if (order.delivery.delivery_type === 'toTransportCompany') requiredFields.push('delivery.shipment_transport_company');
+
+        for (let field of requiredFields) {
+            let keys = field.split('.')
+
+            let value = order
+            for(let k of keys) {
+                value = value[k]
+            }
+
+            console.log(value)
+        }
+            
+        return true
+    }
+
+    const handleStoreOrder = async () => {
+
+    }
 
     return isStoreReady && (<>
         <section className="order-section container">
@@ -80,7 +104,7 @@ export default function OrderPage() {
                                     value={order.user.surnemae}
                                     onInput={e => setOrder({
                                         ...order,
-                                        user: {...order.user, surnemae: e.target.value}
+                                        user: { ...order.user, surnemae: e.target.value }
                                     })}
                                     placeholder="Фамилия"
                                     className="p-inputtext-sm"
@@ -89,7 +113,7 @@ export default function OrderPage() {
                             <div className="order_form_details_input">
                                 <InputText
                                     value={order.user.name}
-                                    onInput={e => setOrder({...order, user: {...order.user, name: e.target.value}})}
+                                    onInput={e => setOrder({ ...order, user: { ...order.user, name: e.target.value } })}
                                     placeholder="Имя*"
                                     className="p-inputtext-sm"
                                 />
@@ -99,7 +123,7 @@ export default function OrderPage() {
                                     value={order.user.patronimyc}
                                     onInput={e => setOrder({
                                         ...order,
-                                        user: {...order.user, patronimyc: e.target.value}
+                                        user: { ...order.user, patronimyc: e.target.value }
                                     })}
                                     placeholder="Отчество"
                                     className="p-inputtext-sm"
@@ -109,7 +133,7 @@ export default function OrderPage() {
                         <div className="order_form_details_input">
                             <InputMask
                                 value={order.user.phone}
-                                onInput={e => setOrder({...order, user: {...order.user, phone: e.target.value}})}
+                                onInput={e => setOrder({ ...order, user: { ...order.user, phone: e.target.value } })}
                                 mask="+7(999)-999-99-99"
                                 placeholder="+7(___)-___-__-__"
                             />
@@ -120,7 +144,7 @@ export default function OrderPage() {
                         <div className="order_form_details_input">
                             <InputText
                                 value={order.user.email}
-                                onInput={e => setOrder({...order, user: {...order.user, email: e.target.value}})}
+                                onInput={e => setOrder({ ...order, user: { ...order.user, email: e.target.value } })}
                                 placeholder="Почта"
                                 className="p-inputtext-sm"
                             />
@@ -135,7 +159,7 @@ export default function OrderPage() {
                             выбранного города
                         </div>
                         <div className="order_form_delivery_town">
-                            <img src="/assets/img/town.svg" alt=""/>
+                            <img src="/assets/img/town.svg" alt="" />
                             <span>Ваш город</span>
                             <b>{getSelectedCity().name}</b>
                         </div>
@@ -143,33 +167,27 @@ export default function OrderPage() {
                             className={`order_form_delivery_item ${order.delivery.delivery_type === 'deliveryPoint' && 'active'}`}
                             onClick={() => setOrder({
                                 ...order,
-                                delivery: {...order.delivery, delivery_type: 'deliveryPoint'}
+                                delivery: { ...order.delivery, delivery_type: 'deliveryPoint' }
                             })}
                         >
                             <div className="order_form_delivery_item_img">
-                                <img src="/assets/img/delivery_1.svg" alt=""/>
+                                <img src="/assets/img/delivery_1.svg" alt="" />
                             </div>
                             <div className="order_form_delivery_item_cont">
                                 <div className="order_form_delivery_item_title">Самовывоз со склада с 14.02 по 17.02
                                 </div>
                                 <div className="order_form_delivery_item_list">
                                     {deliveryPoints.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            style={{ cursor: 'pointer' }}
-                                            onClick={() => {
-                                                console.log({...order, delivery: {...order.delivery, delivery_point_id: item.id}})
-                                                setOrder({...order, delivery: {...order.delivery, delivery_point_id: item.id}})
-                                            }}
 
-                                        >
-                                            <img
-                                                src={order.delivery.delivery_point_id === item.id
-                                                    ? '/assets/img/order_check_a.svg'
-                                                    : '/assets/img/order_check.svg'}
-                                                alt=""
+                                        <div key={index}>
+                                            <RadioButton
+                                                name="point"
+                                                inputId={item.id}
+                                                value={item}
+                                                onChange={(e) => setOrder({ ...order, delivery: { ...order.delivery, delivery_point_id: item.id } })}
+                                                checked={order.delivery.delivery_point_id === item.id}
                                             />
-                                            <span>{item.full_name} ({item.work_time})</span>
+                                            <label htmlFor={item.id} className="ml-2">{item.full_name} ({item.work_time})</label>
                                         </div>
                                     ))}
                                 </div>
@@ -179,11 +197,11 @@ export default function OrderPage() {
                             className={`order_form_delivery_item ${order.delivery.delivery_type === 'toClient' && 'active'}`}
                             onClick={() => setOrder({
                                 ...order,
-                                delivery: {...order.delivery, delivery_type: 'toClient'}
+                                delivery: { ...order.delivery, delivery_type: 'toClient' }
                             })}
                         >
                             <div className="order_form_delivery_item_img">
-                                <img src="/assets/img/delivery_2.svg" alt=""/>
+                                <img src="/assets/img/delivery_2.svg" alt="" />
                             </div>
                             <div className="order_form_delivery_item_cont">
                                 <div className="order_form_delivery_item_title">Доставка в Вашем
@@ -194,7 +212,7 @@ export default function OrderPage() {
                                         value={order.delivery.shipment_address}
                                         onInput={e => setOrder({
                                             ...order,
-                                            delivery: {...order.delivery, shipment_address: e.target.value}
+                                            delivery: { ...order.delivery, shipment_address: e.target.value }
                                         })}
                                         placeholder="Адрес в свободной форме* "
                                         className="p-inputtext-sm"
@@ -206,14 +224,14 @@ export default function OrderPage() {
                             </div>
                         </div>
                         <div
-                            className={`order_form_delivery_item ${order.delivery.delivery_type === 'toProductCompany' && 'active'}`}
+                            className={`order_form_delivery_item ${order.delivery.delivery_type === 'toTransportCompany' && 'active'}`}
                             onClick={() => setOrder({
                                 ...order,
-                                delivery: {...order.delivery, delivery_type: 'toProductCompany'}
+                                delivery: { ...order.delivery, delivery_type: 'toTransportCompany' }
                             })}
                         >
                             <div className="order_form_delivery_item_img">
-                                <img src="/assets/img/delivery_3.svg" alt=""/>
+                                <img src="/assets/img/delivery_3.svg" alt="" />
                             </div>
                             <div className="order_form_delivery_item_cont">
                                 <div className="order_form_delivery_item_title">Отправим Ваш заказ транспортной
@@ -224,7 +242,7 @@ export default function OrderPage() {
                                         value={order.delivery.shipment_transport_company}
                                         onInput={e => setOrder({
                                             ...order,
-                                            delivery: {...order.delivery, shipment_transport_company: e.target.value}
+                                            delivery: { ...order.delivery, shipment_transport_company: e.target.value }
                                         })}
                                         placeholder="Город, пожелание по ТК (в свободной форме)* "
                                         className="p-inputtext-sm"
@@ -236,18 +254,22 @@ export default function OrderPage() {
                     <div className="order_form_in order_form_method">
                         <div className="order_form_title"><span>3</span> Способ оплаты</div>
                         <div className="order_form_method_item active">
-                            <img src="/assets/img/order_check_a.svg" alt=""/>
+                            <img src="/assets/img/order_check_a.svg" alt="" />
                             <span>Наличными при получении</span>
                         </div>
-                        <div className="order_form_method_item">
-                            <img src="/assets/img/order_check.svg" alt=""/>
+                        {/* <div className="order_form_method_item">
+                            <img src="/assets/img/order_check.svg" alt="" />
                             <span>Картами Visa, MasterCard, Мир. Система быстрых платежей</span>
-                        </div>
+                        </div> */}
 
                         <div className="order_form_method_btn">
-                            <a className="order_form_method_btn_submit" href="#">Оформить заказ</a>
+                            <button className={`order_form_method_btn_submit ${!isFill() && 'disabled'}`}
+                                onClick={handleStoreOrder}
+
+                            >Подтвердить заказ
+                            </button>
                             <div className="order_form_method_btn_info">
-                                <img src="/assets/img/order_check_a.svg" alt=""/>
+                                <img src="/assets/img/order_check_a.svg" alt="" />
                                 <span>Продолжая оформление заказа, я соглашаюсь с условиями <a href="#">Политики конфиденциальности</a>&nbsp;и&nbsp;
                                     <a href="#">Публичной оферты</a>, включающей условия обработки персональных данных</span>
                             </div>

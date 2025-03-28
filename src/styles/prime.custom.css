@@ -78,3 +78,20 @@
 .p-accordion .p-accordion-content .order_total_list {
     font-size: 12px
 }
+.p-radiobutton {
+    width: 15px;
+    height: 15px;
+}
+.p-radiobutton .p-radiobutton-box {
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 0, 0, 0.553);
+}
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+    width: 9px;
+    height: 9px;
+}
+.p-radiobutton.p-highlight .p-radiobutton-box {
+    background-color: red;
+    background: red;
+}
