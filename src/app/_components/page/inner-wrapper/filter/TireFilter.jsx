@@ -5,7 +5,7 @@ import {useStore} from "@/store/useStore";
 
 
 const TireFilter = () => {
-    const {filterTires, filterWheels, setParamFilterTires, clearFilter} = useStore()
+    const {filterTires, setParamFilterTires, clearFilter} = useStore()
 
     const [params, setParams] = useState({})    // Параметры для показа фильтра
 
@@ -31,12 +31,7 @@ const TireFilter = () => {
                         optionLabel="name"
                         placeholder="Ширина"
                         className="custom-select"
-                        dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>}
-                        collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>}
+                        
                     />
                 </div>
 

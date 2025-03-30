@@ -1,5 +1,5 @@
 'use client'
-import styles from '@/styles/podbor.module.css'
+
 import {useState} from "react";
 import DiskFilter from "./DiskFilter.jsx";
 import TireFilter from "./TireFilter.jsx";
@@ -108,7 +108,7 @@ const FilterComponent = () => {
                     )
                 }
 
-                <button className={`get-result ${buttonIsActive === false && styles.disabled}`}
+                <button className={`get-result ${buttonIsActive === false && 'disabled'}`}
                         onClick={handleClick}
                         disabled={!buttonIsActive}
                 >Подобрать
