@@ -1,11 +1,11 @@
 'use client'
+import styles from '@/styles/podbor.module.css'
 import {useState} from "react";
 import DiskFilter from "./DiskFilter.jsx";
 import TireFilter from "./TireFilter.jsx";
 import AutoFilter from "./AutoFilter.jsx";
 import LocationComponent from "@/components/ui/LocationComponent";
 import {useStore} from "@/store/useStore";
-import styles from '@/styles/podbor.module.css'
 import { useRouter } from "next/navigation.js";
 
 

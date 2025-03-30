@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
-import '@/styles/prime.custom.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import '@/styles/prime.custom.css'
+
 import HeaderSection from "@/app/_components/layout/HeaderSection";
 import FooterSection from "@/app/_components/layout/FooterSection";
 

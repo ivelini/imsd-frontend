@@ -43,4 +43,5 @@ jobs:
           rm -rf ${{ env.WORKDIR }}
           mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
           cd ${{ env.WORKDIR }}
-          npm run start
+          pm2 restart next-app || pm2 start npm --name "next-app" -- start
+          pm2 save
