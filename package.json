@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev --turbopack",
     "build": "next build",
-    "start": "cross-env NODE_OPTIONS='--inspect' next start --turbopack",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
