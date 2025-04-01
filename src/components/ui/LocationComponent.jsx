@@ -36,6 +36,12 @@ export default function LocationComponent() {
         }
     }
 
+    let dialogStyle = {
+        width: window.screen.width > 899 ? '50vw' : '100%'
+    }
+
+    if (window.screen.width < 900) dialogStyle.height = '100%'
+
     return storeIsReady && (<>
         <a className="choice-city" onClick={() => {
             if(pathName !== '/cart/order') {
@@ -56,7 +62,7 @@ export default function LocationComponent() {
 
         <Dialog showHeader={false}
             visible={visible}
-            style={{ width: '50vw' }}
+            style={dialogStyle}
             onHide={() => {
                 if (!visible) return;
                 setVisible(false);

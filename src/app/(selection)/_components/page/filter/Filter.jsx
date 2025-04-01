@@ -8,7 +8,7 @@ import AutoFilter from "./AutoFilter";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
 import { DiskFilter } from "./DiskFilter";
 
-export default function Filter({ type, collback, setSwitcherFilter }) {
+export default function Filter({ type, collback, setSwitcherFilter, isMobileFilterShow = false }) {
     const { filterTires, filterWheels, clearFilter } = useStore()
     const [switcher, setSwitcher] = useState()
 
@@ -38,9 +38,8 @@ export default function Filter({ type, collback, setSwitcherFilter }) {
         setSwitcherFilter('PARAM')
     }
 
-
     return (<>
-        <div className="catalog-filter" id="filter-in-catalog">
+        <div className={`catalog-filter ${isMobileFilterShow ? 'catalog-filter-show' : ''}`} id="filter-in-catalog">
             <div className="catalog-filter-category">
                 <div className={`filter-item-catalog  ${switcher == 'CAR' && 'inactive'}`} onClick={() => {
                     setSwitcher('PARAM')

@@ -1972,6 +1972,21 @@ input[type="checkbox"] {
 }
 
 @media only screen and (min-width: 0px) and (max-width: 599px) {
+    .three-cells .custom-select-wrapper {
+        width: 30%;
+        margin-right: 11px;
+    }
+    .p-dropdown .p-dropdown-trigger {
+        width: 1rem;
+    }
+    .geo-location-window-search-input {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .p-dropdown-label {
+        font-size: 12px;
+        margin-right: 2px;
+    }
     .gallery-panel svg {
         width: 30px;
         height: 30px;
@@ -3849,7 +3864,6 @@ input[type="checkbox"] {
         display: flex;
         justify-content: center;
         width: 100%;
-        height: 40px;
     }
 
     .cart_popup_item_info_single {

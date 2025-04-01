@@ -22,7 +22,7 @@ const TireFilter = () => {
 
     return (<>
         <div className="filter-content-item disk" style={{"display": "block"}}>
-            <div className="select-row">
+            <div className="select-row three-cells">
                 <div className="custom-select-wrapper">
                     <Dropdown
                         value={params.width?.find(item => item.id === filterTires.params.width)}
@@ -31,7 +31,14 @@ const TireFilter = () => {
                         optionLabel="name"
                         placeholder="Ширина"
                         className="custom-select"
-                        
+                        dropdownIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
+                        collapseIcon={() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                            </svg>)}
                     />
                 </div>
 
