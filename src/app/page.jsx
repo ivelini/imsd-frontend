@@ -10,28 +10,28 @@ export default function Home() {
         <h3 className="block-title">Отзывы покупателей Автоальянс</h3>
         <div className="rating-block">
           <div className="rating-stars">
-            <img src="./assets/img/gold-star.svg" alt="" />
-            <img src="./assets/img/gold-star.svg" alt="" />
-            <img src="./assets/img/gold-star.svg" alt="" />
-            <img src="./assets/img/gold-star.svg" alt="" />
-            <img src="./assets/img/white-star.svg" alt="" />
+            <img src="/assets/img/gold-star.svg" alt="" />
+            <img src="/assets/img/gold-star.svg" alt="" />
+            <img src="/assets/img/gold-star.svg" alt="" />
+            <img src="/assets/img/gold-star.svg" alt="" />
+            <img src="/assets/img/white-star.svg" alt="" />
           </div>
           <span className="num-rating">4,3</span>
         </div>
         <button type="button" className="white-button">Читать отзывы</button>
-        <img className="decoration" src="./assets/img/korona.svg" alt="" />
+        <img className="decoration" src="/assets/img/korona.svg" alt="" />
       </div>
 
       <div className="block manufacturer-warranty">
         <h3 className="block-title">Мы поддерживаем все расширенные гарантии производителя</h3>
         <button type="button" className="primary-button red-btn">Гарантия на шины</button>
-        <img className="decoration" src="./assets/img/galki.svg" alt="" />
+        <img className="decoration" src="/assets/img/galki.svg" alt="" />
       </div>
 
       <div className="block help-and-selection">
         <h3 className="block-title">Нужна помощь в подборе? Узнать страну, дату выпуска шин?</h3>
         <button type="button" className="primary-button red-btn">Хочу общаться</button>
-        <img className="decoration" src="./assets/img/Group 33992.svg" alt="" />
+        <img className="decoration" src="/assets/img/Group 33992.svg" alt="" />
       </div>
     </section>
     <div className="wheels-section container">
@@ -46,7 +46,7 @@ export default function Home() {
       <h2>Новости</h2>
       <div className="news-list">
         <div className="news">
-          <img className="news-image" src="./assets/img/news.png" alt="" />
+          <img className="news-image" src="/assets/img/news.png" alt="" />
           <h3 className="news-title">Новость очень важная заголовок</h3>
           <h3 className="news-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -57,7 +57,7 @@ export default function Home() {
           <a className="go-news-link">Подребнее </a>
         </div>
         <div className="news">
-          <img className="news-image" src="./assets/img/news.png" alt="" />
+          <img className="news-image" src="/assets/img/news.png" alt="" />
           <h3 className="news-title">Новость очень важная заголовок</h3>
           <h3 className="news-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -68,7 +68,7 @@ export default function Home() {
           <a className="go-news-link">Подребнее </a>
         </div>
         <div className="news">
-          <img className="news-image" src="./assets/img/news.png" alt="" />
+          <img className="news-image" src="/assets/img/news.png" alt="" />
           <h3 className="news-title">Новость очень важная заголовок</h3>
           <h3 className="news-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt

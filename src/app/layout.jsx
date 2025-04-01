@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
                             <div className="catalog-page-panel">
                                 <div></div>
                                 <div className="catalog-page-logo">
-                                    <img src="./assets/img/logo.svg" alt="" />
+                                    <img src="/assets/img/logo.svg" alt="" />
                                 </div>
                                 <div className="catalog-page-close">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -96,19 +96,19 @@ export default function RootLayout({ children }) {
                                 <button className="catalog-page-btn">Заказать звонок</button>
                                 <div className="social-links-blk">
                                     <a href="#" className="social-links-item">
-                                        <img src="./assets/img/tg.svg" alt="" />
+                                        <img src="/assets/img/tg.svg" alt="" />
                                     </a>
                                     <a href="#" className="social-links-item">
-                                        <img src="./assets/img/wa.svg" alt="" />
+                                        <img src="/assets/img/wa.svg" alt="" />
                                     </a>
                                     <a href="#" className="social-links-item">
-                                        <img src="./assets/img/vib.svg" alt="" />
+                                        <img src="/assets/img/vib.svg" alt="" />
                                     </a>
                                     <a href="#" className="social-links-item">
-                                        <img src="./assets/img/vk.svg" alt="" />
+                                        <img src="/assets/img/vk.svg" alt="" />
                                     </a>
                                     <a href="#" className="social-links-item">
-                                        <img src="./assets/img/youtube.svg" alt="" />
+                                        <img src="/assets/img/youtube.svg" alt="" />
                                     </a>
                                 </div>
                             </div>
