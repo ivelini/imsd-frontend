@@ -16,6 +16,13 @@ export default function LocationComponent() {
     const [cities, setCities] = useState([])
     const [cityName, setCityName] = useState('')
 
+    let dialogStyle = {width: '50vw'}
+
+    if(typeof window !== 'undefined' && window.screen.width < 900) {
+        dialogStyle.width = '100%'
+        dialogStyle.height = '100%'
+    }
+
     useEffect(() => {
         if(!selectedCity) return
         setStoreIsReady(true)
@@ -36,11 +43,7 @@ export default function LocationComponent() {
         }
     }
 
-    let dialogStyle = {
-        width: window.screen.width > 899 ? '50vw' : '100%'
-    }
 
-    if (window.screen.width < 900) dialogStyle.height = '100%'
 
     return storeIsReady && (<>
         <a className="choice-city" onClick={() => {
