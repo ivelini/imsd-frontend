@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import DiskFilter from "./DiskFilter.jsx";
 import TireFilter from "./TireFilter.jsx";
 import AutoFilter from "./AutoFilter.jsx";
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation.js";
 
 const FilterComponent = () => {
     const {filterTires, filterWheels} = useStore()
+    const [storeIsReady, setStoreIsReady] = useState(false)
     const router = useRouter()
 
     const SWTIRES = 'SWTIRES' // Выбор шины
@@ -19,6 +20,11 @@ const FilterComponent = () => {
     const SWCAR = 'SWCAR' // Выбор по автомобилю
 
     const [switcher, setSwitcher] = useState({type: SWTIRES, param: SWPARAMS})
+
+    useEffect(() => {
+        if(!filterTires) return
+        setStoreIsReady(true)
+    }, [filterTires]);
 
     let buttonIsActive = false
 
@@ -42,7 +48,7 @@ const FilterComponent = () => {
         }
     }
 
-    return (<>
+    return storeIsReady && (<>
         <section className="filter-block">
             <div className="container filter-block-menu">
                 <div className={`filter-item for-wheels ${switcher.type !== SWTIRES && 'inactive'}`} onClick={() => {

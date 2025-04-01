@@ -9,11 +9,17 @@ import { usePathname } from "next/navigation";
 
 export default function LocationComponent() {
     const { selectedCity, setCity } = useStore()
+    const [storeIsReady, setStoreIsReady] = useState(false)
     const [visible, setVisible] = useState(false);
     const pathName = usePathname()
 
     const [cities, setCities] = useState([])
     const [cityName, setCityName] = useState('')
+
+    useEffect(() => {
+        if(!selectedCity) return
+        setStoreIsReady(true)
+    }, [selectedCity])
 
     useEffect(() => {
         if (cityName.length > 2) {
@@ -30,7 +36,7 @@ export default function LocationComponent() {
         }
     }
 
-    return (<>
+    return storeIsReady && (<>
         <a className="choice-city" onClick={() => {
             if(pathName !== '/cart/order') {
                 getCities()
