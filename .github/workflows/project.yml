@@ -38,7 +38,6 @@ jobs:
         script: |
           cd ${{ env.BUILD_DIR }}
           cp /var/www/ilya/data/www/build/.env.shop.frontend ./.env
-          pm2 stop aalyans74.ru-app
           npm install
           npm run build
           rm -rf ${{ env.WORKDIR }}
