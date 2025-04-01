@@ -40,6 +40,7 @@ jobs:
           cp /var/www/ilya/data/www/build/.env.shop.frontend ./.env
           npm install
           npm run build
+          pm2 stop aalyans74.ru-app
           rm -rf ${{ env.WORKDIR }}
           mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
           cd ${{ env.WORKDIR }}
