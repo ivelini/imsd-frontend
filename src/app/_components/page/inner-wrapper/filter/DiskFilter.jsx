@@ -59,7 +59,7 @@ const DiskFilter = () => {
                 </div>
             </div>
 
-            <div className="select-row">
+            <div className="select-row three-cells">
                 <div className="custom-select-wrapper">
                     <Dropdown
                         value={params.pcd?.find(item => item.id === filterWheels.params.pcd)}

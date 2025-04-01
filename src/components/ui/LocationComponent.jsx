@@ -43,8 +43,6 @@ export default function LocationComponent() {
         }
     }
 
-
-
     return storeIsReady && (<>
         <a className="choice-city" onClick={() => {
             if(pathName !== '/cart/order') {
