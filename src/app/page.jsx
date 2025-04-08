@@ -1,6 +1,12 @@
 import InnerWrapperComponent from "@/app/_components/page/inner-wrapper/InnerWrapperComponent";
 import CaruselComponent from "@/app/_components/page/CaruselComponent";
 
+
+export const metadata = {
+  title: 'Интернет-магазин шин и дисков Автоальянс',
+  description: 'Интернет-магазин шин и дисков Автоальянс',
+}
+
 export default function Home() {
   return (<>
     <InnerWrapperComponent />

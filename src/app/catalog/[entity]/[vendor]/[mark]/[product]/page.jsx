@@ -13,6 +13,39 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum";
  * @param {string} props.params.mark
  * @param {string} props.params.product
  */
+
+export async function generateMetadata({params, searchParams}) {
+    const { entity, product } = await params;
+    const { city_name } = await searchParams;
+
+    let response = null
+    let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}/seo`)
+
+    try {
+        if (entity === TypeProductEnum.DISKS) {
+            url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}/seo`)
+        }
+
+        if (city_name) {
+            url.searchParams.set("city_name", city_name)
+        }
+
+        response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
+
+        return {
+            title: response.data.title,
+            description: response.data.description
+        }
+    } catch (error) {
+        return {
+            title: '',
+            description: ''
+        }
+    }
+}
+
+
+
 export default async function Product({ params, searchParams }) {
     const { entity, product } = await params;
     const { city_name } = await searchParams;
@@ -31,6 +64,8 @@ export default async function Product({ params, searchParams }) {
         }
 
         response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
+
+        console.log(response)
     } catch (error) {
         console.error("Ошибка загрузки данных:", error)
     }

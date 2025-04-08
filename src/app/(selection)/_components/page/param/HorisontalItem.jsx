@@ -1,5 +1,6 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import LocationComponent from "@/components/ui/LocationComponent";
 import Image from 'next/image';
 import { useStore } from "@/store/useStore";
@@ -7,6 +8,7 @@ import Link from "next/link";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import {useState} from "react";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
+const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false}) ;
 
 
 /**
@@ -55,6 +57,10 @@ export default function HorisontalItem({ item }) {
         })
 
         setIsPoUppVisible(true)
+    }
+
+    const handleRemoveFromCart = () => {
+        removeFromCart(item.product_article)
     }
 
     return (<>
@@ -127,19 +133,10 @@ export default function HorisontalItem({ item }) {
                             <p className="free-shipping">Доставка <span className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_cost}</span></p>
                         </div>
                         <div className="catalog-product-flex-item catalog-product-purchase-actions">
-                            {hasProductInCart(item.product_article)
-                                ? (<button className="buy-now" onClick={() => removeFromCart(item.product_article)}
-                                    style={{ 'backgroundColor': '#D8D8D8' }}>
-                                    <p>Удалить</p>
-                                    <img src="/assets/img/bag.svg" alt="" />
-                                </button>)
-                                : (<button className="buy-now" onClick={handleAddCart}>
-                                    <p>Купить</p>
-                                    <img src="/assets/img/bag.svg" alt="" />
-                                </button>)
-                            }
-
-
+                            <CartButtonInHorisontalItem
+                                item={item}
+                                add={handleAddCart}
+                                remove={handleRemoveFromCart} />
                             <p className="availability">Наличие {item.price_stock_and_delivery.count} шт.</p>
                             <div style={{ 'margin': '10px 0' }}></div>
                         </div>
