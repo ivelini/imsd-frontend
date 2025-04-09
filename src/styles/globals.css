@@ -1227,6 +1227,7 @@ input[type="checkbox"] {
     text-align: end;
     display: block;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 .about-company-section {
@@ -1246,13 +1247,15 @@ input[type="checkbox"] {
 
 .news-list {
     width: 100%;
-    display: flex;
+    display: block;
     justify-content: space-between;
 }
 
 .news {
     width: 100%;
     max-width: 370px;
+    float: left;
+    height: 700px;
 }
 
 .packet {
