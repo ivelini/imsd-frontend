@@ -1,4 +1,3 @@
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
 import Image from "next/image";
 
 export default async function ArticlePage({params}) {
