@@ -1,27 +1,24 @@
+import Link from "next/link";
+
 export default function FooterSection() {
     return (<>
         <footer>
             <div className="footer-content container">
                 <div className="footer-group footer-group-center">
-                    <p className="footer-grup-num">8-351-700-03-19</p>
-                    <button className="footer-get-call" type="button">Заказать звонок</button>
-                    <div className="footer-group-city">2023 г. Автоальянс</div>
+                    <p className="footer-grup-num">+7 (351) 700-03-19</p>
+                    {/*<button className="footer-get-call" type="button">Заказать звонок</button>*/}
+                    <div className="footer-group-city">2025 г. Автоальянс</div>
                 </div>
                 <div className="footer-group fg-hide">
-                    <a href="#" className="footer-group-link">Каталог</a>
-                    <a href="#" className="footer-group-link">Компания</a>
-                    <a href="#" className="footer-group-link">Новости и акции</a>
-                    <a href="#" className="footer-group-link">Статьи</a>
-                    <a href="#" className="footer-group-link">Доставка</a>
-                    <a href="#" className="footer-group-link">Оплата</a>
+                    <Link href="/article" className="footer-group-link">Новости</Link>
+                    <Link href="/delivery" className="footer-group-link">Доставка</Link>
+                    <Link href="/pay" className="footer-group-link">Оплата</Link>
+
                 </div>
                 <div className="footer-group fg-hide">
-                    <a href="#" className="footer-group-link">Компания</a>
-                    <a href="#" className="footer-group-link">Сервис</a>
-                    <a href="#" className="footer-group-link">Доставка и оплата</a>
-                    <a href="#" className="footer-group-link">Гарантия</a>
-                    <a href="#" className="footer-group-link">Отзывы</a>
-                    <a href="#" className="footer-group-link">Магазины</a>
+                    <Link href="/refound" className="footer-group-link">Возврат</Link>
+                    <Link href="/contacts" className="footer-group-link">Контакты</Link>
+                    <Link href="/company_us" className="footer-group-link">О компании</Link>
                 </div>
                 <div className="footer-group"></div>
                 <div className="footer-group footer-group-center fg-hide-2">

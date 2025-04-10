@@ -1,4 +1,5 @@
 import FilterComponent from "@/app/_components/page/inner-wrapper/filter/FilterComponent";
+import Link from "next/link";
 
 export default function InnerWrapperComponent() {
     return (<>
@@ -12,7 +13,7 @@ export default function InnerWrapperComponent() {
                         На литые диски!
                     </h2>
                     <p className="block-text">*максимальная скидка при покупке комплекта шин.</p>
-                    <a href="#" className="block-button primary-button">Подробнее</a>
+                    <Link href="/article" className="block-button primary-button">Подробнее</Link>
                 </section>
             </div>
         </div>

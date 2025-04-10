@@ -1,3 +1,8 @@
+export const metadata = {
+    title: 'Условия оплаты в интернет магазине aalyans74.ru',
+    description: ''
+}
+
 export default async function PayPage() {
 
     let response = null
@@ -5,7 +10,7 @@ export default async function PayPage() {
 
     response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
 
-    let item = response.data ?? null
+    let item = response?.data ?? null
     return item !== null && (<>
         <section className="about-company-section container">
             <h2>{item.title}</h2>

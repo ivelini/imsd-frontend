@@ -1,3 +1,9 @@
+
+export const metadata = {
+    title: 'Контакты интернет магазина aalyans74.ru',
+    description: ''
+}
+
 export default async function ContactPage() {
 
     let response = null
@@ -5,7 +11,7 @@ export default async function ContactPage() {
 
     response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
 
-    let item = response.data ?? null
+    let item = response?.data ?? null
     return item !== null && (<>
         <section className="about-company-section container">
             <h2>{item.title}</h2>

@@ -1,5 +1,26 @@
 import Image from "next/image";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
+export async function generateMetadata({params}) {
+    const {article} = await params
+
+    let response = null
+    let url = new URL(`${process.env.BACKEND_URL}/api/article/${article}`)
+
+    try {
+        response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
+
+        return {
+            title: response.data.title,
+            description: response.data.description
+        }
+    } catch (error) {
+        return {
+            title: '',
+            description: ''
+        }
+    }
+}
 export default async function ArticlePage({params}) {
     const {article} = await params
 

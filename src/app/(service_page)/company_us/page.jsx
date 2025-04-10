@@ -1,13 +1,13 @@
 
 export const metadata = {
-    title: 'Условия доставки интернет магазина aalyans74.ru',
+    title: 'Контакты интернет магазина aalyans74.ru',
     description: ''
 }
 
-export default async function DelivaryPage() {
+export default async function ContactPage() {
 
     let response = null
-    let url = new URL(`${process.env.BACKEND_URL}/api/article/12`)
+    let url = new URL(`${process.env.BACKEND_URL}/api/article/16`)
 
     response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
 

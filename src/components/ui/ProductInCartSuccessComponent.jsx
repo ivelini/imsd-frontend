@@ -13,7 +13,6 @@ import Link from "next/link";
  * @constructor
  */
 export default function ProductInCartSuccessComponent({item, handleOnClose}) {
-    console.log(item)
     return (<>
         <Dialog
             visible

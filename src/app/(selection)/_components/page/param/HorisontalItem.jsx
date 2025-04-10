@@ -10,7 +10,6 @@ import {useState} from "react";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false}) ;
 
-
 /**
  *
  * @param {Object} item
