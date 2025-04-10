@@ -9,11 +9,12 @@ export default function GroupSpecificationItems({ title, items }) {
                 return itemsGroupA.specification_id - itemsGroupB.specification_id
             })
             .map(function (itemsGroup, index) {
-                return (<>
-                    {Boolean(itemsGroup.is_grouping) === true ?
-                        <GroupItems key={index} groupingItemsGroup={itemsGroup} /> :
-                        <InlineItems key={index} itemsGroup={itemsGroup} />}
-                </>)
+
+                if(Boolean(itemsGroup.is_grouping) === true) {
+                    return <GroupItems key={index} groupingItemsGroup={itemsGroup} />
+                } else {
+                    return <InlineItems key={index} itemsGroup={itemsGroup} />
+                }
             })}
     </>)
 }

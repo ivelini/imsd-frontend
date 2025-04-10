@@ -27,7 +27,7 @@ export default function CartItem({ item, isStub = false }) {
             changeProductInCart({
                 product_article: item.product_article,
                 params: {
-                    count: item.count + 1
+                    count: Number(item.count) + 1
                 }
             })
         }
@@ -38,7 +38,7 @@ export default function CartItem({ item, isStub = false }) {
             changeProductInCart({
                 product_article: item.product_article,
                 params: {
-                    count: item.count - 1
+                    count: Number(item.count) - 1
                 }
             })
         }

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import CartItem from "@/app/cart/_components/CartItem";
 import { useStore } from "@/store/useStore";
-import LocationReloadComponent from "@/components/LocationReloadComponent";
 import Link from "next/link";
 import BackendApi from "@/lib/BackendApi";
 
@@ -51,7 +50,7 @@ export default function CartPage() {
 
     const themplateAddFreePack = () => {
 
-        let itemsCount = getProductsInCart().reduce((sum, item) => sum + item.count, 0)
+        const itemsCount = getProductsInCart().reduce((sum, item) => sum + Number(item.count), 0)
 
         if (itemsCount >= 4) {
             return <CartItem
