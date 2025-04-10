@@ -20,7 +20,6 @@ export default async function Home() {
     let data = response?.data ?? null
 
     return (<>
-        <LocationReloadComponent />
         <InnerWrapperComponent/>
         <AttentionBlocksComponent/>
 
