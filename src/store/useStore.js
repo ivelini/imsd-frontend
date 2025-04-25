@@ -8,6 +8,7 @@ import { useCartSlice } from "@/store/useCartSlice";
 export const useStore = create(
     devtools(
         persist((set, get) => ({
+            useStoreIsReady: true,
             ...useCitySlice(set, get),
             ...useFilterSlice(set, get),
             ...useCartSlice(set, get)

@@ -4,7 +4,6 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum"
 
 export default function SpecificationsContent({ type, specifications }) {
     const { filterTires, setCarFilterTires, setCarFilterWheels, getFilterForCar } = useStore()
-    const [isStoreReady, setIsStoreReady] = useState(false)
 
     useEffect(() => {
         if (filterTires) {
@@ -18,8 +17,6 @@ export default function SpecificationsContent({ type, specifications }) {
             : setCarFilterWheels
 
         const vehicleIds = [...getFilterForCar(type).vehicleIds ?? []]
-
-        console.log(isChecked, vehicleId, vehicleIds, setEntity)
 
         if (isChecked) {
             setEntity({

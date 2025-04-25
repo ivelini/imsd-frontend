@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import {useEffect, useState} from "react"
 import { useStore } from "@/store/useStore"
 
 /**
@@ -10,7 +10,7 @@ export default function LocationReloadComponent() {
     const { getSelectedCity } = useStore()
 
     useEffect(() => {
-    
+
         let url = new URL(window.location.href)
 
         if (getSelectedCity().name_en !== 'Chelyabinsk' && getSelectedCity().name_en !== url.searchParams.get('city_name')) {
@@ -24,5 +24,5 @@ export default function LocationReloadComponent() {
             history.pushState({}, '', url)
             window.location.reload()
         }
-    }, [getSelectedCity()])
+    }, [])
 }

@@ -32,7 +32,7 @@ export const useCartSlice = (set, get) => ({
      * Получить продукт из корзины по product_article
      * @param {string} product_article
      */
-    getProductFromCart: (product_article) => get().cart.items.filter(item => item.product_article === product_article),
+    getProductFromCart: (product_article) => get().cart.items.filter(item => item.product_article === product_article)[0],
 
     /**
      * Добавление позиции в корзину

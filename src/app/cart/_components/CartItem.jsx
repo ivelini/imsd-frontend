@@ -2,6 +2,7 @@
 
 import { useStore } from "@/store/useStore"
 import Image from "next/image"
+import Link from "next/link";
 
 /**
  * Компонент элемента корзины
@@ -20,7 +21,7 @@ import Image from "next/image"
  * @returns {JSX.Element} Элемент товара в корзине
  */
 export default function CartItem({ item, isStub = false }) {
-    const { changeProductInCart, removeFromCart } = useStore()
+    const { getCityQueryParam, changeProductInCart, removeFromCart } = useStore()
 
     const handleIncrease = () => {
         if (item.count < item.stock_count) {
@@ -62,9 +63,10 @@ export default function CartItem({ item, isStub = false }) {
             </div>
             <div className="cart_item_info">
                 <div className="cart_item_info_title">
-                    <a href={item.url}>
-                        {item.name}
-                    </a>
+                    <Link href={{
+                        pathname: item.url,
+                        query: getCityQueryParam()
+                    }}>{item.name}</Link>
                 </div>
                 {!isStub && (<>
                     <div className="cart_item_info_more">
