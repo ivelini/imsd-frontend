@@ -27,6 +27,8 @@ const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_comp
  * @param {boolean} item.is_spike
  * @param {boolean} item.is_runflat
  * @param {string} item.url
+ * @param {Object} item.country
+ * @param {string} item.country.name
  * @param {Object} item.price_stock_and_delivery
  * @param {string} item.price_stock_and_delivery.price
  * @param {number} item.price_stock_and_delivery.count
@@ -103,7 +105,7 @@ export default function HorisontalItem({ item }) {
                 <div className="catalog-product-flex-container">
                     <div className="catalog-product-flex-item catalog-product-general-info">
                         <p className="product-code"><b>Код товара:</b> {item.product_article}</p>
-                        <p className="country">Страна произв.: Россия</p>
+                        <p className="country">Страна произв.: {item.country.name}</p>
                         <div style={{ 'margin': '10px 0' }}></div>
                     </div>
 

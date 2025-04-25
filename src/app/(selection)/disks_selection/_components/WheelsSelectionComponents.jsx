@@ -103,7 +103,10 @@ export default function WheelsSelectionComponents() {
         for (const key in filterWheels.params) {
             queryString += `${key}|${filterWheels.params[key]};`;
         }
-        queryString = queryString.slice(0, -1); // Убираем последнюю ";"
+
+        if(Object.keys(filterWheels.params).length > 0) {
+            queryString = queryString.slice(0, -1); // Убираем последнюю ";"
+        }
 
         if (filterWheels.range.current.length > 0 && filterWheels.range.current[0] !== 1 && filterWheels.range.current[1] !== 2) {
             queryString += queryString === '?filters=' ? 'price|' : ';price|';

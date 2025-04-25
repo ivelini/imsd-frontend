@@ -17,7 +17,9 @@ export default function SpecificationsContent({ type, specifications }) {
             ? setCarFilterTires
             : setCarFilterWheels
 
-        const vehicleIds = [...getFilterForCar().vehicleIds ?? []]
+        const vehicleIds = [...getFilterForCar(type).vehicleIds ?? []]
+
+        console.log(isChecked, vehicleId, vehicleIds, setEntity)
 
         if (isChecked) {
             setEntity({
@@ -32,19 +34,19 @@ export default function SpecificationsContent({ type, specifications }) {
         }
     }
 
-    function returnHtmlTypeSpecification(type, title) {
-        if (!specifications[type]?.length || !isStoreReady) return null;
+    function returnHtmlTypeSpecification(typeGroup, title) {
+        if (!specifications[typeGroup]?.length || !isStoreReady) return null;
 
         return (
             <div>
                 <div>{title}</div>
-                {specifications[type].map((el) => (
+                {specifications[typeGroup].map((el) => (
                     <div key={el.id}>
                         <input
                             type="checkbox"
                             value={el.id}
                             onChange={(e) => handleChecked(e.target.checked, el.id)}
-                            checked={getFilterForCar().vehicleIds?.includes(el.id) ?? false}
+                            checked={getFilterForCar(type).vehicleIds?.includes(el.id) ?? false}
                         />
                         <span>{el.name}</span>
                     </div>

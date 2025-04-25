@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import { Slider } from "primereact/slider";
 import {RangeComponent} from "@/app/(selection)/_components/page/filter/RangeComponent";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
+import DeliveryDaysComponent from "@/app/(selection)/_components/page/filter/DeliveryDaysComponent";
 
 export function TireFilter({ collback }) {
-    const { filterTires, setParamFilterTires } = useStore()
+    const { filterTires, setParamFilterTires, setRangeFilterTires } = useStore()
 
     const [params, setParams] = useState({})    // Параметры для показа фильтра
+    const [rangeIsActive, setRangeIsActive] = useState(true)
 
  
     useEffect(() => {
@@ -23,12 +25,29 @@ export function TireFilter({ collback }) {
 
     }, [])
 
+    /**
+     * @paarm {object} data
+     * @param {string} data.type
+     * @param {string} data.value
+     */
+    const handleChangeInput = (data) => {
+        setParamFilterTires(data)
+        setRangeFilterTires({type: 'current', value: []})
+        setRangeFilterTires({type: 'all', value: []})
+        setRangeIsActive(false)
+    }
+
+    const handleSearchButtonClick = () => {
+        collback('PARAM')
+        setRangeIsActive(true)
+    }
+
     return (<>
         <div className="calatog-select-col">
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.width?.find(item => item.id === filterTires.params.width)}
-                    onChange={(e) => setParamFilterTires({ type: 'width', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'width', value: e.value.id })}
                     options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
                     
                     optionLabel="name"
@@ -47,7 +66,7 @@ export function TireFilter({ collback }) {
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.height?.find(item => item.id === filterTires.params.height)}
-                    onChange={(e) => setParamFilterTires({ type: 'height', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'height', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.height ?? [])]}
                     optionLabel="name"
                     placeholder="Профиль"
@@ -66,7 +85,7 @@ export function TireFilter({ collback }) {
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.diameter?.find(item => item.id === filterTires.params.diameter)}
-                    onChange={(e) => setParamFilterTires({ type: 'diameter', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'diameter', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.diameter ?? [])]}
                     optionLabel="name"
                     placeholder="Диаметр"
@@ -86,7 +105,7 @@ export function TireFilter({ collback }) {
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.season?.find(item => item.id === filterTires.params.season)}
-                    onChange={(e) => setParamFilterTires({ type: 'season', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'season', value: e.value.id })}
                     options={[{ id: null, name: 'Любая' }, ...(params?.season ?? [])]}
                     optionLabel="name"
                     placeholder="Сезонность"
@@ -105,7 +124,7 @@ export function TireFilter({ collback }) {
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.is_spike?.find(item => item.id === filterTires.params.is_spike)}
-                    onChange={(e) => setParamFilterTires({ type: 'is_spike', value: e.value.id == null ? e.value.id : Boolean(e.value.id) })}
+                    onChange={(e) => handleChangeInput({ type: 'is_spike', value: e.value.id == null ? e.value.id : Boolean(e.value.id) })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.is_spike ?? [])]}
                     optionLabel="name"
                     placeholder="Тип шин"
@@ -121,12 +140,10 @@ export function TireFilter({ collback }) {
                 />
             </div>
 
-
-
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.vendor?.find(item => item.id === filterTires.params.vendor)}
-                    onChange={(e) => setParamFilterTires({ type: 'vendor', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'vendor', value: e.value.id })}
                     options={[{ id: null, name: 'Любой' }, ...(params?.vendor ?? [])]}
                     optionLabel="name"
                     placeholder="Производитель"
@@ -144,7 +161,7 @@ export function TireFilter({ collback }) {
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.country?.find(item => item.id === filterTires.params.country)}
-                    onChange={(e) => setParamFilterTires({ type: 'country', value: e.value.id })}
+                    onChange={(e) => handleChangeInput({ type: 'country', value: e.value.id })}
                     options={[{ id: null, name: 'Любая' }, ...(params?.country ?? [])]}
                     optionLabel="name"
                     placeholder="Страна"
@@ -160,32 +177,11 @@ export function TireFilter({ collback }) {
                 />
             </div>
 
-            <RangeComponent type={TypeProductEnum.TIRES} />
+            <RangeComponent type={TypeProductEnum.TIRES} isActive={rangeIsActive}/>
 
-            <div className="delivery-checkbox-group">
-                <h3 className="delivery-title-cat">Способ получения</h3>
-
-                <div className="options-group">
-                    <div className="option">
-                        <input type="checkbox" id="todayCheckbox" />
-                        <label htmlFor="todayCheckbox">Сегодня</label>
-                    </div>
-                    <div className="option">
-                        <input type="checkbox" id="delivery1to2Checkbox" />
-                        <label htmlFor="delivery1to2Checkbox">Поставка 1-2 дня</label>
-                    </div>
-                    <div className="option">
-                        <input type="checkbox" id="delivery2to5Checkbox" />
-                        <label htmlFor="delivery2to5Checkbox">Поставка 2-5 дней</label>
-                    </div>
-                    <div className="option">
-                        <input type="checkbox" id="delivery5to7Checkbox" />
-                        <label htmlFor="delivery5to7Checkbox">Поставка 5-7 дней</label>
-                    </div>
-                </div>
-            </div>
+            {/*<DeliveryDaysComponent />*/}
         </div>
 
-        <button className="get-result" type="button" onClick={() => collback('PARAM')}>Подобрать</button>
+        <button className="get-result" type="button" onClick={() => handleSearchButtonClick()}>Подобрать</button>
     </>)
 }

@@ -96,7 +96,10 @@ export default function TiresSelectionComponent() {
         for (const key in filterTires.params) {
             queryString += `${key}|${filterTires.params[key]};`;
         }
-        queryString = queryString.slice(0, -1); // Убираем последнюю ";"
+
+        if(Object.keys(filterTires.params).length > 0) {
+            queryString = queryString.slice(0, -1); // Убираем последнюю ";"
+        }
 
         if (filterTires.range.current.length > 0 && filterTires.range.current[0] !== 1 && filterTires.range.current[1] !== 2) {
             queryString += queryString === '?filters=' ? 'price|' : ';price|';
@@ -109,10 +112,16 @@ export default function TiresSelectionComponent() {
 
         queryString += getCityQueryParamString();
 
+
+
         let response = await BackendApi.get('/api/catalog/tire' + queryString);
 
         if (response.code === 200) {
             let data = await response;
+
+            console.log('current', data.meta.range_price.currentFilter[0], data.meta.range_price.currentFilter[1])
+            console.log('all', data.meta.range_price.all[0], data.meta.range_price.all[1])
+
             setRangeFilterTires({
                 type: 'current',
                 value: [
