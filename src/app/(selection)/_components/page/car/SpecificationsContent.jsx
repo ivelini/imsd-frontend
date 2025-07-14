@@ -4,6 +4,7 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum"
 
 export default function SpecificationsContent({ type, specifications }) {
     const { filterTires, setCarFilterTires, setCarFilterWheels, getFilterForCar } = useStore()
+    const [isStoreReady, setIsStoreReady] = useState(false) // Флаг готовности Zustand
 
     useEffect(() => {
         if (filterTires) {
