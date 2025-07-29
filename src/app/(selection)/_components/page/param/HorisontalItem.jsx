@@ -90,7 +90,7 @@ export default function HorisontalItem({ item }) {
         //ТО выводим текст о не возможности забрать заказ из пункта выдачи
         //ИНАЧЕ выводим пункты выдачи заказа
         if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
-            return '<div>В вашем городе нет точек самовывоза.</div>' +
+            return '<div style="color: red; font-size: 18px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
                 '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
                 'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
                 '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
@@ -117,7 +117,7 @@ export default function HorisontalItem({ item }) {
         //ТО выводим текст, что не доставляем по городу заказ, только транспортной коомпанией
         //ИНАЧЕ выводим текст, что доставляем
         if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
-            return '<div>Доставка по городу <strong>г. ' + getSelectedCity().name + '</strong> не осуществляется.</div> ' +
+            return '<div style="color: red; font-size: 18px; font-weight: bold">Доставка по городу <strong>г. ' + getSelectedCity().name + '</strong> не осуществляется.</div> ' +
                 '<div>Доставка в Ваш город возможна транспортной компанией.</div> ' +
                 '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
         } else {
