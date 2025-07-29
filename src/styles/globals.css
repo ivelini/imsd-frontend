@@ -1786,6 +1786,7 @@ input[type="checkbox"] {
 .add-to-cart-button {
     height: 40px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .parameter-name {

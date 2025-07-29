@@ -31,6 +31,21 @@ import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_comp
  */
 export default function InfoProduct({ item }) {
 
+    const htmlDeliveryInfo = () => {
+
+        //ЕСЛИ в выбранном городе есть точки выдачи
+        if(item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return '<div><strong>Самовывоз из ПВЗ по адресу:</strong></div><div> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
+                '<div><strong>Время работы:</strong></div><div>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
+                    .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
+                    .toString() + '</div>'
+        } else {
+            return '<div style="color: red; font-size: 16px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
+                '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
+                'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>'
+        }
+    }
+
     return (<>
         <div className="container product-container">
             <div className="gallery">
@@ -67,12 +82,19 @@ export default function InfoProduct({ item }) {
                             <div className="payment-info">
                                 <div className="payment-option">
                                     <span className="payment-title">Оплата при получении</span>
+
                                     <span
                                         className="payment-details">Наличие {item.price_stock_and_delivery.count} шт.</span>
-                                    <span className="payment-details">Самовывоз <span
-                                        className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_days}</span></span>
-                                    <span className="payment-details">Доставка <span
-                                        className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_cost}</span></span>
+
+                                    <span className="payment-details">Самовывоз &nbsp;
+                                        <span
+                                            className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_days}</span>
+                                    </span>
+
+                                    <span className="payment-details">Доставка до ПВЗ&nbsp;
+                                        <span
+                                            className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_cost}</span>
+                                    </span>
                                 </div>
 
                                 <div className="payment-option">
@@ -80,6 +102,9 @@ export default function InfoProduct({ item }) {
                                     <span className="payment-details">Расширенная гарантия</span>
                                 </div>
                             </div>
+
+                            <div className="payment-option" dangerouslySetInnerHTML={{__html:htmlDeliveryInfo()}}></div>
+
 
                         </CostAndCartComponent>
 
