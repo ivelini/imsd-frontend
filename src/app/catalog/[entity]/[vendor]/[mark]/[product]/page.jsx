@@ -2,7 +2,12 @@ import ContentComponent from "./_components/ContentComponent";
 import LocationReloadComponent from "../../../../../../components/LocationReloadComponent";
 import HorisontalMenu from "./HorisontalMenu";
 import InfoProduct from "./InfoProduct";
-import { TypeProductEnum } from "@/lib/TypeProductEnum";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
+import {
+    deliveryCityExistPoints,
+    deliveryCityNotExistPoints,
+    deliveryMainCityIncludeMapInfo, deliveryPointsExists, deliveryPointsNotExists,
+} from "@/lib/TextInformation";
 
 /**
  * @param {Object} props
@@ -15,8 +20,8 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum";
  */
 
 export async function generateMetadata({params, searchParams}) {
-    const { entity, product } = await params;
-    const { city_name } = await searchParams;
+    const {entity, product} = await params;
+    const {city_name} = await searchParams;
 
     let response = null
     let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}/seo`)
@@ -30,7 +35,7 @@ export async function generateMetadata({params, searchParams}) {
             url.searchParams.set("city_name", city_name)
         }
 
-        response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
+        response = await fetch(url.toString(), {cache: "no-store"}).then(res => res.json())
 
         return {
             title: response.data.title,
@@ -45,10 +50,9 @@ export async function generateMetadata({params, searchParams}) {
 }
 
 
-
-export default async function Product({ params, searchParams }) {
-    const { entity, product } = await params;
-    const { city_name } = await searchParams;
+export default async function Product({params, searchParams}) {
+    const {entity, product} = await params;
+    const {city_name} = await searchParams;
 
     let item = null
     let response = null
@@ -63,7 +67,7 @@ export default async function Product({ params, searchParams }) {
             url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}`)
         }
 
-        response = await fetch(url.toString(), { cache: "no-store" }).then(res => res.json())
+        response = await fetch(url.toString(), {cache: "no-store"}).then(res => res.json())
 
         console.log(response)
     } catch (error) {
@@ -72,10 +76,11 @@ export default async function Product({ params, searchParams }) {
 
     item = response?.data ?? null;
 
+    console.log(item)
     return (
         <>
-            <LocationReloadComponent />
-            <InfoProduct item={item} />
+            <LocationReloadComponent/>
+            <InfoProduct item={item}/>
 
             <HorisontalMenu
                 menu={{
@@ -84,11 +89,33 @@ export default async function Product({ params, searchParams }) {
                     delivery: "Доставка",
                 }}
             />
-            <ContentComponent 
-                tag="description" 
-                title="Описание" 
-                content={item?.description ?? "Нет описания"} 
+            <ContentComponent
+                tag="description"
+                title="Описание"
+                content={item?.description ?? "Нет описания"}
             />
+
+            {city_name === undefined && <ContentComponent
+                tag="delivery"
+                title="Доставка"
+                content={deliveryMainCityIncludeMapInfo()}
+            />}
+
+            {city_name !== undefined &&
+                item.price_stock_and_delivery.is_delivery_points_exists_current_city &&
+                <ContentComponent
+                    tag="delivery"
+                    title="Доставка"
+                    content={deliveryPointsExists(item) + '<br />' + deliveryCityExistPoints()}
+                />}
+
+            {city_name !== undefined &&
+                !item.price_stock_and_delivery.is_delivery_points_exists_current_city &&
+                <ContentComponent
+                    tag="delivery"
+                    title="Доставка"
+                    content={deliveryPointsNotExists(item) + '<br />' + deliveryCityNotExistPoints()}
+                />}
         </>
     );
 }

@@ -9,6 +9,13 @@ import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import {useState} from "react";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 import PopUpComponent from "@/components/ui/PopUpComponent";
+import {
+    deliveryCityExistPoints,
+    deliveryCityNotExistPoints,
+    deliveryMainCity,
+    deliveryPointsExists,
+    deliveryPointsNotExists
+} from "@/lib/TextInformation";
 
 const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false}) ;
 
@@ -86,20 +93,13 @@ export default function HorisontalItem({ item }) {
                     .toString() + '</div>'
         }
 
-        //ЕСЛИ нет точек выдачи для данного города
-        //ТО выводим текст о не возможности забрать заказ из пункта выдачи
-        //ИНАЧЕ выводим пункты выдачи заказа
-        if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
-            return '<div style="color: red; font-size: 18px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
-                '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
-                'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
-                '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
+        //ЕСЛИ есть точки выдачи для данного города
+        //ТО выводим текст где забрать
+        //ИНАЧЕ выводим текст, что их нет
+        if(item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return deliveryPointsExists(item)
         } else {
-            return item.price_stock_and_delivery.people_name_delivery_days + ' заказ можно получить в транспортной компании «Луч». ' +
-                '<div><strong>Aдрес:</strong> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
-                '<div><strong>Время работы:</strong>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
-                    .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
-                    .toString() + '</div>'
+            return deliveryPointsNotExists(item)
         }
     }
 
@@ -108,21 +108,16 @@ export default function HorisontalItem({ item }) {
         //ЕСЛИ выбранный город Челябинск
         //ТО выводим информацию для центральных складов
         if (getSelectedCity().name === 'Челябинск') {
-            return'<div>Доставка осуществляется, по согласованию с заказчиком, с 9:00 до 20:00.</div>' +
-                '<div>Доставка осуществляется в пределах городской черты. Стоимость доставки 400р.</div>' +
-                '<div>Доставка в отдаленные районы города согласно тарифам доставки в удаленные районы.</div>'
+            return deliveryMainCity()
         }
 
         //ЕСЛИ нет точек выдачи для данного города
         //ТО выводим текст, что не доставляем по городу заказ, только транспортной коомпанией
         //ИНАЧЕ выводим текст, что доставляем
-        if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
-            return '<div style="color: red; font-size: 18px; font-weight: bold">Доставка по городу <strong>г. ' + getSelectedCity().name + '</strong> не осуществляется.</div> ' +
-                '<div>Доставка в Ваш город возможна транспортной компанией.</div> ' +
-                '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
+        if(item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return deliveryCityExistPoints(getSelectedCity().name)
         } else {
-            return '<div>Вы можете оформить адресную доставку курьером в пределах  городской черты г. ' +getSelectedCity().name+ '.</div>' +
-                '<div>Стоимость доставки курьером, оплачивается отдельно, согласно тарифам ТК «Луч».</div>'
+            return deliveryCityNotExistPoints(getSelectedCity().name)
         }
     }
 

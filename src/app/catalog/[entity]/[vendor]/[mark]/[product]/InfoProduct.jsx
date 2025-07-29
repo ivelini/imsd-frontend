@@ -104,10 +104,7 @@ export default function InfoProduct({ item }) {
                             </div>
 
                             <div className="payment-option" dangerouslySetInnerHTML={{__html:htmlDeliveryInfo()}}></div>
-
-
                         </CostAndCartComponent>
-
                     </div>
                 </div>
             </div>
