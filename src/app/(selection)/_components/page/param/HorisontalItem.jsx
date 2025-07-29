@@ -8,6 +8,8 @@ import Link from "next/link";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import {useState} from "react";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
+import PopUpComponent from "@/components/ui/PopUpComponent";
+
 const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false}) ;
 
 /**
@@ -31,6 +33,9 @@ const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_comp
  * @param {string} item.country.name
  * @param {Object} item.price_stock_and_delivery
  * @param {string} item.price_stock_and_delivery.price
+ * @param {boolean} item.price_stock_and_delivery.is_delivery_points_exists_current_city
+ * @param {boolean} item.price_stock_and_delivery.is_free_shipping
+ * @param {array} item.price_stock_and_delivery.delivery_points
  * @param {number} item.price_stock_and_delivery.count
  * @param {number} item.price_stock_and_delivery.delivery_days
  * @param {string} item.price_stock_and_delivery.people_name_delivery_cost
@@ -40,8 +45,13 @@ const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_comp
  *
  */
 export default function HorisontalItem({ item }) {
+
+    const {getSelectedCity} = useStore()
+
     const { addCart, removeFromCart, hasProductInCart, getCityQueryParam } = useStore()
-    const [isPopUppVisible, setIsPoUppVisible] = useState(false)
+    const [isPopUppAddCartVisible, setIsPoUppAddCartVisible] = useState(false)
+    const [isPopUppDeliveryVisible, setIsPopUppDeliveryVisible] = useState(false)
+    const [isPopUppDeliveryPointsVisible, setIsPopUppDeliveryPointsVisible] = useState(false)
 
     const handleAddCart = () => {
         addCart({
@@ -57,21 +67,86 @@ export default function HorisontalItem({ item }) {
             price: item.price_stock_and_delivery.price,
         })
 
-        setIsPoUppVisible(true)
+        setIsPoUppAddCartVisible(true)
     }
 
     const handleRemoveFromCart = () => {
         removeFromCart(item.product_article)
     }
 
+    const htmContentDeliveryPointsForPopUpp = () => {
+
+        //ЕСЛИ выбранный город Челябинск
+        //ТО выводим информацию для центральных складов
+        if (getSelectedCity().name === 'Челябинск') {
+            return 'Самовывоз осуществляется из центального офиса:' +
+            '<div><strong>Aдрес:</strong> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
+                '<div><strong>Время работы:</strong>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
+                    .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
+                    .toString() + '</div>'
+        }
+
+        //ЕСЛИ нет точек выдачи для данного города
+        //ТО выводим текст о не возможности забрать заказ из пункта выдачи
+        //ИНАЧЕ выводим пункты выдачи заказа
+        if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return '<div>В вашем городе нет точек самовывоза.</div>' +
+                '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
+                'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
+                '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
+        } else {
+            return item.price_stock_and_delivery.people_name_delivery_days + ' заказ можно получить в транспортной компании «Луч». ' +
+                '<div><strong>Aдрес:</strong> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
+                '<div><strong>Время работы:</strong>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
+                    .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
+                    .toString() + '</div>'
+        }
+    }
+
+    const htmContentDeliveryForPopUpp = () => {
+
+        //ЕСЛИ выбранный город Челябинск
+        //ТО выводим информацию для центральных складов
+        if (getSelectedCity().name === 'Челябинск') {
+            return'<div>Доставка осуществляется, по согласованию с заказчиком, с 9:00 до 20:00.</div>' +
+                '<div>Доставка осуществляется в пределах городской черты. Стоимость доставки 400р.</div>' +
+                '<div>Доставка в отдаленные районы города согласно тарифам доставки в удаленные районы.</div>'
+        }
+
+        //ЕСЛИ нет точек выдачи для данного города
+        //ТО выводим текст, что не доставляем по городу заказ, только транспортной коомпанией
+        //ИНАЧЕ выводим текст, что доставляем
+        if(!item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return '<div>Доставка по городу <strong>г. ' + getSelectedCity().name + '</strong> не осуществляется.</div> ' +
+                '<div>Доставка в Ваш город возможна транспортной компанией.</div> ' +
+                '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
+        } else {
+            return '<div>Вы можете оформить адресную доставку курьером в пределах  городской черты г. ' +getSelectedCity().name+ '.</div>' +
+                '<div>Стоимость доставки курьером, оплачивается отдельно, согласно тарифам ТК «Луч».</div>'
+        }
+    }
+
     return (<>
-        {isPopUppVisible && <ProductInCartSuccessComponent item={{
+        {isPopUppAddCartVisible && <ProductInCartSuccessComponent item={{
             name: item.name,
             count: 4,
             price: item.price_stock_and_delivery.price,
             image: item.main_image.url,
 
-        }} handleOnClose={() => setIsPoUppVisible(false)}/>}
+        }} handleOnClose={() => setIsPoUppAddCartVisible(false)}/>}
+
+        {isPopUppDeliveryPointsVisible &&
+            <PopUpComponent title={"Пункты выдачи товара в городе " + getSelectedCity().name}
+                            content={() => htmContentDeliveryPointsForPopUpp()}
+                            handleOnClose={() => setIsPopUppDeliveryPointsVisible(false)}
+            />}
+
+        {isPopUppDeliveryVisible &&
+            <PopUpComponent title={"Доставка по городу " + getSelectedCity().name}
+                            content={() => htmContentDeliveryForPopUpp()}
+                            handleOnClose={() => setIsPopUppDeliveryVisible(false)}
+            />}
+
 
         <div className="catalog-product">
             <div className="catalog-product-image">
@@ -130,8 +205,16 @@ export default function HorisontalItem({ item }) {
                         <div className="catalog-product-flex-item catalog-product-location-info">
                             <LocationComponent />
                             <p className="payment">Оплата при получении</p>
-                            <p className="pickup">Самовывоз <span className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_days}</span></p>
-                            <p className="free-shipping">Доставка <span className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_cost}</span></p>
+                            <p className="pickup">Самовывоз
+                                <a onClick={() => setIsPopUppDeliveryPointsVisible(true)} style={{fontWeight: 'bold'}}>
+                                    <span className="highlight-text"> {item.price_stock_and_delivery.people_name_delivery_days}</span>
+                                </a>
+                            </p>
+                            <p className="free-shipping">Доставка
+                                <a onClick={() => setIsPopUppDeliveryVisible(true)} style={{fontWeight: 'bold'}}>
+                                    <span className="highlight-text"> {item.price_stock_and_delivery.people_name_delivery_cost}</span>
+                                </a>
+                            </p>
                         </div>
                         <div className="catalog-product-flex-item catalog-product-purchase-actions">
                             <CartButtonInHorisontalItem
