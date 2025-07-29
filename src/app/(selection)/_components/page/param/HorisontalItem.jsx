@@ -205,9 +205,9 @@ export default function HorisontalItem({ item }) {
                         <div className="catalog-product-flex-item catalog-product-location-info">
                             <LocationComponent />
                             <p className="payment">Оплата при получении</p>
-                            <p className="pickup">Самовывоз
+                            <p className="pickup">Самовывоз &nbsp;
                                 <a onClick={() => setIsPopUppDeliveryPointsVisible(true)} style={{fontWeight: 'bold', textDecoration: 'underline'}}>
-                                    <span className="highlight-text"> {item.price_stock_and_delivery.people_name_delivery_days}</span>
+                                    <span className="highlight-text">{item.price_stock_and_delivery.people_name_delivery_days}</span>
                                     <img style={{width: '14px',
                                         verticalAlign: 'middle',
                                         marginLeft: '5px'}} src="/assets/img/question_square.png"></img>
