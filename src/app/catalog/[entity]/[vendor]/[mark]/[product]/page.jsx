@@ -85,7 +85,6 @@ export default async function Product({params, searchParams}) {
             <HorisontalMenu
                 menu={{
                     description: "Описание",
-                    availability: "Наличие",
                     delivery: "Доставка",
                 }}
             />
