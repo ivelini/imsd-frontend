@@ -36,6 +36,7 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
 
         setSwitcher('PARAM')
         setSwitcherFilter('PARAM')
+        window.location.reload()
     }
 
     return (<>

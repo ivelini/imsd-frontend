@@ -24,5 +24,5 @@ export default function LocationReloadComponent() {
             history.pushState({}, '', url)
             window.location.reload()
         }
-    }, [])
+    }, [getSelectedCity()])
 }

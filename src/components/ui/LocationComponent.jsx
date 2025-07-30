@@ -43,6 +43,12 @@ export default function LocationComponent() {
         }
     }
 
+    const handleSelectCity =  (city) => {
+        setCity({ id: city.id, name: city.name, name_en: city.name_en })
+        setVisible(false)
+        setCityName('')
+    }
+
     return storeIsReady && (<>
         <a className="choice-city" onClick={() => {
             if(pathName !== '/cart/order') {
@@ -94,12 +100,7 @@ export default function LocationComponent() {
                                     <span className="geo-location-window__link"
                                         title={city.name}
                                         data-id={city.id}
-                                        onClick={() => {
-                                            setCity({ id: city.id, name: city.name, name_en: city.name_en })
-                                            setVisible(false)
-                                            setCityName('')
-                                        }}
-                                    >
+                                        onClick={() => handleSelectCity(city)}>
                                         {city.name}
                                     </span>
                                 </div>

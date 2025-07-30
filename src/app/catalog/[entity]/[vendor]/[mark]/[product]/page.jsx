@@ -76,7 +76,6 @@ export default async function Product({params, searchParams}) {
 
     item = response?.data ?? null;
 
-    console.log(item)
     return (
         <>
             <LocationReloadComponent/>

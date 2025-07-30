@@ -39,7 +39,11 @@ export default function TiresSelectionComponent() {
 
         if (Object.keys(filterTires.params).length > 0) {
             setFilterType('PARAM');
-        } else if (Object.keys(filterTires.car).length > 0) {
+        }
+
+        delete filterTires.car.vehicleIds
+
+        if (Object.keys(filterTires.car).length > 0) {
             setFilterType('CAR');
         }
         getItems()
