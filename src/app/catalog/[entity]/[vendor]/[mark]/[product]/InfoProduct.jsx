@@ -2,6 +2,7 @@ import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[produc
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
 import Image from "next/image";
 import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/Gallery/GalleryImage";
+import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
 
 /**
  *
@@ -53,6 +54,7 @@ export default function InfoProduct({ item }) {
                     <SeasonIconComponent seasonName={item.season?.name} />
                 </div>
                 <GalleryImage images={[item.main_image]}/>
+                <EuroLabel />
             </div>
             <div className="details">
                 <h1 className="details-name">{item.name}</h1>

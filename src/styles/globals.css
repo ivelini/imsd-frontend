@@ -643,7 +643,7 @@ input[type="checkbox"] {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 15px;
     padding-top: 15px;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
     padding-left: 20px;
@@ -652,6 +652,8 @@ input[type="checkbox"] {
 .catalog-product {
     display: flex;
     gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #c5c5c5;
 }
 
 .catalog-product-image {
@@ -758,7 +760,7 @@ input[type="checkbox"] {
 .catalog-product-details {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     width: 100%;
 }
 
@@ -2356,7 +2358,6 @@ input[type="checkbox"] {
     .catalog-with-products {
         padding: 0;
         border: none;
-        margin-top: 30px;
     }
 
     .product-code,
@@ -4203,6 +4204,88 @@ input[type="checkbox"] {
     text-align: right;
     min-width: 120px;
     display: block;
+}
+
+.eu-label {
+    position:absolute;
+    bottom:0;
+    left:0;
+    border-radius:4px;
+    background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.eu-label .rolling-resistance.category-C {
+    background-color: #c6bf10;
+    color: #000;
+}
+
+.eu-label i {
+    display: block;
+    font-style: normal;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.2;
+    position: relative;
+    padding: 5px 6px 3px;
+}
+
+.eu-label .wet-grip.category-B {
+    background-color: #2e7cbf;
+    color: #fff;
+}
+.eu-label .wet-grip {
+    position: relative;
+    padding-left: 7px;
+}
+.eu-label .noise-emission {
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+}
+.eu-label .noise-emission {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.eu-label .rolling-resistance::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%2335332d" d="M336 448H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm157.2-340.7l-81-81c-6.2-6.2-16.4-6.2-22.6 0l-11.3 11.3c-6.2 6.2-6.2 16.4 0 22.6L416 97.9V160c0 28.1 20.9 51.3 48 55.2V376c0 13.2-10.8 24-24 24s-24-10.8-24-24v-32c0-48.6-39.4-88-88-88h-8V64c0-35.3-28.7-64-64-64H96C60.7 0 32 28.7 32 64v352h288V304h8c22.1 0 40 17.9 40 40v27.8c0 37.7 27 72 64.5 75.9 43 4.3 79.5-29.5 79.5-71.7V152.6c0-17-6.8-33.3-18.8-45.3zM256 192H96V64h160v128z"/></svg>') no-repeat center center;
+    background-size: auto;
+}
+.eu-label i::before {
+    content: "";
+    display: block;
+    margin: 0 auto 2px;
+    width: 12px;
+    height: 12px;
+    background-size: 14px 12px !important;
+}
+.eu-label .wet-grip.category-A::before, .eu-label .wet-grip.category-B::before, .eu-label .wet-grip.category-C::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23fff" d="M416 128c-.6 0-1.1.2-1.6.2 1.1-5.2 1.6-10.6 1.6-16.2 0-44.2-35.8-80-80-80-24.6 0-46.3 11.3-61 28.8C256.4 24.8 219.3 0 176 0 114.1 0 64 50.1 64 112c0 7.3.8 14.3 2.1 21.2C27.8 145.8 0 181.5 0 224c0 53 43 96 96 96h320c53 0 96-43 96-96s-43-96-96-96zM88 374.2c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0zm160 0c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0zm160 0c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0z"/></svg>') no-repeat center center;
+    background-size: auto;
+}
+.eu-label .wet-grip::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%2335332d" d="M416 128c-.6 0-1.1.2-1.6.2 1.1-5.2 1.6-10.6 1.6-16.2 0-44.2-35.8-80-80-80-24.6 0-46.3 11.3-61 28.8C256.4 24.8 219.3 0 176 0 114.1 0 64 50.1 64 112c0 7.3.8 14.3 2.1 21.2C27.8 145.8 0 181.5 0 224c0 53 43 96 96 96h320c53 0 96-43 96-96s-43-96-96-96zM88 374.2c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0zm160 0c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0zm160 0c-12.8 44.4-40 56.4-40 87.7 0 27.7 21.5 50.1 48 50.1s48-22.4 48-50.1c0-31.4-27.2-43.1-40-87.7-2.2-8.1-13.5-8.5-16 0z"/></svg>') no-repeat center center;
+}
+.eu-label .wet-grip::after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: 1px;
+    background: rgba(0,0,0,.15);
+}
+.eu-label .noise-emission.noise-emission-2::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 480"><path fill="%2335332d" d="M263 55.1l-89 89H72c-13.3 0-24 10.7-24 24v144a24 24 0 0024 24h102.1l89 89c15 15 41 4.5 41-17V72C304 50.6 278 40 263 55.1zM528 240c0-63.5-32.1-121.9-85.8-156.2-11.2-7.1-26-3.8-33.1 7.5s-3.8 26.2 7.4 33.4C456.3 150 480 193.1 480 240s-23.7 90-63.5 115.4c-11.2 7.1-14.5 22.1-7.4 33.4 6.5 10.4 21.1 15.1 33.1 7.5C495.9 361.9 528 303.5 528 240zm-141.8-76.9a24.08 24.08 0 00-32.6 9.4 23.94 23.94 0 009.5 32.6C376 212.3 384 225.6 384 240c0 14.4-8 27.7-20.9 34.8-11.6 6.4-15.8 21-9.5 32.6 6.4 11.7 21 15.8 32.6 9.5 28.2-15.5 45.8-45 45.8-76.9s-17.5-61.3-45.8-76.9z"/></svg>');
+}
+.eu-label .noise-emission::before {
+    width: 16px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 480"><path fill="%2335332d" d="M215 55.1l-89 89H24c-13.3 0-24 10.7-24 24v144a24 24 0 0024 24h102.1l89 89c15 15 41 4.5 41-17V72C256 50.6 230 40 215 55.1zM448.4 4a24.2 24.2 0 10-26.5 40.5C488.1 87.9 527.6 161 527.6 240s-39.5 152.1-105.8 195.6a24.2 24.2 0 00-7 33.5c7 10.7 21.9 14.6 33.5 7C528.3 423.6 576 335.3 576 240S528.3 56.4 448.4 4zM480 240c0-63.5-32.1-121.9-85.8-156.2-11.2-7.1-26-3.8-33.1 7.5s-3.8 26.2 7.4 33.4C408.3 150 432 193.1 432 240s-23.7 90-63.5 115.4c-11.2 7.1-14.5 22.1-7.4 33.4 6.5 10.4 21.1 15.1 33.1 7.5C447.9 361.9 480 303.5 480 240zm-141.8-76.9a24.08 24.08 0 00-32.6 9.4 23.94 23.94 0 009.5 32.6C328 212.3 336 225.6 336 240c0 14.4-8 27.7-20.9 34.8-11.6 6.4-15.8 21-9.5 32.6 6.4 11.7 21 15.8 32.6 9.5 28.2-15.5 45.8-45 45.8-76.9s-17.5-61.3-45.8-76.9z"/></svg>') no-repeat center center;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 480\"><path fill=\"%2335332d\" d=\"M215 55.1l-89 89H24c-13.3 0-24 10.7-24 24v144a24 24 0 0024 24h102.1l89 89c15 15 41 4.5 41-17V72C256 50.6 230 40 215 55.1zM448.4 4a24.2 24.2 0 10-26.5 40.5C488.1 87.9 527.6 161 527.6 240s-39.5 152.1-105.8 195.6a24.2 24.2 0 00-7 33.5c7 10.7 21.9 14.6 33.5 7C528.3 423.6 576 335.3 576 240S528.3 56.4 448.4 4zM480 240c0-63.5-32.1-121.9-85.8-156.2-11.2-7.1-26-3.8-33.1 7.5s-3.8 26.2 7.4 33.4C408.3 150 432 193.1 432 240s-23.7 90-63.5 115.4c-11.2 7.1-14.5 22.1-7.4 33.4 6.5 10.4 21.1 15.1 33.1 7.5C447.9 361.9 480 303.5 480 240zm-141.8-76.9a24.08 24.08 0 00-32.6 9.4 23.94 23.94 0 009.5 32.6C328 212.3 336 225.6 336 240c0 14.4-8 27.7-20.9 34.8-11.6 6.4-15.8 21-9.5 32.6 6.4 11.7 21 15.8 32.6 9.5 28.2-15.5 45.8-45 45.8-76.9s-17.5-61.3-45.8-76.9z\"/></svg>");
+    background-size: auto;
 }
 
 @media all and (max-width:1200px) {
