@@ -4222,6 +4222,21 @@ input[type="checkbox"] {
     color: #000;
 }
 
+.eu-label .rolling-resistance.category-D {
+    background-color: #ffc302;
+    color: #000;
+}
+
+.eu-label .rolling-resistance.category-E {
+    background-color: #ff9f08;
+    color: #000;
+}
+
+.eu-label .rolling-resistance.category-F {
+    background-color: #eb661b;
+    color: #fff;
+}
+
 .eu-label i {
     display: block;
     font-style: normal;
@@ -4236,6 +4251,22 @@ input[type="checkbox"] {
     background-color: #2e7cbf;
     color: #fff;
 }
+
+.eu-label .wet-grip.category-C {
+    background-color: #60a7dd;
+    color: #fff;
+}
+
+.eu-label .wet-grip.category-D {
+    background-color: #83c1ed;
+    color: #000;
+}
+
+.eu-label .wet-grip.category-F {
+    background-color: #b4e1f6;
+    color: #000;
+}
+
 .eu-label .wet-grip {
     position: relative;
     padding-left: 7px;

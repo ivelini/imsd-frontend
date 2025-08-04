@@ -59,6 +59,7 @@ export default function HorisontalItem({item}) {
     const {getSelectedCity} = useStore()
 
     const {addCart, removeFromCart, hasProductInCart, getCityQueryParam} = useStore()
+    const [popUpp, setPoUpp] = useState({visible: false})
     const [isPopUppAddCartVisible, setIsPoUppAddCartVisible] = useState(false)
     const [isPopUppDeliveryVisible, setIsPopUppDeliveryVisible] = useState(false)
     const [isPopUppDeliveryPointsVisible, setIsPopUppDeliveryPointsVisible] = useState(false)
@@ -135,6 +136,15 @@ export default function HorisontalItem({item}) {
         return 172
     }
 
+    const badgeStyle = {
+        borderRadius: '5px',
+        padding: '0 5px',
+        cursor: 'pointer',
+        display: 'initial',
+        background: '#f5f5f5',
+        color: '#383838',
+    }
+
     return (<>
         {isPopUppAddCartVisible && <ProductInCartSuccessComponent item={{
             name: item.name,
@@ -156,6 +166,11 @@ export default function HorisontalItem({item}) {
                             handleOnClose={() => setIsPopUppDeliveryVisible(false)}
             />}
 
+        {popUpp.visible &&
+            <PopUpComponent title={popUpp.title}
+                            content={() => popUpp.content}
+                            handleOnClose={() => setPoUpp({visible: false})}
+            />}
 
         <div className="catalog-product">
             <div className="catalog-product-image">
@@ -175,11 +190,13 @@ export default function HorisontalItem({item}) {
                         }}
                     />
                 </div>
-                <div>
-                    <EuroLabel />
-                </div>
-
-
+                {item.euro_label !== undefined &&
+                    item.euro_label.length > 0 && (
+                        <div>
+                            <EuroLabel euroLabel={item.euro_label}/>
+                        </div>
+                    )
+                }
             </div>
 
             <div className="catalog-product-details">
@@ -201,41 +218,34 @@ export default function HorisontalItem({item}) {
                     <div className="catalog-product-flex-item catalog-product-general-info">
                         <p className="product-code"><b>Код товара:</b> {item.product_article}</p>
                         <p className="country">Производитель:&nbsp;
-                            <Badge onClick={() => setIsPopUppDeliveryPointsVisible(true)}
-                                   style={{borderRadius: '5px',
-                                       padding: '0 5px',
-                                       cursor: 'pointer',
-                                       display: 'initial',
-                                       background: '#f5f5f5',
-                                       color: '#383838',
-                                   }}
-                                   value={item.country.name}
+                            <Badge onClick={() => setPoUpp({
+                                visible: true,
+                                title: "Информация о производителе",
+                                content: item.vendor.description[1] ?? ''
+                            })} style={badgeStyle}
+                                   value={item.vendor.description[0] ?? ''}
                                    severity="secondary">
                             </Badge>
                         </p>
                         <p className="country">Страна производства:&nbsp;
-                            <Badge onClick={() => setIsPopUppDeliveryPointsVisible(true)}
-                                   style={{borderRadius: '5px',
-                                       padding: '0 5px',
-                                       cursor: 'pointer',
-                                       display: 'initial',
-                                       background: '#f5f5f5',
-                                       color: '#383838',
-                                   }}
-                                   value={item.country.name}
+                            <Badge onClick={() => setPoUpp({
+                                visible: true,
+                                title: "Страна производства шин",
+                                content: item.manufacture_country[1]
+                            })}
+                                   style={badgeStyle}
+                                   value={item.manufacture_country[0] ?? null}
                                    severity="secondary">
                             </Badge>
                         </p>
                         <p className="country">Год выпуска: &nbsp;
-                            <Badge onClick={() => setIsPopUppDeliveryPointsVisible(true)}
-                                   style={{borderRadius: '5px',
-                                       padding: '0 5px',
-                                       cursor: 'pointer',
-                                       display: 'initial',
-                                       background: '#f5f5f5',
-                                       color: '#383838',
-                                   }}
-                                   value="2024-2025"
+                            <Badge onClick={() => setPoUpp({
+                                visible: true,
+                                title: "Год выпуска шин",
+                                content: item.manufacture_year[1]
+                            })}
+                                   style={badgeStyle}
+                                   value={item.manufacture_year[0] ?? null}
                                    severity="secondary">
                             </Badge>
                         </p>
@@ -248,39 +258,30 @@ export default function HorisontalItem({item}) {
 
                             <p className="pickup">Самовывоз &nbsp;
                                 <Badge onClick={() => setIsPopUppDeliveryPointsVisible(true)}
-                                       style={{borderRadius: '5px',
-                                           padding: '0 5px',
-                                           cursor: 'pointer',
-                                           display: 'initial',
-                                           background: '#f5f5f5',
-                                           color: '#383838',
-                                }}
+                                       style={badgeStyle}
                                        value={item.price_stock_and_delivery.people_name_delivery_days + ' >'}
-                                       >
+                                >
                                 </Badge>
                             </p>
                             <p className="free-shipping">Доставка до ПВЗ &nbsp;
                                 <Badge onClick={() => setIsPopUppDeliveryVisible(true)}
-                                       style={{borderRadius: '5px',
-                                           padding: '0 5px',
-                                           cursor: 'pointer',
-                                           display: 'initial',
-                                           background: '#f5f5f5',
-                                           color: '#383838',
-                                       }}
-                                       value={item.price_stock_and_delivery.people_name_delivery_cost  + ' >'}
+                                       style={badgeStyle}
+                                       value={item.price_stock_and_delivery.people_name_delivery_cost + ' >'}
                                        severity="secondary">
                                 </Badge>
                             </p>
                         </div>
-                        {/*<div className="catalog-product-flex-item catalog-product-purchase-actions">*/}
-                        {/*    <CartButtonInHorisontalItem*/}
-                        {/*        item={item}*/}
-                        {/*        add={handleAddCart}*/}
-                        {/*        remove={handleRemoveFromCart}/>*/}
-                        {/*    <p className="availability">Наличие {item.price_stock_and_delivery.count} шт.</p>*/}
-                        {/*    <div style={{'margin': '10px 0'}}></div>*/}
-                        {/*</div>*/}
+                        {window.screen.width > 599 && (
+                            <div className="catalog-product-flex-item catalog-product-purchase-actions">
+                                <CartButtonInHorisontalItem
+                                    item={item}
+                                    add={handleAddCart}
+                                    remove={handleRemoveFromCart}/>
+                                <p className="availability">Наличие {item.price_stock_and_delivery.count} шт.</p>
+                                <div style={{'margin': '10px 0'}}></div>
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>

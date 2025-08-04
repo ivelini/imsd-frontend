@@ -21,6 +21,7 @@ import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
  * @param {boolean} item.is_spike
  * @param {boolean} item.is_runflat
  * @param {string} item.url
+ * @param {string} item.euro_label
  * @param {Object} item.price_stock_and_delivery
  * @param {number} item.price_stock_and_delivery.count
  * @param {number} item.price_stock_and_delivery.delivery_days
@@ -46,7 +47,6 @@ export default function InfoProduct({ item }) {
                 'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>'
         }
     }
-
     return (<>
         <div className="container product-container">
             <div className="gallery">
@@ -54,7 +54,10 @@ export default function InfoProduct({ item }) {
                     <SeasonIconComponent seasonName={item.season?.name} />
                 </div>
                 <GalleryImage images={[item.main_image]}/>
-                <EuroLabel />
+                {item.euro_label !== undefined &&
+                    item.euro_label.length > 0 && (
+                        <EuroLabel euroLabel={item.euro_label}/>)
+                }
             </div>
             <div className="details">
                 <h1 className="details-name">{item.name}</h1>
