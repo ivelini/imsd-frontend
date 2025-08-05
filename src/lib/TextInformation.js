@@ -2,7 +2,7 @@
  * Информация о доставке для основного города  с картой доставки
  */
 export function deliveryMainCityIncludeMapInfo() {
-    const map =  "<iframe src='https://yandex.ru/map-widget/v1/?um=constructor%3A92ebb88f9f20fdc36ce793ae4d8a27367277cef6679b07d5ff54054a18f90192&amp;source=constructor' width='100%' height='600' frameborder='0'></iframe>"
+    const map = "<iframe src='https://yandex.ru/map-widget/v1/?um=constructor%3A92ebb88f9f20fdc36ce793ae4d8a27367277cef6679b07d5ff54054a18f90192&amp;source=constructor' width='100%' height='600' frameborder='0'></iframe>"
 
     const text = '<p>Самовывоз заказа со склада г. Челябинск, Свердловский тракт 3н. Режим работы склада пн-пт: 9:00-19:00,  сб-вс: 9:00-17:00. </p>' +
         '<p>Доставка по Челябинску и области осуществляется по согласованию с заказчиком в удобное время.  ' +
@@ -18,7 +18,7 @@ export function deliveryMainCityIncludeMapInfo() {
  * Информация о доставке для основного города
  */
 export function deliveryMainCity() {
-    return'<div>Доставка осуществляется, по согласованию с заказчиком, с 9:00 до 20:00.</div>' +
+    return '<div>Доставка осуществляется, по согласованию с заказчиком, с 9:00 до 20:00.</div>' +
         '<div>Доставка осуществляется в пределах городской черты. Стоимость доставки 400р.</div>' +
         '<div>Доставка в отдаленные районы города согласно тарифам доставки в удаленные районы.</div>'
 }
@@ -27,12 +27,20 @@ export function deliveryMainCity() {
  * Информация о точках выдачи для городов, где они есть
  * @return {string}
  */
-export function deliveryPointsExists(item) {
-    return item.price_stock_and_delivery.people_name_delivery_days + ' заказ можно получить в транспортной компании «Луч». ' +
+export function deliveryPointsExists(item, isEpilog = true) {
+
+    const epilog = item.price_stock_and_delivery.people_name_delivery_days
+        + ' заказ можно получить в транспортной компании «Луч». '
+
+    console.log(Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
+        .map((key) => ' <div>' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key] + '</div>')
+    )
+    return (isEpilog ? epilog : '') +
         '<div><strong>Aдрес:</strong> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
-        '<div><strong>Время работы:</strong>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
-            .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
-            .toString() + '</div>'
+        '<div><strong>Время работы:</strong>'
+        + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
+            .map((key) => ' <div>' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key] + '</div>')
+            .join('') + '</div>'
 }
 
 /**
@@ -41,7 +49,7 @@ export function deliveryPointsExists(item) {
 export function deliveryPointsNotExists(item) {
     return '<div style="color: red; font-size: 18px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
         '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' товар поступит на центральный склад в г. Челябинск</strong>, ' +
-        'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
+        'откуда его можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
         '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
 }
 

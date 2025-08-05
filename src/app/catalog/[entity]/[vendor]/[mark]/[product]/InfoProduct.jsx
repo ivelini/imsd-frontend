@@ -1,8 +1,10 @@
 import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/CostAndCartComponent";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
-import Image from "next/image";
 import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/Gallery/GalleryImage";
 import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
+import {deliveryPointsExists, deliveryPointsNotExists} from "@/lib/TextInformation";
+import BadgePopUpComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/BadgePopUpComponent";
+
 
 /**
  *
@@ -31,27 +33,30 @@ import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
  * @param {string} item.price_stock_and_delivery.people_name_price_percent_higher
  *
  */
-export default function InfoProduct({ item }) {
-
+export default function InfoProduct({item}) {
     const htmlDeliveryInfo = () => {
 
         //ЕСЛИ в выбранном городе есть точки выдачи
-        if(item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
-            return '<div><strong>Самовывоз из ПВЗ по адресу:</strong></div><div> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
-                '<div><strong>Время работы:</strong></div><div>' + Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
-                    .map((key) => ' ' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key])
-                    .toString() + '</div>'
+        if (item.price_stock_and_delivery.is_delivery_points_exists_current_city) {
+            return '<div><strong>Самовывоз из ПВЗ по адресу:</strong></div>' + deliveryPointsExists(item, false)
         } else {
-            return '<div style="color: red; font-size: 16px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
-                '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
-                'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>'
+            return deliveryPointsNotExists(item)
         }
+    }
+
+    const badgeStyle = {
+        borderRadius: '5px',
+        padding: '0 5px',
+        cursor: 'pointer',
+        display: 'initial',
+        background: '#f5f5f5',
+        color: '#383838',
     }
     return (<>
         <div className="container product-container">
             <div className="gallery">
                 <div className="gallery-panel">
-                    <SeasonIconComponent seasonName={item.season?.name} />
+                    <SeasonIconComponent seasonName={item.season?.name}/>
                 </div>
                 <GalleryImage images={[item.main_image]}/>
                 {item.euro_label !== undefined &&
@@ -64,22 +69,29 @@ export default function InfoProduct({ item }) {
 
                 <div className="product-info">
                     <div className="product-parameters">
-                        <h2>Параметры</h2>
                         <ul className="parameters-list">
 
-                            {Object.keys(item.parameters_to_front).map((key, index) => (<>
+                            {Object.keys(item.parameters_to_front).map((key, index) => (
                                 <li key={index} className="parameter-item">
                                     <span className="parameter-name">{key}:</span>
-                                    <span className="parameter-value">{item.parameters_to_front[key]}</span>
+
+                                    {typeof item.parameters_to_front[key] == 'object'
+                                        ? <BadgePopUpComponent
+                                            title={key}
+                                            value={item.parameters_to_front[key][0]}
+                                            content={item.parameters_to_front[key][1]} />
+                                        : <span className="parameter-value">{item.parameters_to_front[key]}</span>
+                                    }
                                 </li>
-                            </>))}
+                            ))}
                         </ul>
                     </div>
 
                     <div className="price-payment-shipping">
                         <div className="price-info">
                             <span className="current-price">{item.price_stock_and_delivery.people_name_price} ₽</span>
-                            <span className="old-price">{item.price_stock_and_delivery.people_name_price_percent_higher} ₽</span>
+                            <span
+                                className="old-price">{item.price_stock_and_delivery.people_name_price_percent_higher} ₽</span>
                         </div>
 
                         <CostAndCartComponent item={item}>
@@ -108,7 +120,8 @@ export default function InfoProduct({ item }) {
                                 </div>
                             </div>
 
-                            <div className="payment-option" dangerouslySetInnerHTML={{__html:htmlDeliveryInfo()}}></div>
+                            <div className="payment-option"
+                                 dangerouslySetInnerHTML={{__html: htmlDeliveryInfo()}}></div>
                         </CostAndCartComponent>
                     </div>
                 </div>

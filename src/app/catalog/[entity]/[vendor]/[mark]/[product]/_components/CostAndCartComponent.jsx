@@ -84,13 +84,16 @@ export default function CostAndCartComponent({children, item}) {
 
         {children}
 
-        {!hasProductInCart(item.product_article)
-            ?
-            <button className="add-to-cart-button primary-button" onClick={handleAddProduct}>Добавить в корзину</button>
-            : <button className="add-to-cart-button primary-button"
-                      style={{'backgroundColor': '#D8D8D8', 'color': '#444444'}}
-                      onClick={handleRemoveProduct}
-            >Убрать из корзины</button>
-        }
+        <div style={{display: 'grid'}}>
+            {!hasProductInCart(item.product_article)
+                ?
+                <button className="add-to-cart-button primary-button" onClick={handleAddProduct}>Добавить в корзину</button>
+                : <button className="add-to-cart-button primary-button"
+                          style={{'backgroundColor': '#D8D8D8', 'color': '#444444'}}
+                          onClick={handleRemoveProduct}
+                >Убрать из корзины</button>
+            }
+        </div>
+
     </>)
 }

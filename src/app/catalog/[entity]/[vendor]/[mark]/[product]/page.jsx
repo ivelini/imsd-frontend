@@ -100,20 +100,20 @@ export default async function Product({params, searchParams}) {
             />}
 
             {city_name !== undefined &&
-                item.price_stock_and_delivery.is_delivery_points_exists_current_city &&
-                <ContentComponent
+            item.price_stock_and_delivery.is_delivery_points_exists_current_city
+                ? <ContentComponent
                     tag="delivery"
                     title="Доставка"
                     content={deliveryPointsExists(item) + '<br />' + deliveryCityExistPoints()}
-                />}
-
-            {city_name !== undefined &&
-                !item.price_stock_and_delivery.is_delivery_points_exists_current_city &&
-                <ContentComponent
+                />
+                : <ContentComponent
                     tag="delivery"
                     title="Доставка"
                     content={deliveryPointsNotExists(item) + '<br />' + deliveryCityNotExistPoints()}
-                />}
+                />
+            }
+
+
         </>
     );
 }
