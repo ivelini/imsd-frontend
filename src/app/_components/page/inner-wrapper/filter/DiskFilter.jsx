@@ -102,7 +102,7 @@ const DiskFilter = () => {
                         onChange={(e) => setParamFilterWheels({type: 'dia', value: e.value.id})}
                         options={[{id: null, name: 'Любая'}, ...(params?.dia ?? [])]}
                         optionLabel="name"
-                        placeholder="Ступица"
+                        placeholder="D (Ступица)"
                         className="custom-select"
                         dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
                                            fill="none">
@@ -114,7 +114,6 @@ const DiskFilter = () => {
                         </svg>}
                     />
                 </div>
-
             </div>
             <div className="select-row">
                 <div className="custom-select-wrapper">

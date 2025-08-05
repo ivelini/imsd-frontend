@@ -40,7 +40,7 @@ export function deliveryPointsExists(item) {
  */
 export function deliveryPointsNotExists(item) {
     return '<div style="color: red; font-size: 18px; font-weight: bold">В вашем городе нет точек самовывоза.</div>' +
-        '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' шины поступят на центральный склад в г. Челябинск</strong>, ' +
+        '<div><strong>' + item.price_stock_and_delivery.people_name_delivery_days + ' товар поступит на центральный склад в г. Челябинск</strong>, ' +
         'откуда их можно забрать самостоятельно, либо оформить доставку в Ваш город транспортной компанией.</div>' +
         '<div>По выбору транспортной компании и расчету стоимости, обратитесь к нашим менеджерам.</div>'
 }

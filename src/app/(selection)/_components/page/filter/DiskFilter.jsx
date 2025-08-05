@@ -53,14 +53,14 @@ export function DiskFilter({ collback }) {
                     optionLabel="name"
                     placeholder="Диаметр"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
 
@@ -74,10 +74,12 @@ export function DiskFilter({ collback }) {
                     placeholder="Ширина"
                     className={`custom-select ${filterWheels.params?.width ? 'p-dropdown-selected' : ''}`}
 
-                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
                         <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
                     </svg>}
-                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
                         <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
                     </svg>}
                 />
@@ -91,14 +93,14 @@ export function DiskFilter({ collback }) {
                     optionLabel="name"
                     placeholder="PCD (крепеж)"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
 
@@ -110,33 +112,33 @@ export function DiskFilter({ collback }) {
                     optionLabel="name"
                     placeholder="ET (вылет)"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
 
             <div className="custom-select-wrapper custom-select-wrapper-cat">
                 <Dropdown
                     value={params.dia?.find(item => item.id === filterWheels.params.dia)}
-                    onChange={(e) => handleChangeInput({ type: 'dia', value: e.value.id == null ? e.value.id : Boolean(e.value.id) })}
+                    onChange={(e) => handleChangeInput({type: 'dia', value: e.value.id})}
                     options={[{ id: null, name: 'Любой' }, ...(params?.dia ?? [])]}
                     optionLabel="name"
-                    placeholder="Ступица"
+                    placeholder="D (Ступица)"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
 
@@ -148,14 +150,14 @@ export function DiskFilter({ collback }) {
                     optionLabel="name"
                     placeholder="Тип дисков"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
             <div className="custom-select-wrapper custom-select-wrapper-cat">
@@ -166,14 +168,14 @@ export function DiskFilter({ collback }) {
                     optionLabel="name"
                     placeholder="Производитель"
                     className="custom-select"
-                    dropdownIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
-                    collapseIcon={() => (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                            <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                        </svg>)}
+                    dropdownIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
+                    collapseIcon={<svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6"
+                                       fill="none">
+                        <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
+                    </svg>}
                 />
             </div>
 

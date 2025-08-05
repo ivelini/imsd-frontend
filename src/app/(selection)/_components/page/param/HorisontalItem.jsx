@@ -221,9 +221,9 @@ export default function HorisontalItem({item}) {
                             <Badge onClick={() => setPoUpp({
                                 visible: true,
                                 title: "Информация о производителе",
-                                content: item.vendor.description[1] ?? ''
+                                content: item.vendor.description?.[1] ?? ''
                             })} style={badgeStyle}
-                                   value={item.vendor.description[0] ?? ''}
+                                   value={(item.vendor.description?.[0] ?? '') + ' >'}
                                    severity="secondary">
                             </Badge>
                         </p>
@@ -231,10 +231,10 @@ export default function HorisontalItem({item}) {
                             <Badge onClick={() => setPoUpp({
                                 visible: true,
                                 title: "Страна производства шин",
-                                content: item.manufacture_country[1]
+                                content: item.manufacture_country?.[1] ?? null
                             })}
                                    style={badgeStyle}
-                                   value={item.manufacture_country[0] ?? null}
+                                   value={(item.manufacture_country?.[0] ?? '') + ' >'}
                                    severity="secondary">
                             </Badge>
                         </p>
@@ -242,10 +242,10 @@ export default function HorisontalItem({item}) {
                             <Badge onClick={() => setPoUpp({
                                 visible: true,
                                 title: "Год выпуска шин",
-                                content: item.manufacture_year[1]
+                                content: item.manufacture_year?.[1]
                             })}
                                    style={badgeStyle}
-                                   value={item.manufacture_year[0] ?? null}
+                                   value={(item.manufacture_year?.[0] ?? '') + ' >'}
                                    severity="secondary">
                             </Badge>
                         </p>
