@@ -15,7 +15,7 @@ export default function BadgePopUpComponent({title, value, content}) {
         background: '#f5f5f5',
         color: '#383838',
         textAlign: 'center',
-        width: '120px',
+        width: window.screen.width <= 600 ? '200px' : '120px',
         height: 'auto'
     }
 
