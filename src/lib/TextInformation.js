@@ -2,7 +2,11 @@
  * Информация о доставке для основного города  с картой доставки
  */
 export function deliveryMainCityIncludeMapInfo() {
-    const map = "<iframe src='https://yandex.ru/map-widget/v1/?um=constructor%3A92ebb88f9f20fdc36ce793ae4d8a27367277cef6679b07d5ff54054a18f90192&amp;source=constructor' width='100%' height='600' frameborder='0'></iframe>"
+    const map = "<iframe src='https://yandex.ru/map-widget/v1/?um=constructor%3A92ebb88f9f20fdc36ce793ae4d8a27367277cef6679b07d5ff54054a18f90192&amp;source=constructor' " +
+        "width='100%' " +
+        "height='400' " +
+        "frameborder='0'>" +
+        "</iframe>"
 
     const text = '<p>Самовывоз заказа со склада г. Челябинск, Свердловский тракт 3н. Режим работы склада пн-пт: 9:00-19:00,  сб-вс: 9:00-17:00. </p>' +
         '<p>Доставка по Челябинску и области осуществляется по согласованию с заказчиком в удобное время.  ' +
