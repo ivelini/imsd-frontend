@@ -1,3 +1,5 @@
+import {useStore} from "@/store/useStore";
+
 /**
  * Класс взаимодействия с backend частью приложения
  */
@@ -9,10 +11,18 @@ export default class BackendApi {
     }
 
     static getHeaders(contentType = 'application/json') {
-        return {
+        const token = useStore.getState().getToken()
+
+        let header = {
             ...this.headers,
             'Content-Type': contentType,
-        };
+        }
+
+        if (token != null) {
+            header.Authorization = token
+        }
+
+        return header;
     }
 
     /**
@@ -33,7 +43,7 @@ export default class BackendApi {
         }
 
         let response = await fetch(fullUrl.href, {
-            headers: this.headers
+            headers: this.getHeaders()
         })
 
         return  this.prepareResponse(response)
@@ -46,7 +56,7 @@ export default class BackendApi {
      */
     static async post(url, body = null) {
 
-        let headers = this.headers
+        let headers = this.getHeaders()
         if(!(body instanceof FormData)) {
             body = JSON.stringify(body)
             headers = this.getHeaders('application/json;charset=utf-8')
@@ -69,7 +79,7 @@ export default class BackendApi {
      */
     static async patch(url, body = null) {
 
-        let headers = this.headers
+        let headers = this.getHeaders()
         if(!(body instanceof FormData)) {
             body = JSON.stringify(body)
             headers = this.getHeaders('application/json;charset=utf-8')
@@ -88,7 +98,7 @@ export default class BackendApi {
 
         let response = await fetch(this.base_url + url, {
             method: 'DELETE',
-            headers: this.headers,
+            headers: this.getHeaders(),
         });
 
         return  this.prepareResponse(response)

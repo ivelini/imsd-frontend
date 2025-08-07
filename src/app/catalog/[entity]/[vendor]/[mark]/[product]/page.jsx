@@ -8,6 +8,8 @@ import {
     deliveryCityNotExistPoints,
     deliveryMainCityIncludeMapInfo, deliveryPointsExists, deliveryPointsNotExists,
 } from "@/lib/TextInformation";
+import StocksForManagerComponent
+    from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/StocksForManagerComponent";
 
 /**
  * @param {Object} props
@@ -49,7 +51,6 @@ export async function generateMetadata({params, searchParams}) {
     }
 }
 
-
 export default async function Product({params, searchParams}) {
     const {entity, product} = await params;
     const {city_name} = await searchParams;
@@ -85,8 +86,10 @@ export default async function Product({params, searchParams}) {
                 menu={{
                     description: "Описание",
                     delivery: "Доставка",
+
                 }}
             />
+            <StocksForManagerComponent entity={entity} product={product}/>
             <ContentComponent
                 tag="description"
                 title="Описание"
@@ -113,8 +116,6 @@ export default async function Product({params, searchParams}) {
                     content={deliveryPointsNotExists(item) + '<br />' + deliveryCityNotExistPoints()}
                 />
             }
-
-
         </>
     );
 }

@@ -9,11 +9,6 @@ import FooterSection from "@/app/_components/layout/FooterSection";
 
 export default function RootLayout({ children }) {
 
-    const handleToggleCatalogMenu = () => {
-
-        console.log('asasas')
-    }
-
     return (
         <html lang="en">
             <head>
