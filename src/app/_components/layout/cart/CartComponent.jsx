@@ -9,7 +9,7 @@ export default function CartComponent() {
     return (<>
         <Link href="/cart">
             <div className="cart header-icon-and-btn" id="busket">
-                <img src="/assets/img/busket.svg" alt="" />
+                <i className="pi pi-shopping-bag" style={{fontSize: '20px', color: 'black'}} />
                 <p className="header-icon-and-btn-text">Корзина</p>
                 <CountProductsInCart />
             </div>

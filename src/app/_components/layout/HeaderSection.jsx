@@ -1,8 +1,9 @@
 import Link from "next/link";
 import LocationComponent from "@/components/ui/LocationComponent";
 import CartComponent from "@/app/_components/layout/cart/CartComponent";
-import CatalogMenu from "@/app/_components/layout/CatalogMenu";
 import SearchInCatalogComponent from "@/app/_components/layout/SearchInCatalogComponent";
+import LoginIconComponent from "@/app/_components/layout/LoginIconComponent";
+import OverlaySidebarComponent from "@/app/_components/layout/OverlaySidebarComponent";
 
 export default function HeaderSection() {
 
@@ -31,18 +32,7 @@ export default function HeaderSection() {
 
             <div className="additional-menu">
                 <div className="gr1">
-                    <div id="hide-show-catalog">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"
-                             fill="none">
-                            <path
-                                d="M6.56818 3.36842H18.5M1 9.68421H18.5M1 16H18.5M1 5.73684L3.38636 3.36842L1 1"
-                                stroke="#303030"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </div>
+                    <OverlaySidebarComponent />
                     <div className="logo">
                         <Link href="/">
                             <img src="/assets/img/logo.svg" alt=""/>
@@ -56,25 +46,18 @@ export default function HeaderSection() {
                     {/*            fill="#DD062A"*/}
                     {/*        />*/}
                     {/*    </svg>*/}
-                    {/*    <a id="get-catalog">Каталог</a>*/}
+                    {/*    <a id="get-catalog">Меню</a>*/}
                     {/*</div>*/}
                 </div>
                 <div className="gr2">
                     <SearchInCatalogComponent/>
                     <div className="user-panel">
-                        <div className="status-order header-icon-and-btn" id="order-status">
-                            <img src="/assets/img/note.svg" alt=""/>
-                            <p className="header-icon-and-btn-text hide-on-mobile">Статус заказа</p>
-                            <p className="header-icon-and-btn-text show-on-mobile">Мой заказ</p>
-                        </div>
-                        <Link href="/login">
-                        <div className="login header-icon-and-btn" id="header-login">
-
-                                <img src="/assets/img/login.svg" alt=""/>
-                                <p className="header-icon-and-btn-text">Войти</p>
-
-                        </div>
-                    </Link>
+                        {/*<div className="status-order header-icon-and-btn" id="order-status">*/}
+                        {/*    <img src="/assets/img/note.svg" alt=""/>*/}
+                        {/*    <p className="header-icon-and-btn-text hide-on-mobile">Статус заказа</p>*/}
+                        {/*    <p className="header-icon-and-btn-text show-on-mobile">Мой заказ</p>*/}
+                        {/*</div>*/}
+                        <LoginIconComponent />
                         <CartComponent/>
                     </div>
                 </div>

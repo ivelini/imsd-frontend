@@ -10,7 +10,7 @@ export default function GalleryImage({images}) {
                 src={images[0].url}
                 width={100}
                 height={100}
-                style={{'width': '100%', 'height': '100%'}}
+                className={"product-img"}
                 alt="img"
                 unoptimized
             />}

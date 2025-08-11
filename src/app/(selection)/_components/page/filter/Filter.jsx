@@ -7,10 +7,15 @@ import { useStore } from "@/store/useStore";
 import AutoFilter from "./AutoFilter";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
 import { DiskFilter } from "./DiskFilter";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 export default function Filter({ type, collback, setSwitcherFilter, isMobileFilterShow = false }) {
     const { filterTires, filterWheels, clearFilter } = useStore()
     const [switcher, setSwitcher] = useState()
+
+    const router = useRouter();
+    const pathname = usePathname(); // Только путь без query
+    const searchParams = useSearchParams(); //query параметры из адресной строки
 
     useEffect(() => {
         let entityFilter = filterTires
@@ -21,11 +26,17 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
 
         if (
             Object.keys(entityFilter.params).length > 0 ||
-            (Object.keys(entityFilter.params).length === 0 && Object.keys(entityFilter.car).length === 0)
+            (
+                Object.keys(entityFilter.params).length === 0 && Object.keys(entityFilter.car).length === 0
+                && (searchParams.get('filterType') == null || searchParams.get('filterType') === 'param')
+            )
         ) {
             setSwitcher('PARAM')
             setSwitcherFilter('PARAM')
-        } else if (Object.keys(entityFilter.car).length > 0) {
+        } else if (
+            Object.keys(entityFilter.car).length > 0
+            || (searchParams.get('filterType') == null || searchParams.get('filterType') === 'car')
+        ) {
             setSwitcher('CAR')
             setSwitcherFilter('CAR')
         }
@@ -36,6 +47,8 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
 
         setSwitcher('PARAM')
         setSwitcherFilter('PARAM')
+
+        router.replace(pathname)
         window.location.reload()
     }
 

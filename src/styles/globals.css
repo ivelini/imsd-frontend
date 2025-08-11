@@ -464,6 +464,7 @@ a,
 .catalog-page-close,
 .footer-get-call {
     cursor: pointer;
+    text-decoration: none;
 }
 
 .price-inputs {
@@ -1991,6 +1992,10 @@ input[type="checkbox"] {
     display: none;
 }
 
+.logo img {
+    height: 40px
+}
+
 @media only screen and (min-width: 0px) and (max-width: 599px) {
     .three-cells .custom-select-wrapper {
         width: 30%;
@@ -2159,10 +2164,6 @@ input[type="checkbox"] {
         width: 100%;
     }
 
-    .logo img {
-        margin-left: 20px;
-    }
-
     #header-login {
         display: none;
     }
@@ -2172,7 +2173,7 @@ input[type="checkbox"] {
     }
 
     .logo img {
-        width: 104px;
+        margin-left: 20px;
         height: 20px;
     }
 
@@ -2683,6 +2684,7 @@ input[type="checkbox"] {
         width: 100%;
     }
 
+
     .logo img {
         margin-left: 20px;
     }
@@ -2988,6 +2990,11 @@ input[type="checkbox"] {
         align-items: center;
         justify-content: flex-end;
     }
+
+    .product-img {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 @media only screen and (min-width: 900px) and (max-width: 1360px) {
@@ -3191,6 +3198,11 @@ input[type="checkbox"] {
         padding: 20px;
         max-width: 540px;
     }
+
+    .product-img {
+        width: 450px;
+        height: 450px;
+    }
 }
 
 @media screen and (min-width: 1360px) {
@@ -3236,6 +3248,11 @@ input[type="checkbox"] {
 
     .search-input input {
         font-size: 20px;
+    }
+
+    .product-img {
+        width: 540px;
+        height: 540px;
     }
 }
 
@@ -4347,6 +4364,7 @@ input[type="checkbox"] {
 
 }
 
+
 @media all and (max-width:1200px) {
     .order_row {
         flex-wrap: wrap;
@@ -4357,6 +4375,7 @@ input[type="checkbox"] {
         width: 100%;
         min-width: unset;
     }
+
 }
 
 @media all and (max-width:700px) {
