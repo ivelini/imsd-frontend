@@ -56,14 +56,16 @@ export default function OverlaySidebarComponent() {
                     <div className="catalog-page-link-group">
                         <br/><br/>
                         <h3 className="link-group-title">Шины</h3>
-                        <a onClick={() => handleClickLink('/tires_selection?filterType=param&filterIsOpen=true')} className="link-group-item">Поиск шин по характеристикам
+                        <a onClick={() => handleClickLink('/tires_selection?filterType=param&filterIsOpen=true')}
+                           className="link-group-item">Поиск шин по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
                                 <path d="M1 1L5 5L1 9" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/tires_selection?filterType=car&filterIsOpen=true')} className="link-group-item">Поиск шин по автомобилю
+                        <a onClick={() => handleClickLink('/tires_selection?filterType=car&filterIsOpen=true')}
+                           className="link-group-item">Поиск шин по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
                                 <path d="M1 1L5 5L1 9" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"
@@ -74,14 +76,16 @@ export default function OverlaySidebarComponent() {
                     <div className="catalog-page-link-group">
                         <br/>
                         <h3 className="link-group-title">Диски</h3>
-                        <a onClick={() => handleClickLink('/disks_selection?filterType=param&filterIsOpen=true')} className="link-group-item">Поиск дисков по характеристикам
+                        <a onClick={() => handleClickLink('/disks_selection?filterType=param&filterIsOpen=true')}
+                           className="link-group-item">Поиск дисков по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
                                 <path d="M1 1L5 5L1 9" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/disks_selection?filterType=car&filterIsOpen=true')} className="link-group-item">Поиск дисков по автомобилю
+                        <a onClick={() => handleClickLink('/disks_selection?filterType=car&filterIsOpen=true')}
+                           className="link-group-item">Поиск дисков по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
                                 <path d="M1 1L5 5L1 9" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"
@@ -93,18 +97,30 @@ export default function OverlaySidebarComponent() {
                         <br/>
                         <h3 className="link-group-title">Компания</h3>
                         <a onClick={() => handleClickLink('/contacts')} className="link-group-item">Контакты</a>
-                        <a onClick={() => handleClickLink('/delivery')} className="link-group-item">Доставка и оплата</a>
+                        <a onClick={() => handleClickLink('/delivery')} className="link-group-item">Доставка и
+                            оплата</a>
                         <a onClick={() => handleClickLink('/refound')} className="link-group-item">Возврат</a>
                         <a onClick={() => handleClickLink('/article')} className="link-group-item">Новости</a>
                     </div>
                     <div className="catalog-page-footer">
-                        <p className="catalog-page-num">8 (351) 7000-319</p>
-                        <button className="catalog-page-btn">Заказать звонок</button>
+                        <a href="tel:+71234567890"
+                           style={{
+                               display: 'inline-block',
+                               padding: '10px 50px',
+                               background: '#dd062a',
+                               color: '#ffffff',
+                               borderRadius: '5px',
+                               textDecoration: 'none',
+                               fontSize: '14px'
+                           }}>
+                            8 (351) 7000-319
+                        </a>
                     </div>
                     <div className="catalog-page-link-group">
                         <br/>
                         <h3 className="link-group-title">Личный кабинет</h3>
-                        <a onClick={() => handleClickLink('/login')} className="link-group-item">{getToken() ==  null ? 'Войти' : 'Выйти'}
+                        <a onClick={() => handleClickLink('/login')}
+                           className="link-group-item">{getToken() == null ? 'Войти' : 'Выйти'}
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
                                 <path d="M1 1L5 5L1 9" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"
