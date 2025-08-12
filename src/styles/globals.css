@@ -2618,6 +2618,13 @@ input[type="checkbox"] {
     .catalog-product-flex-item p {
         font-size: clamp(10px, 4vw, 12px);
     }
+
+    .product-img {
+        width: 360px;
+        height: 360px;
+    }
+
+
 }
 
 @media only screen and (min-width: 600px) and (max-width: 899px) {
