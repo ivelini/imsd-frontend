@@ -1996,8 +1996,13 @@ input[type="checkbox"] {
     display: none;
 }
 
+.logo {
+    display: block;
+}
+
 .logo img {
-    height: 30px
+    height: 30px;
+    vertical-align: middle;
 }
 
 @media only screen and (min-width: 0px) and (max-width: 599px) {
