@@ -5,7 +5,7 @@ export default function FooterSection() {
         <footer>
             <div className="footer-content container">
                 <div className="footer-group footer-group-center">
-                    <p className="footer-grup-num">+7 (351) 700-03-19</p>
+                    <p className="footer-grup-num"><a href="tel:+73517000319">+7 (351) 70-00-319</a></p>
                     {/*<button className="footer-get-call" type="button">Заказать звонок</button>*/}
                     <div className="footer-group-city">2025 г. Автоальянс</div>
                 </div>

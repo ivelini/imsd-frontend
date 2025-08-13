@@ -15,7 +15,7 @@ export default function HeaderSection() {
                         <span className="choice-city-h">Ваш город: </span>
                         <LocationComponent/>
                     </p>
-                    <p className="header-number">+7 (351) 70-00-319</p>
+                    <p className="header-number"><a href="tel:+73517000319">+7 (351) 70-00-319</a></p>
                 </div>
                 <div className="navigation-block">
                     <ul>

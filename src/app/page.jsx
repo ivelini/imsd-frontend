@@ -43,9 +43,9 @@ export default async function Home() {
                 )}
             </div>
         </section>
-        <section className="about-company-section container">
+        <section className="container section section-content">
             <h2>{data.about_us.title}</h2>
-            <div className="about-company-text" dangerouslySetInnerHTML={{__html: data.about_us.content}}/>
+            <div className="container section section-content" dangerouslySetInnerHTML={{__html: data.about_us.content}}/>
         </section>
     </>)
 }

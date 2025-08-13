@@ -31,7 +31,7 @@ export default async function ArticlePage({params}) {
 
     let item = response.data ?? null
     return item !== null && (<>
-        <section className="about-company-section container">
+        <section className="container section section-content">
             <h2>{item.title}</h2>
             <Image className="news-image"
                    src={item.images[0].url}
@@ -42,7 +42,7 @@ export default async function ArticlePage({params}) {
                    unoptimized
             />
 
-                <div className="about-company-text" dangerouslySetInnerHTML={{__html:item.content}} />
+                <div className="container section section-content" dangerouslySetInnerHTML={{__html:item.content}} />
 
         </section>
     </>)

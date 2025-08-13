@@ -16,7 +16,7 @@ export default function PopUpComponent({title, content, handleOnClose}) {
             maskStyle={{'background': 'rgba(0, 0, 0, 0.7)', 'animation': 'none'}}
         >
             <div className="cart_popup" id="cart_popup" style={{'display': 'inline-block'}}>
-                <div className="about-company-text" dangerouslySetInnerHTML={{__html: content()}}></div>
+                <div className="container section section-content" dangerouslySetInnerHTML={{__html: content()}}></div>
             </div>
         </Dialog>
     </>)

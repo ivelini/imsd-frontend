@@ -13,9 +13,9 @@ export default async function ContactPage() {
 
     let item = response?.data ?? null
     return item !== null && (<>
-        <section className="about-company-section container">
+        <section className="container section section-content">
             <h2>{item.title}</h2>
-            <div className="about-company-text" dangerouslySetInnerHTML={{__html:item.content}} />
+            <div className="container section section-content" dangerouslySetInnerHTML={{__html:item.content}} />
         </section>
     </>)
 }

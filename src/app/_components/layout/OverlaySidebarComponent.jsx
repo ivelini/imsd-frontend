@@ -103,7 +103,7 @@ export default function OverlaySidebarComponent() {
                         <a onClick={() => handleClickLink('/article')} className="link-group-item">Новости</a>
                     </div>
                     <div className="catalog-page-footer">
-                        <a href="tel:+71234567890"
+                        <a href="tel:+73517000319"
                            style={{
                                display: 'inline-block',
                                padding: '10px 50px',

@@ -170,6 +170,10 @@ footer {
     line-height: normal;
 }
 
+.footer-grup-num a {
+    color: #000000;
+}
+
 .footer-group-link {
     text-decoration: none;
     color: #2f2f2f;
@@ -2599,8 +2603,13 @@ input[type="checkbox"] {
     }
 
     .breadcrumbs {
-        font-size: 12px;
+        font-size: 10px;
     }
+
+    .breadcrumbs li {
+        padding: 0 2px;
+    }
+
 }
 
 @media screen and (min-width: 360px) and (max-width: 599px) {
