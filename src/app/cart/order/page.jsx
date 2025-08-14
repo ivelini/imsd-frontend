@@ -9,23 +9,26 @@ import {Accordion, AccordionTab} from 'primereact/accordion';
 import {RadioButton} from "primereact/radiobutton";
 import BackendApi from "@/lib/BackendApi";
 import OrderStoreSuccess from "@/app/cart/order/_components/OrderStoreSuccess";
+import Link from "next/link";
+import ToastMessageServerComponent from "@/components/ui/ToastMessageServerComponent";
 
+//Сформированный заказ
 const INITIAL_ORDER = {
-    user: {
+    user: { // Информация о пользователе
         name: '',
-        surnemae: '',
+        surname: '',
         patronimyc: '',
         phone: '',
         email: ''
     },
-    description: '',
-    delivery: {
-        delivery_type: 'deliveryPoint',
-        delivery_point_id: null,
-        shipment_address: '',
-        shipment_transport_company: ''
+    description: '', // Комментарий пользователя к заказу
+    delivery: { //Информация о доставке
+        delivery_type: 'deliveryPoint', // Тип доставки (точка выдачи, доставка курьером, доставка транспортной)
+        delivery_point_id: null, // Если точка выдачи, то ID этой точки выдачи
+        shipment_address: '', // Если курьерская доставка, то адрес куда доставляем
+        shipment_transport_company: '' // Если транспортная компания, то заполняется в свободной форме
     },
-    products: []
+    products: []    // Массив товаров
 }
 
 export default function OrderPage() {
@@ -42,6 +45,7 @@ export default function OrderPage() {
     const [isOrderSuccess, setIsOrderSuccess] = useState(false)
     const [order, setOrder] = useState(INITIAL_ORDER)
     const [deliveryPoints, setDeliveryPoints] = useState([])
+    const [errors, setErrors] = useState(null)
 
     useEffect(() => {
         if (countProductsInCart() === 0) {
@@ -54,11 +58,23 @@ export default function OrderPage() {
     useEffect(() => {
         if (!isStoreReady) return
 
+        let city = getCityQueryParamString({isFirst: true})
+
+            if(city === '') {
+                city = '?city_name=Chelyabinsk'
+            }
         (async () => {
-            let response = await BackendApi.get('/api/list/order/delivery-point' + getCityQueryParamString({isFirst: true}))
+            let response = await BackendApi.get('/api/list/order/delivery-point' + city)
 
             if (response.code === 200) {
                 setDeliveryPoints(response.data)
+                setOrder({
+                    ...order,
+                    delivery: {
+                        ...order.delivery,
+                        delivery_point_id: response.data[0].id
+                    }
+                })
             }
         })()
 
@@ -103,6 +119,10 @@ export default function OrderPage() {
         if (response.code === 201) {
             setIsOrderSuccess(true)
         }
+
+        if(response.code === 422) {
+            setErrors(response)
+        }
     }
 
     const clearOrder = () => {
@@ -111,6 +131,10 @@ export default function OrderPage() {
     }
 
     return isStoreReady && (<>
+        <ToastMessageServerComponent errors={errors} clearErrors={() => {
+            setErrors(null)
+        }}/>
+
         {isOrderSuccess && <OrderStoreSuccess handleOnClick={clearOrder}/>}
 
         <section className="order-section container">
@@ -123,10 +147,10 @@ export default function OrderPage() {
                         <div className="order_form_details_row">
                             <div className="order_form_details_input">
                                 <InputText
-                                    value={order.user.surnemae}
+                                    value={order.user.surname}
                                     onChange={e => setOrder({
                                         ...order,
-                                        user: {...order.user, surnemae: e.target.value}
+                                        user: {...order.user, surname: e.target.value}
                                     })}
                                     placeholder="Фамилия"
                                     className="p-inputtext-sm"
@@ -194,72 +218,86 @@ export default function OrderPage() {
                             <span>Ваш город</span>
                             <b>{getSelectedCity().name}</b>
                         </div>
-                        <div
-                            className={`order_form_delivery_item ${order.delivery.delivery_type === 'deliveryPoint' && 'active'}`}
-                            onClick={() => setOrder({
-                                ...order,
-                                delivery: {...order.delivery, delivery_type: 'deliveryPoint'}
-                            })}
-                        >
-                            <div className="order_form_delivery_item_img">
-                                <img src="/assets/img/delivery_1.svg" alt=""/>
-                            </div>
-                            <div className="order_form_delivery_item_cont">
-                                <div className="order_form_delivery_item_title">Самовывоз со склада с 14.02 по 17.02
-                                </div>
-                                <div className="order_form_delivery_item_list">
-                                    {deliveryPoints.map((item, index) => (
-
-                                        <div key={index}>
-                                            <RadioButton
-                                                name="point"
-                                                inputId={item.id}
-                                                value={item}
-                                                onChange={(e) => setOrder({
-                                                    ...order,
-                                                    delivery: {...order.delivery, delivery_point_id: item.id}
-                                                })}
-                                                checked={order.delivery.delivery_point_id === item.id}
-                                            />
-                                            <label htmlFor={item.id}
-                                                   className="ml-2">{item.full_name} ({item.work_time})</label>
+                        {deliveryPoints.length > 0 &&
+                            <>
+                                <div
+                                    className={`order_form_delivery_item ${order.delivery.delivery_type === 'deliveryPoint' && 'active'}`}
+                                    onClick={() => setOrder({
+                                        ...order,
+                                        delivery: {...order.delivery, delivery_type: 'deliveryPoint'}
+                                    })}
+                                >
+                                    <div className="order_form_delivery_item_img">
+                                        <img src="/assets/img/delivery_1.svg" alt=""/>
+                                    </div>
+                                    <div className="order_form_delivery_item_cont">
+                                        <div className="order_form_delivery_item_title">
+                                            Самовывоз со склада
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className={`order_form_delivery_item ${order.delivery.delivery_type === 'toClient' && 'active'}`}
-                            onClick={() => setOrder({
-                                ...order,
-                                delivery: {...order.delivery, delivery_type: 'toClient'}
-                            })}
-                        >
-                            <div className="order_form_delivery_item_img">
-                                <img src="/assets/img/delivery_2.svg" alt=""/>
-                            </div>
-                            <div className="order_form_delivery_item_cont">
-                                <div className="order_form_delivery_item_title">Доставка в Вашем
-                                    городе <span>бесплатно</span>. В удаленные районы согласно установленным <a
-                                        href="#">тарифам</a></div>
-                                <div className="order_form_delivery_item_input">
-                                    <InputText
-                                        value={order.delivery.shipment_address}
-                                        onInput={e => setOrder({
-                                            ...order,
-                                            delivery: {...order.delivery, shipment_address: e.target.value}
-                                        })}
-                                        placeholder="Адрес в свободной форме* "
-                                        className="p-inputtext-sm"
-                                    />
-                                    <div className="order_form_delivery_item_input_prompt">*Позвоним, что бы согласовать
-                                        детали заказа (обязательно)
+                                        <div className="order_form_delivery_item_list">
+                                            {deliveryPoints.map((item, index) => (
+
+                                                <div key={index}>
+                                                    <RadioButton
+                                                        name="point"
+                                                        inputId={item.id}
+                                                        value={item}
+                                                        onChange={(e) => setOrder({
+                                                            ...order,
+                                                            delivery: {...order.delivery, delivery_point_id: item.id}
+                                                        })}
+                                                        checked={order.delivery.delivery_point_id === item.id || index === 0 && order.delivery.delivery_point_id == null}
+                                                    />
+                                                    <label htmlFor={item.id}
+                                                           className="ml-2">
+                                                        {item.full_name}&nbsp;
+                                                        {Object.keys(item.work_time)
+                                                            .map(key => key + ': ' + item.work_time[key])
+                                                            .join(', ')
+                                                        }</label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div
-                            className={`order_form_delivery_item ${order.delivery.delivery_type === 'toTransportCompany' && 'active'}`}
+
+                                <div
+                                    className={`order_form_delivery_item ${order.delivery.delivery_type === 'toClient' && 'active'}`}
+                                    onClick={() => setOrder({
+                                        ...order,
+                                        delivery: {...order.delivery, delivery_type: 'toClient'}
+                                    })}
+                                >
+                                    <div className="order_form_delivery_item_img">
+                                        <img src="/assets/img/delivery_2.svg" alt=""/>
+                                    </div>
+                                    <div className="order_form_delivery_item_cont">
+                                        <div className="order_form_delivery_item_title">
+                                            <p>Доставка курьером.</p>
+                                            <p>Стоимость доставки курьером, оплачивается отдельно. <Link href="/delivery" target="_blank">Тарифы на доставку.</Link>
+                                            </p>
+                                        </div>
+                                        <div className="order_form_delivery_item_input">
+                                            <InputText
+                                                value={order.delivery.shipment_address}
+                                                onInput={e => setOrder({
+                                                    ...order,
+                                                    delivery: {...order.delivery, shipment_address: e.target.value}
+                                                })}
+                                                placeholder="Адрес в свободной форме* "
+                                                className="p-inputtext-sm"
+                                            />
+                                            <div className="order_form_delivery_item_input_prompt">*Позвоним, что бы
+                                                согласовать
+                                                детали заказа (обязательно)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        }
+
+                        <div className={`order_form_delivery_item ${order.delivery.delivery_type === 'toTransportCompany' && 'active'} ${deliveryPoints.length == 0 && 'active'}`}
                             onClick={() => setOrder({
                                 ...order,
                                 delivery: {...order.delivery, delivery_type: 'toTransportCompany'}
@@ -287,7 +325,7 @@ export default function OrderPage() {
                         </div>
                     </div>
                     <div className="order_form_in order_form_method">
-                        <div className="order_form_title"><span>3</span> Способ оплаты</div>
+                    <div className="order_form_title"><span>3</span> Способ оплаты</div>
                         <div className="order_form_method_item active">
                             <img src="/assets/img/order_check_a.svg" alt=""/>
                             <span>Наличными при получении</span>

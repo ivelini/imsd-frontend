@@ -8,7 +8,8 @@ import {useEffect, useState} from "react";
 import {useStore} from "@/store/useStore";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 import dynamic from "next/dynamic";
-const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false}) ;
+
+const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false});
 
 /**
  *
@@ -17,12 +18,12 @@ const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_comp
  * @constructor
  */
 export default function CaruselComponent({items}) {
-    const [itemAddedToCart, setItemAddedToCart, ] = useState({})
-    const { addCart, removeFromCart, getCityQueryParam } = useStore()
+    const [itemAddedToCart, setItemAddedToCart,] = useState({})
+    const {addCart, removeFromCart, getCityQueryParam} = useStore()
     const [storeIsReady, setStoreIsReady] = useState(false)
 
     useEffect(() => {
-        if(!getCityQueryParam()) return
+        if (!getCityQueryParam()) return
         setStoreIsReady(true)
     }, [getCityQueryParam()]);
 
@@ -53,22 +54,22 @@ export default function CaruselComponent({items}) {
     const responsiveOptions = [
         {
             breakpoint: '1400px',
-            numVisible: 2,
+            numVisible: 5,
             numScroll: 1
         },
         {
             breakpoint: '1199px',
-            numVisible: 3,
+            numVisible: 4,
             numScroll: 1
         },
         {
             breakpoint: '767px',
-            numVisible: 2,
+            numVisible: 3,
             numScroll: 1
         },
         {
             breakpoint: '575px',
-            numVisible: 1,
+            numVisible: 2,
             numScroll: 1
         }
     ];
@@ -105,8 +106,8 @@ export default function CaruselComponent({items}) {
                     <Image
                         src={item.main_image.url}
                         alt={item.name}
-                        width={172}
-                        height={172}
+                        width={142}
+                        height={142}
                         unoptimized
                     />
                 </div>
@@ -133,7 +134,8 @@ export default function CaruselComponent({items}) {
                 </div>
                 <div className="price-info">
                     <span className="current-price">{item.price_stock_and_delivery.people_name_price} ₽</span>
-                    <span className="old-price">{item.price_stock_and_delivery.people_name_price_percent_higher} ₽</span>
+                    <span
+                        className="old-price">{item.price_stock_and_delivery.people_name_price_percent_higher} ₽</span>
                 </div>
                 <div className="buy-button-blk">
                     <CartButtonInHorisontalItem
@@ -155,13 +157,15 @@ export default function CaruselComponent({items}) {
 
         }} handleOnClose={() => setItemAddedToCart({})}/>}
 
-        {storeIsReady && <Carousel value={items}
-                   numVisible={5}
-                   numScroll={1}
-                   circular
-                   responsiveOptions={responsiveOptions}
-                   itemTemplate={productTemplate}
-                   showIndicators={false}
+        {storeIsReady && <Carousel
+            value={items}
+            numVisible={5}
+            numScroll={1}
+            circular
+            responsiveOptions={responsiveOptions}
+            itemTemplate={productTemplate}
+            showIndicators={false}
+            className="product-list responsive"
 
         />}
     </>)

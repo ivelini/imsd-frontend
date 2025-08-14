@@ -1157,6 +1157,11 @@ input[type="checkbox"] {
     margin-top: 5px;
 }
 
+.product-details svg {
+    width: 15px;
+    height: 15px;
+}
+
 .section-product {
     justify-content: space-between;
     display: flex;
@@ -1301,13 +1306,12 @@ input[type="checkbox"] {
 
 .product-title {
     color: #383838;
-
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
     margin-top: 36px;
-    height: 80px;
+    min-height: 80px;
 }
 
 .product-title a {
@@ -2424,7 +2428,6 @@ input[type="checkbox"] {
         padding: 10px;
         box-sizing: border-box;
         position: relative;
-        padding-bottom: 50px;
     }
 
     .news-image {
@@ -2461,6 +2464,8 @@ input[type="checkbox"] {
 
     .product-title {
         margin-top: 20px;
+        font-size: 12px;
+        min-height: 65px;
     }
 
     .section-product .current-price {
@@ -2614,7 +2619,6 @@ input[type="checkbox"] {
     .breadcrumbs li {
         padding: 0 2px;
     }
-
 }
 
 @media screen and (min-width: 360px) and (max-width: 599px) {
