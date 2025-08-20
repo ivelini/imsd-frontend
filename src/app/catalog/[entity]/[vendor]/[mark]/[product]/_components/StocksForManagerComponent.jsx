@@ -30,15 +30,16 @@ export default function StocksForManagerComponent({entity, product}) {
     }, []);
 
     return (stocks.length > 0 &&
-        <div style={{overflowX: 'auto', width: '100%'}}>
-            <DataTable value={stocks} tableStyle={{minWidth: '50rem'}}>
-                <Column field="name" header="Склад"></Column>
-                <Column field="count" header="Количество"></Column>
-                <Column field="price" header="Цена закупочная"></Column>
-                <Column field="price_with_coefficient" header="Цена прайсовая"></Column>
-                <Column field="delivery_days" header="Дней доставки"></Column>
-            </DataTable>
+        <div className="container">
+            <div style={{overflowX: 'auto', width: '100%'}}>
+                <DataTable value={stocks} tableStyle={{minWidth: '50rem'}}>
+                    <Column field="name" header="Склад"></Column>
+                    <Column field="count" header="Количество"></Column>
+                    <Column field="price" header="Цена закупочная"></Column>
+                    <Column field="price_with_coefficient" header="Цена прайсовая"></Column>
+                    <Column field="delivery_days" header="Дней доставки"></Column>
+                </DataTable>
+            </div>
         </div>
-
     )
 }
