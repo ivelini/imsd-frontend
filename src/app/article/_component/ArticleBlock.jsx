@@ -12,7 +12,6 @@ import Link from "next/link";
  * @param {boolean} isRight
  */
 export default function ArticleBlock({item, isRight = false}) {
-    console.log(item)
     return (<>
         <div className="news" style={{'marginRight': isRight ? '100px' : '0px'}}>
             <Image className="news-image"

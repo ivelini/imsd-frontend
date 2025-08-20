@@ -28,8 +28,6 @@ export default function CaruselComponent({items}) {
     }, [getCityQueryParam()]);
 
     const handleAddCart = (item) => {
-
-        console.log(item)
         addCart({
             product_type: item.product_type,
             id: item.id,

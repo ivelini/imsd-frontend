@@ -69,8 +69,6 @@ export default async function Product({params, searchParams}) {
         }
 
         response = await fetch(url.toString(), {cache: "no-store"}).then(res => res.json())
-
-        console.log(response)
     } catch (error) {
         console.error("Ошибка загрузки данных:", error)
     }

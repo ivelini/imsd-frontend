@@ -36,9 +36,6 @@ export function deliveryPointsExists(item, isEpilog = true) {
     const epilog = item.price_stock_and_delivery.people_name_delivery_days
         + ' заказ можно получить в транспортной компании «Луч». '
 
-    console.log(Object.keys(item.price_stock_and_delivery.delivery_points[0].work_time)
-        .map((key) => ' <div>' + key + ': ' + item.price_stock_and_delivery.delivery_points[0].work_time[key] + '</div>')
-    )
     return (isEpilog ? epilog : '') +
         '<div><strong>Aдрес:</strong> ' + item.price_stock_and_delivery.delivery_points[0].address + '</div>' +
         '<div><strong>Время работы:</strong>'

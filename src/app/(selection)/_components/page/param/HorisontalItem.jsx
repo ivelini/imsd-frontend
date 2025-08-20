@@ -145,7 +145,6 @@ export default function HorisontalItem({item}) {
         color: '#383838',
     }
 
-    console.log(item)
     return (<>
         {isPopUppAddCartVisible && <ProductInCartSuccessComponent item={{
             name: item.name,

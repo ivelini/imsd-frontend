@@ -13,16 +13,14 @@ export default function StocksForManagerComponent({entity, product}) {
     const [stocks, setStocks] = useState([])
 
     const getStocks = async () => {
-        if (entity === TypeProductEnum.TIRES) {
-            return await BackendApi.get(`/api/front-manager/tires-in-stocks/${product}`)
-        }
+        return await BackendApi.get(`/api/front-manager/stocks/${entity}/${product}`)
     }
 
     useEffect(() => {
         if (getToken() != null) {
             getStocks()
                 .then(response => {
-                    if (response.code == 200) {
+                    if (response.code === 200) {
                         setStocks(response.data)
                     }
                 })

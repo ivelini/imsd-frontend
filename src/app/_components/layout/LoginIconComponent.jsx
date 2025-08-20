@@ -17,7 +17,6 @@ export default function LoginIconComponent() {
                     <Avatar icon="pi pi-user" style={{backgroundColor: '#dd062a', color: '#ffffff', width: '20px', height: '20px', borderRadius: '3px'}}/>
                     <p className="header-icon-and-btn-text">Выйти</p>
                 </>)}
-
             </div>
         </Link>
     )

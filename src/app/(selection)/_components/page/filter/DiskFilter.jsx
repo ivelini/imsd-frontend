@@ -18,7 +18,6 @@ export function DiskFilter({ collback }) {
             let response = await BackendApi.get('/api/list/filter/disk')
 
             if (response.code === 200) {
-                console.log(await response.data)
                 setParams(await response.data)
             }
         })()

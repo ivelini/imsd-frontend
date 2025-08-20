@@ -122,10 +122,6 @@ export default function TiresSelectionComponent() {
 
         if (response.code === 200) {
             let data = await response;
-
-            console.log('current', data.meta.range_price.currentFilter[0], data.meta.range_price.currentFilter[1])
-            console.log('all', data.meta.range_price.all[0], data.meta.range_price.all[1])
-
             setRangeFilterTires({
                 type: 'current',
                 value: [

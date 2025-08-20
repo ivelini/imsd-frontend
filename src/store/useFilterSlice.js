@@ -41,7 +41,6 @@ export const useFilterSlice = (set, get) => ({
      * @param {string} payload.value - Значение параметра.
      */
     setParamFilterTires: (payload) => set((state) => {
-        console.log('setParamFilterTires')
         let newParams = {...state.filterTires.params}
 
         if (payload.value !== null) {
@@ -61,7 +60,6 @@ export const useFilterSlice = (set, get) => ({
      * @param {string} payload.value - Значение параметра.
      */
     setParamFilterWheels: (payload) => set((state) => {
-        console.log('setParamFilterWheels')
         let newParams = {...state.filterWheels.params}
 
         if (payload.value !== null) {
@@ -114,7 +112,6 @@ export const useFilterSlice = (set, get) => ({
      * @param {string} payload.value - Значение параметра.
      */
     setCarFilterTires: (payload) => set((state) => {
-        console.log('setCarFilterTires', payload)
         let newCar = {...state.filterTires.car}
 
         if (payload.value !== null) {
@@ -133,7 +130,6 @@ export const useFilterSlice = (set, get) => ({
      * @param {string} payload.value - Значение параметра.
      */
     setCarFilterWheels: (payload) => set((state) => {
-        console.log('setCarFilterWheels', payload)
         let newCar = {...state.filterWheels.car}
 
         if (payload.value !== null) {
@@ -153,7 +149,6 @@ export const useFilterSlice = (set, get) => ({
      *
      */
     clearFilter: (payload) => set((state) => {
-        console.log('clearFilter')
         if (typeof payload == 'undefined') {
             return {
                 ...state,

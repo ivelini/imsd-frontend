@@ -41,7 +41,6 @@ export default function ArticlesComponent() {
     }
 
     const onPageChange = (data) => {
-        console.log(data)
         getItems(data.page + 1)
         setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
     }
