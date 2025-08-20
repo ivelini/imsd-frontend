@@ -4270,27 +4270,34 @@ input[type="checkbox"] {
     display: inline-flex;
     overflow: hidden;
 }
-
+.eu-label .rolling-resistance.category-A {
+    background-color:#178e42;
+    color:#fff
+}
+.eu-label .rolling-resistance.category-B {
+    background-color:#69a628;
+    color:#fff
+}
 .eu-label .rolling-resistance.category-C {
-    background-color: #c6bf10;
-    color: #000;
+    background-color:#c6bf10;
+    color:#000
 }
-
 .eu-label .rolling-resistance.category-D {
-    background-color: #ffc302;
-    color: #000;
+    background-color:#ffc302;
+    color:#000
 }
-
 .eu-label .rolling-resistance.category-E {
-    background-color: #ff9f08;
-    color: #000;
+    background-color:#ff9f08;
+    color:#000
 }
-
 .eu-label .rolling-resistance.category-F {
-    background-color: #eb661b;
-    color: #fff;
+    background-color:#eb661b;
+    color:#fff
 }
-
+.eu-label .rolling-resistance.category-G {
+    background-color:#d3392a;
+    color:#fff
+}
 .eu-label i {
     display: block;
     font-style: normal;
@@ -4300,39 +4307,46 @@ input[type="checkbox"] {
     position: relative;
     padding: 5px 6px 3px;
 }
-
+.eu-label .wet-grip.category-A {
+    background-color:#2464ac;
+    color:#fff
+}
 .eu-label .wet-grip.category-B {
-    background-color: #2e7cbf;
-    color: #fff;
+    background-color:#2e7cbf;
+    color:#fff
 }
-
 .eu-label .wet-grip.category-C {
-    background-color: #60a7dd;
-    color: #fff;
+    background-color:#60a7dd;
+    color:#fff
 }
-
 .eu-label .wet-grip.category-D {
-    background-color: #83c1ed;
-    color: #000;
+    background-color:#83c1ed;
+    color:#000
 }
-
+.eu-label .wet-grip.category-E {
+    background-color:#b4e1f6;
+    color:#000
+}
 .eu-label .wet-grip.category-F {
-    background-color: #b4e1f6;
-    color: #000;
+    background-color:#b4e1f6;
+    color:#000
 }
-
+.eu-label .wet-grip.category-G {
+    background-color:#b4e1f6;
+    color:#000
+}
 .eu-label .wet-grip {
     position: relative;
     padding-left: 7px;
 }
 .eu-label .noise-emission {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.eu-label .noise-emission {
     font-size: 13px;
     font-weight: 700;
     color: #000;
-}
-.eu-label .noise-emission {
-    padding-left: 5px;
-    padding-right: 5px;
 }
 .eu-label .rolling-resistance::before {
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%2335332d" d="M336 448H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm157.2-340.7l-81-81c-6.2-6.2-16.4-6.2-22.6 0l-11.3 11.3c-6.2 6.2-6.2 16.4 0 22.6L416 97.9V160c0 28.1 20.9 51.3 48 55.2V376c0 13.2-10.8 24-24 24s-24-10.8-24-24v-32c0-48.6-39.4-88-88-88h-8V64c0-35.3-28.7-64-64-64H96C60.7 0 32 28.7 32 64v352h288V304h8c22.1 0 40 17.9 40 40v27.8c0 37.7 27 72 64.5 75.9 43 4.3 79.5-29.5 79.5-71.7V152.6c0-17-6.8-33.3-18.8-45.3zM256 192H96V64h160v128z"/></svg>') no-repeat center center;
