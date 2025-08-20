@@ -4,8 +4,10 @@ import {useEffect, useState} from "react";
 import BackendApi from "@/lib/BackendApi";
 import ToastMessageServerComponent from "@/components/ui/ToastMessageServerComponent";
 import {useStore} from "@/store/useStore";
+import {useRouter} from "next/navigation";
 
 export default function Login() {
+    const router = useRouter()
     const {getToken, setToken, clearToken, useStoreIsReady} = useStore()
 
     const [data, setData] = useState({email: '', password: ''})
@@ -24,7 +26,9 @@ export default function Login() {
 
             if (response.code === 200) {
                 setToken(response.token_type + ' ' + response.access_token)
+                router.back()
             } else {
+                setToken(null)
                 setErrors(response)
             }
         }
@@ -66,7 +70,10 @@ export default function Login() {
 
             <div className="login order_form_method_btn">
                 <a className="order_form_method_btn_submit"
-                   onClick={() => clearToken()}
+                   onClick={() => {
+                       clearToken()
+                       router.back()
+                   }}
                 >Выйти</a>
             </div>
         </div>}

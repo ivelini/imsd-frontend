@@ -13,7 +13,7 @@ export const useAuthUserData = (set, get) => ({
 
     /**
      * Установка токена авторизации
-     * @param {string} payload
+     * @param {string|null} payload
      *
      */
     setToken: (payload) => set(state => ({
