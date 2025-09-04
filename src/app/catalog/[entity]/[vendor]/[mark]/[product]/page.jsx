@@ -76,10 +76,6 @@ export default async function Product({params, searchParams}) {
 
     item = (await response.json())?.data
 
-    if (!item) {
-        notFound()
-    }
-
     return (
         <>
             <LocationReloadComponent/>
