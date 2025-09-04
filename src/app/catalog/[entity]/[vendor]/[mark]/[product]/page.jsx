@@ -10,6 +10,7 @@ import {
 } from "@/lib/TextInformation";
 import StocksForManagerComponent
     from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/StocksForManagerComponent";
+import {notFound} from "next/navigation";
 
 /**
  * @param {Object} props
@@ -63,17 +64,21 @@ export default async function Product({params, searchParams}) {
         url.searchParams.set("city_name", city_name)
     }
 
-    try {
-        if (entity === TypeProductEnum.DISKS) {
-            url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}`)
-        }
-
-        response = await fetch(url.toString(), {cache: "no-store"}).then(res => res.json())
-    } catch (error) {
-        console.error("Ошибка загрузки данных:", error)
+    if (entity === TypeProductEnum.DISKS) {
+        url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}`)
     }
 
-    item = response?.data ?? null;
+    response = await fetch(url.toString(), {cache: "no-store"})
+
+    if (!response.ok) {
+        notFound()
+    }
+
+    item = (await response.json())?.data
+
+    if (!item) {
+        notFound()
+    }
 
     return (
         <>
