@@ -177,7 +177,7 @@ export default function HorisontalItem({item}) {
             <div className="catalog-product-image">
                 <div className="catalog-product-image-panel">
                     <SeasonIconComponent seasonName={item.season?.name}/>
-                    <PromotionIconComponent promotions={item.promotions} size="1.6rem" />
+                    <PromotionIconComponent promotions={item.promotions} />
                 </div>
                 <div>
                     <Image

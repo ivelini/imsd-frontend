@@ -121,7 +121,7 @@ export default function CaruselComponent({items}) {
                 <div className="product-details">
                     <div className="icons">
                         {item.season?.name !== null && <SeasonIconComponent seasonName={item.season?.name}/>}
-                        <PromotionIconComponent promotions={item.promotions} size="1rem" margin="none"/>
+                        <PromotionIconComponent promotions={item.promotions}/>
 
                         {item.is_spike === true && <Image
                             src="/assets/img/sh.svg"

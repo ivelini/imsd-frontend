@@ -2009,6 +2009,32 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
+.promotions-icon {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 2.5rem;
+    color: #fe1f44;
+}
+
+.catalog-product-image-panel .promotions-icon {
+    margin-top: 0;
+    font-size: 1.6rem;
+}
+
+.product-details .icons .promotions-icon {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.promotion-description {
+    line-height: 1.2;
+    margin-top: 10px;
+}
+
+.promotion-description a {
+    color: #fe1f44;
+}
+
 @media only screen and (min-width: 0px) and (max-width: 599px) {
     .three-cells .custom-select-wrapper {
         width: 30%;
@@ -2642,6 +2668,13 @@ input[type="checkbox"] {
         height: 360px;
     }
 
+    .promotions-icon {
+        font-size: 2.0rem;
+    }
+
+    .catalog-product-image-panel .promotions-icon {
+        font-size: 1.4rem;
+    }
 
 }
 

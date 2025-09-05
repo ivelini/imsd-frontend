@@ -2,14 +2,14 @@
 import {useState} from "react";
 import PopUpComponent from "@/components/ui/PopUpComponent";
 
-export default function PromotionIconComponent({ promotions = [], size = '2.5rem', margin = '10px 0 0 0' }) {
+export default function PromotionIconComponent({promotions = []}) {
     const [popUpp, setPoUpp] = useState({visible: false})
 
     if (promotions.length === 0) return null;
 
     const getContent = () => {
         return promotions.map((promotion, index) =>
-            `<div>${promotion.description} <a target="_blank" href="${promotion.link}">Подробнее</a></div>`
+            `<div class="promotion-description">${promotion.description} </br><a target="_blank" href="${promotion.link}">Подробнее</a></div>`
         ).join(' ')
     }
 
@@ -20,11 +20,6 @@ export default function PromotionIconComponent({ promotions = [], size = '2.5rem
                             handleOnClose={() => setPoUpp({visible: false})}/>
         }
 
-        <div style={{margin: margin}}>
-            <i style={{ fontSize: size, color: 'red', cursor: 'pointer' }}
-               className="pi pi-gift"
-               onClick={() => setPoUpp({visible: true})}
-            ></i>
-        </div>
+        <i className="promotions-icon pi pi-gift" onClick={() => setPoUpp({visible: true})}></i>
     </>)
 }
