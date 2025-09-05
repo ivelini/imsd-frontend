@@ -2,7 +2,7 @@
 import {useState} from "react";
 import PopUpComponent from "@/components/ui/PopUpComponent";
 
-export default function PromotionIconComponent({ promotions, size = '2.5rem' }) {
+export default function PromotionIconComponent({ promotions = [], size = '2.5rem', margin = '10px 0 0 0' }) {
     const [popUpp, setPoUpp] = useState({visible: false})
 
     if (promotions.length === 0) return null;
@@ -20,7 +20,7 @@ export default function PromotionIconComponent({ promotions, size = '2.5rem' }) 
                             handleOnClose={() => setPoUpp({visible: false})}/>
         }
 
-        <div style={{marginTop: '10px'}}>
+        <div style={{margin: margin}}>
             <i style={{ fontSize: size, color: 'red', cursor: 'pointer' }}
                className="pi pi-gift"
                onClick={() => setPoUpp({visible: true})}
