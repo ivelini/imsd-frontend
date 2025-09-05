@@ -4,6 +4,7 @@ import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_comp
 import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
 import {deliveryPointsExists, deliveryPointsNotExists} from "@/lib/TextInformation";
 import BadgePopUpComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/BadgePopUpComponent";
+import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
 
 
 /**
@@ -24,6 +25,7 @@ import BadgePopUpComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product
  * @param {boolean} item.is_runflat
  * @param {string} item.url
  * @param {string} item.euro_label
+ * @param {array} item.promotions
  * @param {Object} item.price_stock_and_delivery
  * @param {number} item.price_stock_and_delivery.count
  * @param {number} item.price_stock_and_delivery.delivery_days
@@ -57,6 +59,7 @@ export default function InfoProduct({item}) {
             <div className="gallery">
                 <div className="gallery-panel">
                     <SeasonIconComponent seasonName={item.season?.name}/>
+                    <PromotionIconComponent promotions={item.promotions}/>
                 </div>
                 <GalleryImage images={[item.main_image]}/>
                 {item.euro_label !== undefined &&
@@ -79,7 +82,7 @@ export default function InfoProduct({item}) {
                                         ? <BadgePopUpComponent
                                             title={key}
                                             value={item.parameters_to_front[key][0]}
-                                            content={item.parameters_to_front[key][1]} />
+                                            content={item.parameters_to_front[key][1]}/>
                                         : <span className="parameter-value">{item.parameters_to_front[key]}</span>
                                     }
                                 </li>
@@ -114,10 +117,16 @@ export default function InfoProduct({item}) {
                                     </span>
                                 </div>
 
-                                <div className="payment-option">
-                                    <span className="payment-title">Шиномонтаж в подарок</span>
-                                    <span className="payment-details">Расширенная гарантия</span>
-                                </div>
+                                {item.promotions.length > 0 &&
+                                    <div className="payment-option">
+                                        {item.promotions.map(promotion => <BadgePopUpComponent
+                                            isInline
+                                            title={promotion.name}
+                                            value={promotion.name}
+                                            content={`<p>${promotion.description}</p>`
+                                                + `<p><a target="_blank" style="color: #383838; font-weight: bold" href=${promotion.link}>Подробнее</a></p>`}/>
+                                        )}
+                                    </div>}
                             </div>
 
                             <div className="payment-option"

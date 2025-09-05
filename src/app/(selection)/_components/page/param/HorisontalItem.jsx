@@ -17,8 +17,9 @@ import {
     deliveryPointsNotExists
 } from "@/lib/TextInformation";
 import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
-import {Button} from "primereact/button";
+
 import {Badge} from "primereact/badge";
+import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
 
 const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false});
 
@@ -176,6 +177,7 @@ export default function HorisontalItem({item}) {
             <div className="catalog-product-image">
                 <div className="catalog-product-image-panel">
                     <SeasonIconComponent seasonName={item.season?.name}/>
+                    <PromotionIconComponent promotions={item.promotions} size="1.6rem" />
                 </div>
                 <div>
                     <Image
