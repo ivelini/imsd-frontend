@@ -123,8 +123,7 @@ export default function InfoProduct({item}) {
                                             isInline
                                             title={promotion.name}
                                             value={promotion.name}
-                                            content={`<p>${promotion.description}</p>`
-                                                + `<p><a target="_blank" style="color: #383838; font-weight: bold" href=${promotion.link}>Подробнее</a></p>`}/>
+                                            content={`<div class="promotion-description">${promotion.description} </br><a target="_blank" href="${promotion.link}">Подробнее</a></div>`}/>
                                         )}
                                     </div>}
                             </div>
