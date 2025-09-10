@@ -2498,11 +2498,11 @@ input[type="checkbox"] {
     }
 
     .section-product .current-price {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .section-product .old-price {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .section-product img {
@@ -2633,10 +2633,6 @@ input[type="checkbox"] {
         padding: 9px 0;
         border-top: 2px solid #dbdbdb;
         border-bottom: 2px solid #dbdbdb;
-    }
-
-    .price-info {
-        margin-bottom: 1x 0px;
     }
 
     .buy-button {
