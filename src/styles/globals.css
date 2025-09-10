@@ -657,7 +657,7 @@ input[type="checkbox"] {
 .catalog-product {
     display: flex;
     gap: 10px;
-    padding-bottom: 15px;
+    padding: 15px 0;
     border-bottom: 1px solid #c5c5c5;
 }
 

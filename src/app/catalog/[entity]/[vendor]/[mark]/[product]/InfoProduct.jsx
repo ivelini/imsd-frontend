@@ -78,6 +78,7 @@ export default function InfoProduct({item}) {
                                 <li key={index} className="parameter-item">
                                     <span className="parameter-name">{key}:</span>
 
+                                    {console.log(item.parameters_to_front)}
                                     {typeof item.parameters_to_front[key] == 'object'
                                         ? <BadgePopUpComponent
                                             title={key}

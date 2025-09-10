@@ -180,7 +180,7 @@ export default function TiresSelectionComponent() {
                         {Object.keys(itemsVehicle).length === 0 && (
                             <div style={{margin: '0 auto'}}>
                                 {loading ?
-                                    <ProgressSpinner/> : 'К сожалению, ничего не найдено. Попробуйте ввести другие параметры'}
+                                    <ProgressSpinner/> : 'Для точного подбора товара уточните дополнительные параметры'}
                             </div>
                         )}
                     </>)}
