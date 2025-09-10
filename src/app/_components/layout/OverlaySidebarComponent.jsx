@@ -33,7 +33,6 @@ export default function OverlaySidebarComponent({children}) {
 
         {children}
 
-
         <a id="get-catalog" onClick={() => setVisible(true)}>
             <div className="catalog-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12"

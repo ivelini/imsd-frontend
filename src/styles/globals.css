@@ -2037,8 +2037,7 @@ input[type="checkbox"] {
 
 @media only screen and (min-width: 0px) and (max-width: 599px) {
     .three-cells .custom-select-wrapper {
-        width: 30%;
-        margin-right: 11px;
+        width: 34%;
     }
     .p-dropdown .p-dropdown-trigger {
         width: 1rem;
@@ -2526,12 +2525,19 @@ input[type="checkbox"] {
         height: max-content;
         width: 100%;
         padding-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .get-result {
+        margin: 0;
     }
 
     .inner-wrapper,
     .main-block {
-        background: none;
+        background: #dddddd;
         background-image: none;
+        padding: 20px 0;
+        min-height: 0px;
     }
 
     .show-hide-btn-description {
