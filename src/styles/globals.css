@@ -2458,6 +2458,9 @@ input[type="checkbox"] {
         box-sizing: border-box;
         position: relative;
     }
+    .news {
+        height: 10%;
+    }
 
     .news-image {
         width: 100%;
