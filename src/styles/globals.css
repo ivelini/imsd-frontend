@@ -2036,6 +2036,10 @@ input[type="checkbox"] {
 }
 
 @media only screen and (min-width: 0px) and (max-width: 599px) {
+
+    .product-details {
+        height: 25px;
+    }
     .three-cells .custom-select-wrapper {
         width: 34%;
     }
@@ -2534,7 +2538,7 @@ input[type="checkbox"] {
 
     .inner-wrapper,
     .main-block {
-        background: #dddddd;
+        background: #e4e4e6;
         background-image: none;
         padding: 20px 0;
         min-height: 0px;
