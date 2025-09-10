@@ -2510,6 +2510,7 @@ input[type="checkbox"] {
 
     .section-product img {
         max-width: 100%;
+        height: 100%;
     }
 
     .product-list {
