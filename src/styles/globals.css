@@ -1155,6 +1155,7 @@ input[type="checkbox"] {
     display: flex;
     gap: 16px;
     margin-top: 5px;
+    height: 25px;
 }
 
 .product-details svg {
@@ -1267,7 +1268,6 @@ input[type="checkbox"] {
     width: 100%;
     max-width: 370px;
     float: left;
-    height: 600px;
 }
 
 .packet {
@@ -1291,6 +1291,7 @@ input[type="checkbox"] {
 .buy-button-blk button {
     max-width: 100%;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .product-photo-blk {

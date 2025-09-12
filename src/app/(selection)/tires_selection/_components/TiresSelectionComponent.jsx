@@ -9,6 +9,7 @@ import {Paginator} from 'primereact/paginator';
 import SpecificationsContent from "@/app/(selection)/_components/page/car/SpecificationsContent";
 import {TypeProductEnum} from "@/lib/TypeProductEnum";
 import SpecifiactionItems from "@/app/(selection)/_components/page/car/SpecificationItems";
+import {usePathname, useSearchParams} from "next/navigation";
 
 const INITIAL_PAGINATOR = {
     first: 0,
@@ -25,6 +26,9 @@ export default function TiresSelectionComponent() {
     const [loading, setLoading] = useState(true)
     const [paginator, setPaginator] = useState(INITIAL_PAGINATOR)
     const [isStoreReady, setIsStoreReady] = useState(false) // Флаг готовности Zustand
+
+    const pathname = usePathname();
+    const searchParams = useSearchParams()
 
     // Дожидаемся загрузки Zustand
     useEffect(() => {
@@ -46,7 +50,8 @@ export default function TiresSelectionComponent() {
         if (Object.keys(filterTires.car).length > 0) {
             setFilterType('CAR');
         }
-        getItems()
+
+        getItems(searchParams.get('page'))
 
     }, [isStoreReady]);
 
@@ -61,21 +66,26 @@ export default function TiresSelectionComponent() {
         getItems();
     }, [filterType, getSelectedCity()]);
 
-    const getItems = () => {
+    const getItems = (page = null) => {
         setItems([]);
         setLoading(true);
 
         if (filterType === 'PARAM') {
-            getParamItems();
+
+            getParamItems(page);
         } else if (filterType === 'CAR') {
             getCarSpecification();
         }
+
+
 
         setTimeout(() => setLoading(false), 3000)
     }
 
     const handleGetItems = () => {
+        window.history.pushState(null, "", `${window.location.pathname}`);
         setCarFilterTires({type: 'vehicleIds', value: []})
+        window.sessionStorage.setItem(`scrollY-${pathname}`, 0)
         getItems()
     }
 
@@ -116,8 +126,6 @@ export default function TiresSelectionComponent() {
 
         queryString += getCityQueryParamString();
 
-
-
         let response = await BackendApi.get('/api/catalog/tire' + queryString);
 
         if (response.code === 200) {
@@ -136,6 +144,10 @@ export default function TiresSelectionComponent() {
                 rows: data.meta.per_page,
                 total: data.meta.total
             });
+
+            if(window.sessionStorage.getItem(`scrollY-${pathname}`)?.length > 0) {
+                setTimeout(() => window.scrollTo({top: parseInt(window.sessionStorage.getItem(`scrollY-${pathname}`))}), 50)
+            }
         }
         setLoading(false);
     }
@@ -151,7 +163,8 @@ export default function TiresSelectionComponent() {
     const onPageChange = (data) => {
         if (filterType === 'PARAM') {
             getParamItems(data.page + 1);
-            setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 50);
+            window.history.pushState(null, "", `${window.location.pathname}?page=${data.page + 1}`);
+            window.sessionStorage.setItem(`scrollY-${pathname}`, 0)
         }
     }
 

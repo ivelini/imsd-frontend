@@ -48,6 +48,7 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
         setSwitcher('PARAM')
         setSwitcherFilter('PARAM')
 
+        window.sessionStorage.setItem(`scrollY-${pathname}`, 0)
         router.replace(pathname)
         window.location.reload()
     }

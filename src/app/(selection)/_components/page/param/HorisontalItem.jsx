@@ -20,6 +20,7 @@ import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
 
 import {Badge} from "primereact/badge";
 import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
+import {usePathname} from "next/navigation";
 
 const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false});
 
@@ -57,6 +58,7 @@ const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_comp
  */
 export default function HorisontalItem({item}) {
 
+    const pathname = usePathname()
     const {getSelectedCity} = useStore()
 
     const {addCart, removeFromCart, hasProductInCart, getCityQueryParam} = useStore()
@@ -207,7 +209,9 @@ export default function HorisontalItem({item}) {
                         <Link href={{
                             pathname: item.url,
                             query: getCityQueryParam()
-                        }}>
+                        }}
+                        onClick={() => window.sessionStorage.setItem(`scrollY-${pathname}`, window.scrollY.toString())}
+                        >
                             {item.name}
                         </Link>
                     </h2>
