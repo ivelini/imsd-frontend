@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import TiresSelectionComponent from "@/app/(selection)/tires_selection/_components/TiresSelectionComponent";
 
 export const metadata = {
@@ -5,5 +6,8 @@ export const metadata = {
 }
 
 export default function TiresSelection() {
-  return <TiresSelectionComponent />
+    return <Suspense fallback={null}>
+        <TiresSelectionComponent />
+    </Suspense>
+
 }
