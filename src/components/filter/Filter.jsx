@@ -18,14 +18,22 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
  * - Отображает LocationComponent для выбора города.
  */
 export default function Filter({ type, isMobileFilterShow = false }) {
-    const { filterType, setFilterType, clearFilters, filterTires, filterWheels } = useStore();
+    const {
+        getFilterType,
+        setFilterType,
+        getValuesFilterTires,
+        getValuesFilterWheels,
+        clearFilters
+    } = useStore();
 
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const entityFilter = type === TypeProductEnum.DISKS ? filterWheels : filterTires;
+        const entityFilter = type === TypeProductEnum.DISKS
+            ? getValuesFilterTires()
+            : getValuesFilterWheels()
 
         if (
             Object.keys(entityFilter.params).length > 0 ||
@@ -55,10 +63,10 @@ export default function Filter({ type, isMobileFilterShow = false }) {
         <div className={`catalog-filter ${isMobileFilterShow ? "catalog-filter-show" : ""}`} id="filter-in-catalog">
             {/* Переключатель */}
             <div className="catalog-filter-category">
-                <div className={`filter-item-catalog ${filterType === "CAR" ? "inactive" : ""}`} onClick={() => setFilterType("PARAM")}>
+                <div className={`filter-item-catalog ${getFilterType() === "CAR" ? "inactive" : ""}`} onClick={() => setFilterType("PARAM")}>
                     По параметрам
                 </div>
-                <div className={`filter-item-catalog ${filterType === "PARAM" ? "inactive" : ""}`} onClick={() => setFilterType("CAR")}>
+                <div className={`filter-item-catalog ${getFilterType() === "PARAM" ? "inactive" : ""}`} onClick={() => setFilterType("CAR")}>
                     По автомобилю
                 </div>
             </div>
@@ -67,10 +75,11 @@ export default function Filter({ type, isMobileFilterShow = false }) {
                 <br />
                 <LocationComponent />
 
-                {type === TypeProductEnum.TIRES && filterType === "PARAM" && <TireFilter />}
-                {type === TypeProductEnum.DISKS && filterType === "PARAM" && <DiskFilter />}
-                {filterType === "CAR" && <AutoFilter type={type} />}
+                {type === TypeProductEnum.TIRES && getFilterType() === "PARAM" && <TireFilter />}
+                {type === TypeProductEnum.DISKS && getFilterType() === "PARAM" && <DiskFilter />}
+                {getFilterType() === "CAR" && <AutoFilter type={type} />}
 
+                <button className="get-result" type="button" >Подобрать</button>
                 <a href="#" className="remove-filters help" onClick={handleResetAllFilters}>
                     Сбросить все фильтры
                 </a>

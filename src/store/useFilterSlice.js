@@ -27,21 +27,43 @@ const INITIAL_FILTER_PRODUCT = {
     range: {current: [0, 0], all: [0, 0]} ,
 };
 
-export const useFilterSlice = (set, get) => ({
-    /** Текущий тип фильтра (PARAM / CAR) */
-    filterType: "PARAM",
-    setFilterType: (type) => set({ filterType: type }),
-
+const INITIAL_FILTER = {
+    // Текущий тип фильтра (PARAM / CAR)
+    type: 'PARAM',
     /** Флаг активности диапазона цены */
     rangeIsActive: true,
-    setRangeIsActive: (val) => set({ rangeIsActive: val }),
+    tires: {
+        list: {},
+        values: Object.assign({}, INITIAL_FILTER_PRODUCT)
+    },
+    wheels: {
+        list: {},
+        values: Object.assign({}, INITIAL_FILTER_PRODUCT)
+    },
+    car: {
+        list: {vendor: null, model: null, year: null, modification: null},
+        values: {}
+    }
+}
+
+export const useFilterSlice = (set, get) => ({
+    filter: INITIAL_FILTER,
+
+    getFilterType: () => get().filter.type,
+    getRangeIsActive: () => get().filter.rangeIsActive,
+    getValuesFilterTires: () => get().filter.tires.values,
+    getValuesFilterWheels: () => get().filter.wheels.values,
+    getListFilterTires: () => get().filter.tires.list,
+    getListFilterWheels: () => get().filter.wheels.list,
+
+    setFilterType: (type) => set((state) => ({ filter: {...state.filter, type: type} })),
+    setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, rangeIsActive: val }})),
 
     /** Фильтры шин */
     filterTires: Object.assign({}, INITIAL_FILTER_PRODUCT),
-    paramsTires: {},
-    loadTireParams: async () => {
+    loadListFilterTire: async () => {
         const res = await BackendApi.get("/api/list/filter/tire");
-        if (res.code === 200) set({ paramsTires: res.data });
+        if (res.code === 200) set((state) => ({filter: {...state.filter, tires: {...state.filter.tires, list: res.data}}}));
     },
     /**
      * Обновляет параметры фильтра для шин.
@@ -49,8 +71,8 @@ export const useFilterSlice = (set, get) => ({
      * @param {string} payload.type - Ключ параметра (например, "width", "profile").
      * @param {string} payload.value - Значение параметра.
      */
-    setParamFilterTires: (payload) => set((state) => {
-        let newParams = {...state.filterTires.params}
+    setValueParamsFilterTires: (payload) => set((state) => {
+        let newParams = {...state.filter.tires.values.params}
 
         if (payload.value !== null) {
             newParams[payload.type] = payload.value
@@ -58,7 +80,7 @@ export const useFilterSlice = (set, get) => ({
             delete newParams[payload.type]
         }
 
-        return {...state, filterTires: {...state.filterTires, params: newParams}}
+        return {filter: {...state.filter, tires: {...state.filter.tires, values: {...state.filter.tires.values, params: newParams}}}}
 
     }),
     /**
