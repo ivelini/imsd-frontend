@@ -2,7 +2,6 @@ import InnerWrapperComponent from "@/app/_components/page/inner-wrapper/InnerWra
 import CaruselComponent from "@/app/_components/page/CaruselComponent";
 import ArticleBlock from "@/app/article/_component/ArticleBlock";
 import AttentionBlocksComponent from "@/app/_components/page/AttentionBlocksComponent";
-import LocationReloadComponent from "@/components/LocationReloadComponent";
 
 
 export const metadata = {
