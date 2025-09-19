@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
     })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
 
     ym(36278095, 'init', {webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});` }} />
-                <noscript><div><img src="https://mc.yandex.ru/watch/36278095" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                <noscript dangerouslySetInnerHTML={{ __html: `<div><img src="https://mc.yandex.ru/watch/36278095" style="position:absolute; left:-9999px;" alt="" /></div>`}}></noscript>
             </body>
         </html>
     )
