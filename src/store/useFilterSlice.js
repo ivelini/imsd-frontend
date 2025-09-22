@@ -1,30 +1,14 @@
 import BackendApi from "@/lib/BackendApi";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 /**
  * Zustand store для фильтров подбора шин и дисков.
- *
- * Хранит:
- * - filterType (PARAM / CAR)
- * - фильтры шин (filterTires)
- * - фильтры дисков (filterWheels)
- * - фильтры по авто (carFilter)
- * - диапазон цен (range)
- * - параметры фильтров (paramsTires, paramsWheels, paramsCar)
- *
- * Содержит экшены:
- * - setFilterType
- * - setParamFilterTires / setParamFilterWheels
- * - setRangeFilterTires / setRangeFilterWheels
- * - setCarFilter
- * - loadTireParams / loadDiskParams / loadCarParams
- * - clearFilters
  */
 
 const INITIAL_FILTER_PRODUCT = {
-    params: {},
-    car: {},
-    range: {current: [0, 0], all: [0, 0]} ,
+    list: {},
+    values: {},
+    vehicleIds: [],
+    range: {current: [0, 0], all: [0, 0]},
 };
 
 const INITIAL_FILTER = {
@@ -32,14 +16,8 @@ const INITIAL_FILTER = {
     type: 'PARAM',
     /** Флаг активности диапазона цены */
     rangeIsActive: true,
-    tires: {
-        list: {},
-        values: Object.assign({}, INITIAL_FILTER_PRODUCT)
-    },
-    wheels: {
-        list: {},
-        values: Object.assign({}, INITIAL_FILTER_PRODUCT)
-    },
+    tires: Object.assign({}, INITIAL_FILTER_PRODUCT),
+    wheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
     car: {
         list: {vendor: null, model: null, year: null, modification: null},
         values: {}
@@ -47,186 +25,170 @@ const INITIAL_FILTER = {
 }
 
 export const useFilterSlice = (set, get) => ({
-    filter: INITIAL_FILTER,
+        filter: INITIAL_FILTER,
 
-    getFilterType: () => get().filter.type,
-    getRangeIsActive: () => get().filter.rangeIsActive,
-    getValuesFilterTires: () => get().filter.tires.values,
-    getValuesFilterWheels: () => get().filter.wheels.values,
-    getListFilterTires: () => get().filter.tires.list,
-    getListFilterWheels: () => get().filter.wheels.list,
+        getFilterType: () => get().filter.type,
+        getRangeIsActive: () => get().filter.rangeIsActive,
+        getValuesFilterTires: () => get().filter.tires.values,
+        getValuesFilterWheels: () => get().filter.wheels.values,
+        getValuesFilterCar: () => get().filter.car.values,
+        getListFilterTires: () => get().filter.tires.list,
+        getListFilterWheels: () => get().filter.wheels.list,
+        getListFilterCar: () => get().filter.car.list,
+        getRangeFilterTires: () => get().filter.tires.range,
+        getRangeFilterWheels: () => get().filter.wheels.range,
 
-    setFilterType: (type) => set((state) => ({ filter: {...state.filter, type: type} })),
-    setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, rangeIsActive: val }})),
+        setFilterType: (type) => set((state) => ({filter: {...state.filter, type: type}})),
+        setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, rangeIsActive: val}})),
 
-    /** Фильтры шин */
-    filterTires: Object.assign({}, INITIAL_FILTER_PRODUCT),
-    loadListFilterTire: async () => {
-        const res = await BackendApi.get("/api/list/filter/tire");
-        if (res.code === 200) set((state) => ({filter: {...state.filter, tires: {...state.filter.tires, list: res.data}}}));
-    },
-    /**
-     * Обновляет параметры фильтра для шин.
-     * @param {Object} payload - Объект с данными для обновления фильтра.
-     * @param {string} payload.type - Ключ параметра (например, "width", "profile").
-     * @param {string} payload.value - Значение параметра.
-     */
-    setValueParamsFilterTires: (payload) => set((state) => {
-        let newParams = {...state.filter.tires.values.params}
+        /** Фильтры шин */
+        /**
+         * Обновляет параметры фильтра для шин.
+         * @param {Object} payload - Объект с данными для обновления фильтра.
+         * @param {string} payload.type - Ключ параметра (например, "width", "profile").
+         * @param {string} payload.value - Значение параметра.
+         */
+        setValueFilterTires: (payload) => set((state) => {
+            let newValues = {...state.filter.tires.values}
 
-        if (payload.value !== null) {
-            newParams[payload.type] = payload.value
-        } else {
-            delete newParams[payload.type]
-        }
-
-        return {filter: {...state.filter, tires: {...state.filter.tires, values: {...state.filter.tires.values, params: newParams}}}}
-
-    }),
-    /**
-     * Обновляет прайс по шинам
-     * @param {Object} payload
-     * @param {string} payload.type
-     * @param {array} payload.value
-     */
-    setRangeFilterTires: (payload) => set((state) => ({
-        ...state,
-        filterTires: {
-            ...state.filterTires,
-            range: {
-                ...state.filterTires.range,
-                [payload.type]: payload.value
+            if (payload.value !== null) {
+                newValues[payload.type] = payload.value
+            } else {
+                delete newValues[payload.type]
             }
-        }
-    })),
-    /**
-     * Обновляет параметры автомобиля для шин.
-     * @param {Object} payload - Объект с данными для обновления фильтра.
-     * @param {string} payload.type - Ключ параметра (например, "width", "profile").
-     * @param {string} payload.value - Значение параметра.
-     */
-    setCarFilterTires: (payload) => set((state) => {
-        let newCar = {...state.filterTires.car}
 
-        if (payload.value !== null) {
-            newCar[payload.type] = payload.value
-        } else {
-            delete newCar[payload.type]
-        }
+            return {filter: {...state.filter, tires: {...state.filter.tires, values: newValues}}}
 
-        return {...state, filterTires: {...state.filterTires, car: newCar}}
-    }),
-
-    /** Фильтры дисков */
-    filterWheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
-    paramsWheels: {},
-    loadDiskParams: async () => {
-        const res = await BackendApi.get("/api/list/filter/disk");
-        if (res.code === 200) set({ paramsWheels: res.data });
-    },
-    /**
-     * Обновляет параметры фильтра для дисков.
-     * @param {Object} payload - Объект с данными для обновления фильтра.
-     * @param {string} payload.type - Ключ параметра (например, "width", "profile").
-     * @param {string} payload.value - Значение параметра.
-     */
-    setParamFilterWheels: (payload) => set((state) => {
-        let newParams = {...state.filterWheels.params}
-
-        if (payload.value !== null) {
-            newParams[payload.type] = payload.value
-        } else {
-            delete newParams[payload.type]
-        }
-
-        return {...state, filterWheels: {...state.filterWheels, params: newParams}}
-    }),
-    /**
-     * Обновляет прайс по дискам
-     * @param {Object} payload
-     * @param {string} payload.type
-     * @param {array} payload.value
-     */
-    setRangeFilterWheels: (payload) => set((state) => ({
-        ...state,
-        filterWheels: {
-            ...state.filterWheels,
-            range: {
-                ...state.filterWheels.range,
-                [payload.type]: payload.value
-            }
-        }
-    })),
-    /**
-     * Обновляет параметры автомобиля для дисков.
-     * @param {Object} payload - Объект с данными для обновления фильтра.
-     * @param {string} payload.type - Ключ параметра (например, "width", "profile").
-     * @param {string} payload.value - Значение параметра.
-     */
-    setCarFilterWheels: (payload) => set((state) => {
-        let newCar = {...state.filterWheels.car}
-
-        if (payload.value !== null) {
-            newCar[payload.type] = payload.value
-        } else {
-            delete newCar[payload.type]
-        }
-
-        return {...state, filterWheels: {...state.filterWheels, car: newCar}}
-    }),
-
-    /** Фильтры по авто */
-    carFilter: { vendor: null, model: null, year: null, modification: null },
-    paramsCar: {},
-    loadCarParams: async () => {
-        const res = await BackendApi.get("/api/list/filter/vehicle/car/info", get().carFilter);
-        if (res.code === 200) set({ paramsCar: res.data });
-    },
-    setCarFilter: (data) =>
-        set((state) => ({
-            carFilter: { ...state.carFilter, [data.type]: data.value }
-        })),
-    getFilterForCar: (type) => {
-        if (type === TypeProductEnum.TIRES) return get().filterTires.car;
-        if (type === TypeProductEnum.DISKS) return get().filterWheels.car;
-        return get().carFilter;
-    },
-
-    /** Очистка всех фильтров */
-    clearFilters: () =>
-        set({
-            filterType: "PARAM",
-            rangeIsActive: true,
-            filterTires: Object.assign({}, INITIAL_FILTER_PRODUCT),
-            filterWheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
-            carFilter: { vendor: null, model: null, year: null, modification: null }
         }),
-
-    /**
-     * Обнуляем параметр сущности
-     * @param {Object} payload - Объект с данными для обновления фильтра.
-     * @param {string} payload.entity - Сущность filterTires, filterWheels.
-     * @param {string} payload.param - Параметр сущности params, car.
-     *
-     */
-    clearFilter: (payload) => set((state) => {
-        if (typeof payload == 'undefined') {
-            return {
-                ...state,
-                filterType: "PARAM",
-                rangeIsActive: true,
-                filterTires: Object.assign({}, INITIAL_FILTER_PRODUCT),
-                filterWheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
-                carFilter: { vendor: null, model: null, year: null, modification: null }
-            }
-        } else {
-            return {
-                ...state,
-                [payload.entity]: {
-                    ...state[payload.entity],
-                    [payload.param]: {}
+        /**
+         * Обновляет прайс по шинам
+         * @param {Object} payload
+         * @param {string} payload.type
+         * @param {array} payload.value
+         */
+        setRangeFilterTires: (payload) => set((state) => ({
+            filter: {
+                ...state.filter,
+                tires: {
+                    ...state.filter.tires,
+                    range: {...state.filter.tires.range, [payload.type]: payload.value}
                 }
             }
-        }
-    }),
-});
+        })),
+        /**
+         * Обновляет параметры автомобиля для шин.
+         * @param {Object} payload - Объект с данными для обновления фильтра.
+         * @param {string} payload.type - Ключ параметра (например, "vendor", "model").
+         * @param {string} payload.value - Значение параметра.
+         */
+        setValueCarFilter: (payload) => set((state) => {
+            let newCar = {...state.filter.car.values}
+
+            if (payload.value !== null) {
+                newCar[payload.type] = payload.value
+            } else {
+                delete newCar[payload.type]
+            }
+
+            return {filter: {...state.filter, car: {...state.filter.car, values: newCar}}}
+
+        }),
+
+        /** Фильтры дисков */
+        filterWheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
+        paramsWheels: {},
+
+        /**
+         * Обновляет параметры фильтра для дисков.
+         * @param {Object} payload - Объект с данными для обновления фильтра.
+         * @param {string} payload.type - Ключ параметра (например, "width", "profile").
+         * @param {string} payload.value - Значение параметра.
+         */
+        setParamFilterWheels: (payload) => set((state) => {
+            let newParams = {...state.filterWheels.params}
+
+            if (payload.value !== null) {
+                newParams[payload.type] = payload.value
+            } else {
+                delete newParams[payload.type]
+            }
+
+            return {...state, filterWheels: {...state.filterWheels, params: newParams}}
+        }),
+        /**
+         * Обновляет прайс по дискам
+         * @param {Object} payload
+         * @param {string} payload.type
+         * @param {array} payload.value
+         */
+        setRangeFilterWheels: (payload) => set((state) => ({
+            ...state,
+            filterWheels: {
+                ...state.filterWheels,
+                range: {
+                    ...state.filterWheels.range,
+                    [payload.type]: payload.value
+                }
+            }
+        })),
+
+        /** Асинхронные запросы к базе за списком значений для фильтра */
+        loadListFilterTire: async () => {
+            const res = await BackendApi.get("/api/list/filter/tire");
+            if (res.code === 200) set((state) => ({
+                filter: {
+                    ...state.filter,
+                    tires: {...state.filter.tires, list: res.data}
+                }
+            }));
+        },
+        loadDiskParams: async () => {
+            const res = await BackendApi.get("/api/list/filter/disk");
+            if (res.code === 200) set({paramsWheels: res.data});
+        },
+        loadListCarParams: async () => {
+            const res = await BackendApi.get("/api/list/filter/vehicle/car/info", get().filter.car.values);
+            if (res.code === 200) set((state) => ({
+                filter: {
+                    ...state.filter,
+                    car: {...state.filter.car, list: res.data}
+                }
+            }));
+        },
+
+        /**
+         * Обнуляем параметр сущности
+         * @param {Object} payload - Объект с данными для обновления фильтра.
+         * @param {string} payload.entity - Сущность tires, wheels, car
+         * @param {string} payload.param - Параметр сущности values, vehicleIds.
+         *
+         */
+        clearFilter: (payload) => set((state) => {
+            if (typeof payload == 'undefined') {
+                let newFilter = Object.assign({}, INITIAL_FILTER);
+
+                delete newFilter.tires.list
+                delete newFilter.wheels.list
+
+                return {
+                    filter: {
+                        ...state.filter,
+                        tires: {...state.filter.tires, ...newFilter.tires},
+                        wheels: {...state.filter.wheels, ...newFilter.wheels},
+                        car: newFilter.car
+                    }
+                }
+            } else {
+                return {
+                    filter: {
+                        ...state.filter,
+                        [payload.entity]: {
+                            ...state.filter[payload.entity],
+                            [payload.param]: INITIAL_FILTER_PRODUCT[payload.param]
+                        }
+                    }
+                }
+            }
+        }),
+    }
+);

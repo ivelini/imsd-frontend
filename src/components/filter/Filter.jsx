@@ -14,7 +14,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
  *
  * - Управляет переключением "По параметрам / По авто" через Zustand.
  * - Рендерит соответствующие подкомпоненты (TireFilter / DiskFilter / AutoFilter).
- * - Сбрасывает все фильтры через store.clearFilters().
+ * - Сбрасывает все фильтры через store.clearFilter().
  * - Отображает LocationComponent для выбора города.
  */
 export default function Filter({ type, isMobileFilterShow = false }) {
@@ -23,7 +23,7 @@ export default function Filter({ type, isMobileFilterShow = false }) {
         setFilterType,
         getValuesFilterTires,
         getValuesFilterWheels,
-        clearFilters
+        clearFilter
     } = useStore();
 
     const router = useRouter();
@@ -35,26 +35,11 @@ export default function Filter({ type, isMobileFilterShow = false }) {
             ? getValuesFilterTires()
             : getValuesFilterWheels()
 
-        if (
-            Object.keys(entityFilter.params).length > 0 ||
-            (
-                Object.keys(entityFilter.params).length === 0 &&
-                Object.keys(entityFilter.car).length === 0 &&
-                (searchParams.get("filterType") == null || searchParams.get("filterType") === "param")
-            )
-        ) {
-            setFilterType("PARAM");
-        } else if (
-            Object.keys(entityFilter.car).length > 0 ||
-            (searchParams.get("filterType") == null || searchParams.get("filterType") === "car")
-        ) {
-            setFilterType("CAR");
-        }
+        setFilterType("PARAM");
     }, []);
 
     const handleResetAllFilters = () => {
-        clearFilters();
-        setFilterType("PARAM");
+        clearFilter();
         window.sessionStorage.setItem(`scrollY-${pathname}`, 0);
         router.replace(pathname);
     };

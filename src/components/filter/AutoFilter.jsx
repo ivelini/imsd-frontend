@@ -1,5 +1,6 @@
 import { useStore } from "@/store/useStore";
 import FilterDropdown from "./FilterDropdown";
+import {useEffect} from "react";
 
 /**
  * Фильтры по автомобилю.
@@ -11,21 +12,46 @@ import FilterDropdown from "./FilterDropdown";
  * @param {string} type - TIRES или DISKS.
  */
 export default function AutoFilter({ type }) {
-    const { getFilterForCar, setCarFilter, paramsCar, loadCarParams } = useStore();
-    const filter = getFilterForCar(type);
+    const { loadListCarParams,
+        getListFilterCar,
+        getValuesFilterCar,
+        setValueCarFilter
+    } = useStore();
+
+    let list = getListFilterCar();
+    let values = getValuesFilterCar();
+
+    useEffect(() => {
+        loadListCarParams()
+    }, [getValuesFilterCar()])
 
     const handleChange = (key, value, resetKeys = []) => {
-        setCarFilter({ type: key, value });
-        resetKeys.forEach((rk) => setCarFilter({ type: rk, value: null }));
-        loadCarParams(); // подгружаем зависимые параметры
+        if(value === 'Любой') value = null
+        setValueCarFilter({ type: key, value });
+        resetKeys.forEach((rk) => setValueCarFilter({ type: rk, value: null }));
     };
 
     return (
         <div className="calatog-select-col">
-            <FilterDropdown label="Производитель" options={paramsCar.vendor} value={filter.vendor} onChange={(v) => handleChange("vendor", v.name, ["model", "year", "modification"])} />
-            <FilterDropdown label="Модель" options={paramsCar.model} value={filter.model} onChange={(v) => handleChange("model", v.name, ["year", "modification"])} />
-            <FilterDropdown label="Год выпуска" options={paramsCar.year} value={filter.year} onChange={(v) => handleChange("year", v.name, ["modification"])} />
-            <FilterDropdown label="Модификация" options={paramsCar.modification} value={filter.modification} onChange={(v) => handleChange("modification", v.name)} />
+            <FilterDropdown label="Производитель"
+                            options={list.vendor}
+                            value={values.vendor !== undefined ? values.vendor : null}
+                            onChange={(v) => handleChange("vendor", v.name, ["model", "year", "modification"])}/>
+            <FilterDropdown label="Модель"
+                            options={list.model}
+                            value={values.model !== undefined ? values.model : null}
+                            onChange={(v) => handleChange("model", v.name, ["year", "modification"])}
+                            disabled={Object.keys(values).length === 0} />
+            <FilterDropdown label="Год выпуска"
+                            options={list.year}
+                            value={values.year !== undefined ? values.year : null}
+                            onChange={(v) => handleChange("year", v.name, ["modification"])}
+                            disabled={Object.keys(values).length <= 1} />
+            <FilterDropdown label="Модификация"
+                            options={list.modification}
+                            value={values.modification !== undefined ? values.modification : null}
+                            onChange={(v) => handleChange("modification", v.name)}
+                            disabled={Object.keys(values).length <= 2} />
         </div>
-    );
+    )
 }

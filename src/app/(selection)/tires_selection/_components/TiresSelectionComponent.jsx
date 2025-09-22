@@ -19,7 +19,7 @@ const INITIAL_PAGINATOR = {
 }
 
 export default function TiresSelectionComponent() {
-    const {filterTires, setCarFilterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString} = useStore()
+    const {getValuesFilterTires, setCarFilterTires, setRangeFilterTires, getSelectedCity, getCityQueryParamString} = useStore()
     const [items, setItems] = useState([]) // Выборка шин по параметрам
     const [itemsVehicle, setItemsVehicle] = useState([]) // Выборка шин по спецификации
     const [specifications, setSpecifications] = useState({})
@@ -33,24 +33,16 @@ export default function TiresSelectionComponent() {
 
     // Дожидаемся загрузки Zustand
     useEffect(() => {
-        if (filterTires) {
+        if (getValuesFilterTires()) {
             setIsStoreReady(true);
         }
-    }, [filterTires]);
+    }, [getValuesFilterTires()]);
 
     // Устанавливаем тип фильтра
     useEffect(() => {
         if (!isStoreReady) return;
 
-        if (Object.keys(filterTires.params).length > 0) {
-            setFilterType('PARAM');
-        }
 
-        delete filterTires.car.vehicleIds
-
-        if (Object.keys(filterTires.car).length > 0) {
-            setFilterType('CAR');
-        }
 
         getItems(searchParams.get('page'))
 
@@ -59,7 +51,7 @@ export default function TiresSelectionComponent() {
     // Получаем продукцию по спецификации
     useEffect(() => {
         getVehicleItems()
-    }, [filterTires.car?.vehicleIds])
+    }, [getValuesFilterTires()?.car?.vehicleIds])
 
     // Загружаем данные при изменении filterType или города
     useEffect(() => {
@@ -92,7 +84,7 @@ export default function TiresSelectionComponent() {
 
     const getVehicleItems = async () => {
         /** @var {array} vehicleIds  */
-        const vehicleIds = filterTires.car.vehicleIds ?? []
+        const vehicleIds = getValuesFilterTires().vehicleIds ?? []
 
         if (vehicleIds.length == 0) {
             setItemsVehicle({})
@@ -108,17 +100,17 @@ export default function TiresSelectionComponent() {
 
     const getParamItems = async (page = null) => {
         let queryString = '?filters=';
-        for (const key in filterTires.params) {
-            queryString += `${key}|${filterTires.params[key]};`;
+        for (const key in getValuesFilterTires().params) {
+            queryString += `${key}|${getValuesFilterTires().params[key]};`;
         }
 
-        if(Object.keys(filterTires.params).length > 0) {
+        if(Object.keys(getValuesFilterTires().params).length > 0) {
             queryString = queryString.slice(0, -1); // Убираем последнюю ";"
         }
 
-        if (filterTires.range.current.length > 0 && filterTires.range.current[0] !== 1 && filterTires.range.current[1] !== 2) {
+        if (getValuesFilterTires().range.current.length > 0 && getValuesFilterTires().range.current[0] !== 1 && getValuesFilterTires().range.current[1] !== 2) {
             queryString += queryString === '?filters=' ? 'price|' : ';price|';
-            queryString += `${filterTires.range.current[0]},${filterTires.range.current[1]}`;
+            queryString += `${getValuesFilterTires().range.current[0]},${getValuesFilterTires().range.current[1]}`;
         }
 
         if (page) {
@@ -154,7 +146,7 @@ export default function TiresSelectionComponent() {
     }
 
     const getCarSpecification = async () => {
-        let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', filterTires.car);
+        let response = await BackendApi.get('/api/list/filter/vehicle/tire/specifications', getValuesFilterTires().car);
         if (response.code === 200) {
             setSpecifications((await response).data);
         }

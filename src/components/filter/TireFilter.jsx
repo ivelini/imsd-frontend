@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useStore } from "@/store/useStore";
 import FilterDropdown from "./FilterDropdown";
 import { RangeComponent } from "./RangeComponent";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 /**
  * Фильтры подбора шин.
@@ -15,7 +16,7 @@ export function TireFilter() {
         getListFilterTires,
         getValuesFilterTires,
         loadListFilterTire,
-        setValueParamsFilterTires,
+        setValueFilterTires,
         setRangeIsActive
     } = useStore();
     
@@ -27,20 +28,20 @@ export function TireFilter() {
     }, []);
 
     const handleChange = (type, value) => {
-        setValueParamsFilterTires({ type, value });
+        setValueFilterTires({ type, value });
         setRangeIsActive(false);
     };
 
     return (
         <div className="calatog-select-col">
-            <FilterDropdown label="Ширина" options={list.width} value={values.params.width} onChange={(v) => handleChange("width", v.id)} />
-            <FilterDropdown label="Профиль" options={list.height} value={values.params.height} onChange={(v) => handleChange("height", v.id)} />
-            <FilterDropdown label="Диаметр" options={list.diameter} value={values.params.diameter} onChange={(v) => handleChange("diameter", v.id)} />
-            <FilterDropdown label="Сезонность" options={list.season} value={values.params.season} onChange={(v) => handleChange("season", v.id)} />
-            <FilterDropdown label="Тип шин" options={list.diameter} value={values.params.diameter} onChange={(v) => handleChange("diameter", v.id)} />
-            <FilterDropdown label="Производитель" options={list.diameter} value={values.params.diameter} onChange={(v) => handleChange("diameter", v.id)} />
-            <FilterDropdown label="Страна" options={list.diameter} value={values.params.diameter} onChange={(v) => handleChange("diameter", v.id)} />
-            <RangeComponent type="TIRES" />
+            <FilterDropdown label="Ширина" options={list.width} value={values.width} onChange={(v) => handleChange("width", v.id)} />
+            <FilterDropdown label="Профиль" options={list.height} value={values.height} onChange={(v) => handleChange("height", v.id)} />
+            <FilterDropdown label="Диаметр" options={list.diameter} value={values.diameter} onChange={(v) => handleChange("diameter", v.id)} />
+            <FilterDropdown label="Сезонность" options={list.season} value={values.season} onChange={(v) => handleChange("season", v.id)} />
+            <FilterDropdown label="Тип шин" options={list.is_spike} value={values.is_spike} onChange={(v) => handleChange("is_spike", v.id)} />
+            <FilterDropdown label="Производитель" options={list.vendor} value={values.vendor} onChange={(v) => handleChange("vendor", v.id)} />
+            <FilterDropdown label="Страна" options={list.country} value={values.country} onChange={(v) => handleChange("country", v.id)} />
+            <RangeComponent type={TypeProductEnum.TIRES} />
         </div>
     );
 }
