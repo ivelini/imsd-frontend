@@ -4,7 +4,7 @@ import MobileHeader from "./MobileHeader"
 import {useEffect, useState} from "react"
 import {useSearchParams} from "next/navigation"
 
-export default function Sidebar({type, collback, setSwitcherFilter}) {
+export default function Sidebar({type, onApplyFilter}) {
     const [isMobileFilterShow, setIsMobileFilterShow] = useState(false)
     const searchParams = useSearchParams(); //query параметры из адресной строки
 
@@ -20,7 +20,7 @@ export default function Sidebar({type, collback, setSwitcherFilter}) {
     }
 
     return (<>
-        <MobileHeader toggleShowFilter={handleToggleFilterShow} />
-        <Filter type={type}  isMobileFilterShow={isMobileFilterShow}/>
+        <MobileHeader onApplyFilter={onApplyFilter} />
+        <Filter type={type}  onApplyFilter={onApplyFilter}/>
     </>)
 }

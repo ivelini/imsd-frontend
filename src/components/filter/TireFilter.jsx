@@ -17,7 +17,8 @@ export function TireFilter() {
         getValuesFilterTires,
         loadListFilterTire,
         setValueFilterTires,
-        setRangeIsActive
+        setRangeIsActive,
+        setRangeFilterTires
     } = useStore();
     
     const list = getListFilterTires()
@@ -28,7 +29,9 @@ export function TireFilter() {
     }, []);
 
     const handleChange = (type, value) => {
-        setValueFilterTires({ type, value });
+        setValueFilterTires({ type, value })
+        setRangeFilterTires({type: 'current', value: [0,0]})
+        setRangeFilterTires({type: 'all', value: [0,0]})
         setRangeIsActive(false);
     };
 

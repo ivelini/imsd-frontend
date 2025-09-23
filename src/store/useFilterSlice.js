@@ -15,7 +15,9 @@ const INITIAL_FILTER = {
     // Текущий тип фильтра (PARAM / CAR)
     type: 'PARAM',
     /** Флаг активности диапазона цены */
-    rangeIsActive: true,
+    range_is_active: true,
+    /** Флаг статуса показывать фильтр или скрыть*/
+    is_hidden: true,
     tires: Object.assign({}, INITIAL_FILTER_PRODUCT),
     wheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
     car: {
@@ -28,18 +30,20 @@ export const useFilterSlice = (set, get) => ({
         filter: INITIAL_FILTER,
 
         getFilterType: () => get().filter.type,
-        getRangeIsActive: () => get().filter.rangeIsActive,
+        getRangeIsActive: () => get().filter.range_is_active,
+        getIsHidden: () => get().filter.is_hidden,
         getValuesFilterTires: () => get().filter.tires.values,
         getValuesFilterWheels: () => get().filter.wheels.values,
         getValuesFilterCar: () => get().filter.car.values,
-        getListFilterTires: () => get().filter.tires.list,
+        getListFilterTires: () => get().filter.tires.list ?? {},
         getListFilterWheels: () => get().filter.wheels.list,
         getListFilterCar: () => get().filter.car.list,
         getRangeFilterTires: () => get().filter.tires.range,
         getRangeFilterWheels: () => get().filter.wheels.range,
 
         setFilterType: (type) => set((state) => ({filter: {...state.filter, type: type}})),
-        setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, rangeIsActive: val}})),
+        setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, range_is_active: val}})),
+        setIsHidden: (val) => set((state) => ({filter: {...state.filter, is_hidden: val}})),
 
         /** Фильтры шин */
         /**

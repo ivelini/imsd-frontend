@@ -8,6 +8,7 @@ import AutoFilter from "./AutoFilter";
 import { TypeProductEnum } from "@/lib/TypeProductEnum";
 import { useStore } from "@/store/useStore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {useSelection} from "@/hooks/useSelection";
 
 /**
  * Главный фильтр-контейнер.
@@ -17,8 +18,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
  * - Сбрасывает все фильтры через store.clearFilter().
  * - Отображает LocationComponent для выбора города.
  */
-export default function Filter({ type, isMobileFilterShow = false }) {
+export default function Filter({ type, onApplyFilter }) {
     const {
+        getIsHidden,
         getFilterType,
         setFilterType,
         getValuesFilterTires,
@@ -39,13 +41,12 @@ export default function Filter({ type, isMobileFilterShow = false }) {
     }, []);
 
     const handleResetAllFilters = () => {
-        clearFilter();
-        window.sessionStorage.setItem(`scrollY-${pathname}`, 0);
-        router.replace(pathname);
+        clearFilter()
+        onApplyFilter()
     };
 
     return (
-        <div className={`catalog-filter ${isMobileFilterShow ? "catalog-filter-show" : ""}`} id="filter-in-catalog">
+        <div className={`catalog-filter ${getIsHidden() ? "catalog-filter-show" : ""}`} id="filter-in-catalog">
             {/* Переключатель */}
             <div className="catalog-filter-category">
                 <div className={`filter-item-catalog ${getFilterType() === "CAR" ? "inactive" : ""}`} onClick={() => setFilterType("PARAM")}>
@@ -64,7 +65,7 @@ export default function Filter({ type, isMobileFilterShow = false }) {
                 {type === TypeProductEnum.DISKS && getFilterType() === "PARAM" && <DiskFilter />}
                 {getFilterType() === "CAR" && <AutoFilter type={type} />}
 
-                <button className="get-result" type="button" >Подобрать</button>
+                <button className="get-result" type="button" onClick={onApplyFilter}>Подобрать</button>
                 <a href="#" className="remove-filters help" onClick={handleResetAllFilters}>
                     Сбросить все фильтры
                 </a>

@@ -23,6 +23,7 @@ export default function FilterDropdown({ label, options, value, onChange, disabl
                 placeholder={label}
                 className={`custom-select ${value ? "p-dropdown-selected" : ""}`}
                 disabled={disabled}
+                appendTo="self"
             />
         </div>
     );
