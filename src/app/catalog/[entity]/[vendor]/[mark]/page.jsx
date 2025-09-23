@@ -11,7 +11,7 @@ export async function generateMetadata({params, searchParams}) {
     let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${vendor}/${mark}/seo`)
 
     try {
-        if (entity === TypeProductEnum.DISKS) {
+        if (entity === TypeProductEnum.DISK + 's') {
             url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${vendor}/${mark}/seo`)
         }
 
@@ -47,7 +47,7 @@ export default async function Mark({ params, searchParams }) {
     let response = null
     let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${vendor}/${mark}`)
 
-    if (entity === TypeProductEnum.DISKS) {
+    if (entity === TypeProductEnum.DISK) {
         url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${vendor}/${mark}`)
     }
 

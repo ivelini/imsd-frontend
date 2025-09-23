@@ -30,7 +30,7 @@ export async function generateMetadata({params, searchParams}) {
     let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${product}/seo`)
 
     try {
-        if (entity === TypeProductEnum.DISKS) {
+        if (entity === TypeProductEnum.DISK) {
             url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}/seo`)
         }
 
@@ -64,7 +64,7 @@ export default async function Product({params, searchParams}) {
         url.searchParams.set("city_name", city_name)
     }
 
-    if (entity === TypeProductEnum.DISKS) {
+    if (entity === TypeProductEnum.DISK + 's') {
         url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${product}`)
     }
 

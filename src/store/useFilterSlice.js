@@ -9,7 +9,14 @@ const INITIAL_FILTER_PRODUCT = {
     values: {},
     vehicleIds: [],
     range: {current: [0, 0], all: [0, 0]},
+    paginator: {first: 0, rows: 0, total: 0}
 };
+
+const INITIAL_FILTER_CAR = {
+    list: {vendor: null, model: null, year: null, modification: null},
+    values: {}
+}
+
 
 const INITIAL_FILTER = {
     // Текущий тип фильтра (PARAM / CAR)
@@ -20,10 +27,7 @@ const INITIAL_FILTER = {
     is_hidden: true,
     tires: Object.assign({}, INITIAL_FILTER_PRODUCT),
     wheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
-    car: {
-        list: {vendor: null, model: null, year: null, modification: null},
-        values: {}
-    }
+    car: Object.assign({}, INITIAL_FILTER_CAR),
 }
 
 export const useFilterSlice = (set, get) => ({
@@ -32,14 +36,20 @@ export const useFilterSlice = (set, get) => ({
         getFilterType: () => get().filter.type,
         getRangeIsActive: () => get().filter.range_is_active,
         getIsHidden: () => get().filter.is_hidden,
-        getValuesFilterTires: () => get().filter.tires.values,
-        getValuesFilterWheels: () => get().filter.wheels.values,
-        getValuesFilterCar: () => get().filter.car.values,
+
         getListFilterTires: () => get().filter.tires.list ?? {},
-        getListFilterWheels: () => get().filter.wheels.list,
-        getListFilterCar: () => get().filter.car.list,
+        getValuesFilterTires: () => get().filter.tires.values,
         getRangeFilterTires: () => get().filter.tires.range,
+        getPaginatorTires: () => get().filter.tires.paginator,
+        getVehicleIdsTires: () => get().filter.tires.vehicleIds ?? [],
+
+        getListFilterWheels: () => get().filter.wheels.list,
+        getValuesFilterWheels: () => get().filter.wheels.values,
         getRangeFilterWheels: () => get().filter.wheels.range,
+        getPaginatorWheels: () => get().filter.wheels.paginator,
+
+        getListFilterCar: () => get().filter.car.list ?? {},
+        getValuesFilterCar: () => get().filter.car.values,
 
         setFilterType: (type) => set((state) => ({filter: {...state.filter, type: type}})),
         setRangeIsActive: (val) => set((state) => ({filter: {...state.filter, range_is_active: val}})),
@@ -80,12 +90,27 @@ export const useFilterSlice = (set, get) => ({
             }
         })),
         /**
+         *
+         * @param {number} payload.first
+         * @param {number} payload.rows
+         * @param {number} payload.total
+         */
+        setPaginatorFilterTires: (payload) => set((state) => ({
+            filter: {
+                ...state.filter,
+                tires: {
+                    ...state.filter.tires,
+                    paginator: payload
+                }
+            }
+        })),
+        /**
          * Обновляет параметры автомобиля для шин.
          * @param {Object} payload - Объект с данными для обновления фильтра.
          * @param {string} payload.type - Ключ параметра (например, "vendor", "model").
          * @param {string} payload.value - Значение параметра.
          */
-        setValueCarFilter: (payload) => set((state) => {
+        setValueFilterCar: (payload) => set((state) => {
             let newCar = {...state.filter.car.values}
 
             if (payload.value !== null) {
@@ -188,7 +213,9 @@ export const useFilterSlice = (set, get) => ({
                         ...state.filter,
                         [payload.entity]: {
                             ...state.filter[payload.entity],
-                            [payload.param]: INITIAL_FILTER_PRODUCT[payload.param]
+                            [payload.param]: payload.entity === 'car'
+                                ? INITIAL_FILTER_CAR[payload.param]
+                                : INITIAL_FILTER_PRODUCT[payload.param]
                         }
                     }
                 }

@@ -20,7 +20,7 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
     useEffect(() => {
         let entityFilter = filterTires
 
-        if (type === TypeProductEnum.DISKS) {
+        if (type === TypeProductEnum.DISK) {
             entityFilter = filterWheels
         }
 
@@ -68,8 +68,8 @@ export default function Filter({ type, collback, setSwitcherFilter, isMobileFilt
             <div className="catalog-filter-cont">
                 <br />
                 <LocationComponent />
-                {type === TypeProductEnum.TIRES && switcher === 'PARAM' && <TireFilter collback={collback} />}
-                {type === TypeProductEnum.DISKS && switcher === 'PARAM' && <DiskFilter collback={collback} />}
+                {type === TypeProductEnum.TIRE && switcher === 'PARAM' && <TireFilter collback={collback} />}
+                {type === TypeProductEnum.DISK && switcher === 'PARAM' && <DiskFilter collback={collback} />}
 
                 {switcher === 'CAR' && <AutoFilter type={type} collback={collback} />}
 

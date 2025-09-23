@@ -1,10 +1,11 @@
 import {useStore} from "@/store/useStore";
 
 export default function MobileHeader({onApplyFilter}) {
-    const { getIsHidden, setIsHidden, clearFilter } = useStore()
+    const { getIsHidden, setIsHidden, setFilterType, clearFilter } = useStore()
 
     const handleClearFilter = () => {
         clearFilter()
+        setFilterType("PARAM")
         onApplyFilter()
     }
 

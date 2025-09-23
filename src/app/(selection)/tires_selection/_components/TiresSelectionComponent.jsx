@@ -174,14 +174,14 @@ export default function TiresSelectionComponent() {
             }
             </h2>
             <div className="main-content-catalog">
-                <Sidebar type={TypeProductEnum.TIRES} collback={handleGetItems} setSwitcherFilter={setFilterType}/>
+                <Sidebar type={TypeProductEnum.TIRE} collback={handleGetItems} setSwitcherFilter={setFilterType}/>
                 <div className="catalog-with-products">
 
                     {filterType === 'CAR' && (<>
-                        <SpecificationsContent type={TypeProductEnum.TIRES} specifications={specifications}/>
+                        <SpecificationsContent type={TypeProductEnum.TIRE} specifications={specifications}/>
 
                         {Object.keys(itemsVehicle).length > 0 &&
-                            <SpecifiactionItems type={TypeProductEnum.TIRES} itemsVehicle={itemsVehicle}/>}
+                            <SpecifiactionItems type={TypeProductEnum.TIRE} itemsVehicle={itemsVehicle}/>}
 
                         {Object.keys(itemsVehicle).length === 0 && (
                             <div style={{margin: '0 auto'}}>

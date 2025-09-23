@@ -8,11 +8,11 @@ import { redirect } from "next/navigation"
 export default async function Entity({ params }) {
     const {entity} = await params
     
-    if (entity == TypeProductEnum.TIRES) {
+    if (entity == TypeProductEnum.TIRE + 's') {
         redirect('/tires_selection')
     }
 
-    if (entity == TypeProductEnum.DISKS) {
+    if (entity == TypeProductEnum.DISK + 's') {
         redirect('/disks_selection')
     }
 }

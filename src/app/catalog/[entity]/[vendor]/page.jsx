@@ -32,8 +32,8 @@ export default function Vendor() {
                 if (response.code === 200) {
                     let data = (await response).data
 
-                    if(params.entity === TypeProductEnum.TIRES) setParamFilterTires({type:'vendor', value: data[0].id})
-                    if(params.entity === TypeProductEnum.DISKS) setParamFilterWheels({type:'vendor', value: data[0].id})
+                    if(params.entity === TypeProductEnum.TIRE + 's') setParamFilterTires({type:'vendor', value: data[0].id})
+                    if(params.entity === TypeProductEnum.DISK + 's') setParamFilterWheels({type:'vendor', value: data[0].id})
 
                     router.push(`/${params.entity}_selection`)
                 }

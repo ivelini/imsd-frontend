@@ -13,7 +13,7 @@ export default function SpecificationsContent({ type, specifications }) {
     }, []);
 
     const handleChecked = (isChecked, vehicleId) => {
-        const setEntity = type === TypeProductEnum.TIRES
+        const setEntity = type === TypeProductEnum.TIRE
             ? setCarFilterTires
             : setCarFilterWheels
 

@@ -177,7 +177,7 @@ export function TireFilter({ collback }) {
                 />
             </div>
 
-            <RangeComponent type={TypeProductEnum.TIRES} isActive={rangeIsActive}/>
+            <RangeComponent type={TypeProductEnum.TIRE} isActive={rangeIsActive}/>
 
             {/*<DeliveryDaysComponent />*/}
         </div>

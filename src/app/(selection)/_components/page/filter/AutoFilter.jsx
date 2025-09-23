@@ -34,9 +34,9 @@ const AutoFilter = ({ type, collback }) => {
 
     const setCarFilter = (dataFilter) => {
 
-        if (type === TypeProductEnum.TIRES) {
+        if (type === TypeProductEnum.TIRE) {
             setCarFilterTires(dataFilter)
-        } else if (type === TypeProductEnum.DISKS) {
+        } else if (type === TypeProductEnum.DISK) {
             setCarFilterWheels(dataFilter)
         }
     }

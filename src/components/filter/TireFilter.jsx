@@ -44,7 +44,7 @@ export function TireFilter() {
             <FilterDropdown label="Тип шин" options={list.is_spike} value={values.is_spike} onChange={(v) => handleChange("is_spike", v.id)} />
             <FilterDropdown label="Производитель" options={list.vendor} value={values.vendor} onChange={(v) => handleChange("vendor", v.id)} />
             <FilterDropdown label="Страна" options={list.country} value={values.country} onChange={(v) => handleChange("country", v.id)} />
-            <RangeComponent type={TypeProductEnum.TIRES} />
+            <RangeComponent type={TypeProductEnum.TIRE} />
         </div>
     );
 }

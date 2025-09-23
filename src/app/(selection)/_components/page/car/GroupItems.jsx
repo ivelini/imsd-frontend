@@ -9,8 +9,8 @@ export default function GroupItems({groupingItemsGroup}) {
         : groupingItemsGroup.disks
 
     const entity = groupingItemsGroup.tires !== undefined
-        ? TypeProductEnum.TIRES
-        : TypeProductEnum.DISKS
+        ? TypeProductEnum.TIRE
+        : TypeProductEnum.DISK
 
     return (<>
         <h2 className="catalog-product-title">{groupingItemsGroup.specification}</h2>

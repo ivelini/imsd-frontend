@@ -22,11 +22,11 @@ export function RangeComponent({ type }) {
         getRangeIsActive
     } = useStore();
 
-    const values = type === TypeProductEnum.TIRES
+    const values = type === TypeProductEnum.TIRE
         ? getRangeFilterTires()
         : getRangeFilterWheels()
 
-    const setRangeFilter = type === TypeProductEnum.TIRES
+    const setRangeFilter = type === TypeProductEnum.TIRE
         ? setRangeFilterTires
         : setRangeFilterWheels;
 

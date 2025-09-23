@@ -2,7 +2,7 @@
 
 import {ProgressSpinner} from "primereact/progressspinner";
 import {Paginator} from "primereact/paginator";
-import Sidebar from "@/app/(selection)/_components/page/Sidebar";
+import Sidebar from "@/components/selection/Sidebar";
 import ParamItems from "@/app/(selection)/_components/page/param/ParamItems";
 import SpecificationsContent from "@/app/(selection)/_components/page/car/SpecificationsContent";
 import SpecifiactionItems from "@/app/(selection)/_components/page/car/SpecificationItems";
@@ -22,31 +22,32 @@ export default function TiresSelectionComponent() {
     const [isReady, setReady] = useState(false);
     const {
         items,
-        getItems,
+        getItemsForParamsFilter,
+        specifications,
+        getSpecifications,
         useStoreIsReady,
-        filterType,
-        paginator,
         loading,
-    } = useSelection(TypeProductEnum.TIRES);
+    } = useSelection(TypeProductEnum.TIRE);
 
-    const {setIsHidden} = useStore()
+    const {getFilterType, getPaginatorTires, getVehicleIdsTires, setIsHidden} = useStore()
 
     useEffect(() => {
-        getItems(TypeProductEnum.TIRES)
+        getItemsForParamsFilter()
         setReady(useStoreIsReady)
     }, []);
 
     const handleApplyFilter = () => {
-        getItems(TypeProductEnum.TIRES)
-        if(window.screen.width <= 768) setIsHidden(false)
+        if (getFilterType() === "PARAM") getItemsForParamsFilter()
+        if (getFilterType() === "CAR") getSpecifications()
+        if (window.screen.width <= 768) setIsHidden(false)
     }
 
     return (isReady && <>
             <h2>
                 Подбор шин{" "}
-                {paginator.total > 0 && filterType === "PARAM" ? (
+                {getPaginatorTires().total > 0 && getFilterType() === "PARAM" ? (
                     <span style={{color: "gray", fontSize: "18px"}}>
-                    Найдено {paginator.total} товаров
+                    Найдено {getPaginatorTires().total} товаров
                   </span>
                 ) : (
                     <span>по параметрам автомобиля</span>
@@ -54,37 +55,38 @@ export default function TiresSelectionComponent() {
             </h2>
 
             <div className="main-content-catalog">
-                <Sidebar type={TypeProductEnum.TIRES} onApplyFilter={() => handleApplyFilter()}/>
+                <Sidebar type={TypeProductEnum.TIRE} onApplyFilter={() => handleApplyFilter()}/>
 
                 <div className="catalog-with-products">
-                    {filterType === "CAR" && (
+                    {getFilterType() === "CAR" && (
                         <>
-                            <SpecificationsContent type={TypeProductEnum.TIRES} specifications={specifications}/>
-                            {Object.keys(itemsVehicle).length > 0 && (
-                                <SpecifiactionItems type={TypeProductEnum.TIRES} itemsVehicle={itemsVehicle}/>
-                            )}
-                            {Object.keys(itemsVehicle).length === 0 && (
-                                <div style={{margin: "0 auto"}}>
-                                    {loading ? <ProgressSpinner/> : "Для точного подбора товара уточните дополнительные параметры"}
+                            <SpecificationsContent type={TypeProductEnum.TIRE} specifications={specifications}/>
+                            {Object.keys(getVehicleIdsTires()).length > 0
+                                ? <SpecifiactionItems type={TypeProductEnum.TIRE}/>
+                                : <div style={{margin: "0 auto"}}>
+                                    {loading ?
+                                        <ProgressSpinner/> : "Для точного подбора товара уточните дополнительные параметры"}
                                 </div>
-                            )}
+                            }
+
                         </>
                     )}
 
-                    {filterType === "PARAM" && (
+                    {getFilterType() === "PARAM" && (
                         <>
                             {items.length === 0 && (
                                 <div style={{margin: "0 auto"}}>
-                                    {loading ? <ProgressSpinner/> : "К сожалению, ничего не найдено. Попробуйте ввести другие параметры"}
+                                    {loading ?
+                                        <ProgressSpinner/> : "К сожалению, ничего не найдено. Попробуйте ввести другие параметры"}
                                 </div>
                             )}
 
                             <ParamItems items={items}/>
-                            {items.length > 0 && paginator.total > paginator.rows && (
+                            {items.length > 0 && getPaginatorTires().total > getPaginatorTires().rows && (
                                 <Paginator
-                                    first={paginator.first}
-                                    rows={paginator.rows}
-                                    totalRecords={paginator.total}
+                                    first={getPaginatorTires().first}
+                                    rows={getPaginatorTires().rows}
+                                    totalRecords={getPaginatorTires().total}
                                     onPageChange={onPageChange}
                                 />
                             )}

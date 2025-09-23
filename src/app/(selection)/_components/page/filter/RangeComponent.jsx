@@ -6,8 +6,8 @@ import { TypeProductEnum } from "@/lib/TypeProductEnum";
 export function RangeComponent({ type, isActive = true }) {
     const { filterTires, filterWheels, setRangeFilterTires, setRangeFilterWheels } = useStore();
 
-    const filterData = type === TypeProductEnum.TIRES ? filterTires : filterWheels;
-    const setRangeFilter = type === TypeProductEnum.TIRES ? setRangeFilterTires : setRangeFilterWheels;
+    const filterData = type === TypeProductEnum.TIRE ? filterTires : filterWheels;
+    const setRangeFilter = type === TypeProductEnum.TIRE ? setRangeFilterTires : setRangeFilterWheels;
 
     // Локальное состояние для ручного ввода
     const [minValue, setMinValue] = useState(filterData?.range.current[0]);

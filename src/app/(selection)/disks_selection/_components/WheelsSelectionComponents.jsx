@@ -172,14 +172,14 @@ export default function WheelsSelectionComponents() {
                 )}
             </h2>
             <div className="main-content-catalog">
-                <Sidebar type={TypeProductEnum.DISKS} collback={handleGetItems} setSwitcherFilter={setFilterType}/>
+                <Sidebar type={TypeProductEnum.DISK} collback={handleGetItems} setSwitcherFilter={setFilterType}/>
                 <div className="catalog-with-products">
 
                     {filterType === 'CAR' && (<>
-                        <SpecificationsContent type={TypeProductEnum.DISKS} specifications={specifications}/>
+                        <SpecificationsContent type={TypeProductEnum.DISK} specifications={specifications}/>
 
                         {Object.keys(itemsVehicle).length > 0 &&
-                            <SpecifiactionItems type={TypeProductEnum.DISKS} itemsVehicle={itemsVehicle}/>}
+                            <SpecifiactionItems type={TypeProductEnum.DISK} itemsVehicle={itemsVehicle}/>}
 
                         {Object.keys(itemsVehicle).length === 0 && (
                             <div style={{margin: '0 auto'}}>
@@ -199,7 +199,7 @@ export default function WheelsSelectionComponents() {
                             </div>
                         )}
 
-                        <ParamItems type={TypeProductEnum.DISKS} items={items}/>
+                        <ParamItems type={TypeProductEnum.DISK} items={items}/>
                         {items.length > 0 && paginator.total > paginator.rows && (
                             <Paginator first={paginator.first} rows={paginator.rows} totalRecords={paginator.total}
                                        onPageChange={onPageChange}/>

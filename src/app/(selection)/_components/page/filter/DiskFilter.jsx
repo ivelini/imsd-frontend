@@ -178,7 +178,7 @@ export function DiskFilter({ collback }) {
                 />
             </div>
 
-            <RangeComponent type={TypeProductEnum.DISKS} isActive={rangeIsActive}/>
+            <RangeComponent type={TypeProductEnum.DISK} isActive={rangeIsActive}/>
 
             {/*<DeliveryDaysComponent />*/}
         </div>

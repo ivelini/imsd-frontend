@@ -15,7 +15,7 @@ export default function AutoFilter({ type }) {
     const { loadListCarParams,
         getListFilterCar,
         getValuesFilterCar,
-        setValueCarFilter
+        setValueFilterCar
     } = useStore();
 
     let list = getListFilterCar();
@@ -27,8 +27,8 @@ export default function AutoFilter({ type }) {
 
     const handleChange = (key, value, resetKeys = []) => {
         if(value === 'Любой') value = null
-        setValueCarFilter({ type: key, value });
-        resetKeys.forEach((rk) => setValueCarFilter({ type: rk, value: null }));
+        setValueFilterCar({ type: key, value });
+        resetKeys.forEach((rk) => setValueFilterCar({ type: rk, value: null }));
     };
 
     return (

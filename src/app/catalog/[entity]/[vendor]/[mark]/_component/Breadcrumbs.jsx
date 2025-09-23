@@ -12,7 +12,7 @@ export default function Breadcrumbs({ entity, vendor, mark }) {
             <ul className="breadcrumbs">
                 <li><a href="/">Главная</a></li>
                 <li>/</li>
-                <li>{entity === TypeProductEnum.TIRES
+                <li>{entity === TypeProductEnum.TIRE
                     ? <Link href="/tires_selection">Каталог шин</Link>
                     : <Link href="/disks_selection">Каталог дисков</Link>
                 }</li>

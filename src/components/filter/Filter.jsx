@@ -25,19 +25,13 @@ export default function Filter({ type, onApplyFilter }) {
         setFilterType,
         getValuesFilterTires,
         getValuesFilterWheels,
+        setValueFilterCar,
         clearFilter
     } = useStore();
 
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
     useEffect(() => {
-        const entityFilter = type === TypeProductEnum.DISKS
-            ? getValuesFilterTires()
-            : getValuesFilterWheels()
-
-        setFilterType("PARAM");
+        setFilterType("PARAM")
+        clearFilter({entity: 'car', param: 'values'});
     }, []);
 
     const handleResetAllFilters = () => {
@@ -61,8 +55,8 @@ export default function Filter({ type, onApplyFilter }) {
                 <br />
                 <LocationComponent />
 
-                {type === TypeProductEnum.TIRES && getFilterType() === "PARAM" && <TireFilter />}
-                {type === TypeProductEnum.DISKS && getFilterType() === "PARAM" && <DiskFilter />}
+                {type === TypeProductEnum.TIRE && getFilterType() === "PARAM" && <TireFilter />}
+                {type === TypeProductEnum.DISK && getFilterType() === "PARAM" && <DiskFilter />}
                 {getFilterType() === "CAR" && <AutoFilter type={type} />}
 
                 <button className="get-result" type="button" onClick={onApplyFilter}>Подобрать</button>
