@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import BackendApi from "@/lib/BackendApi";
 import {useStore} from "@/store/useStore";
 import {TypeProductEnum} from "@/lib/TypeProductEnum";
+import {useParams, useSearchParams} from "next/navigation";
 
 /**
  * Хук для выборки продукции (шины или диски).
@@ -12,23 +13,29 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
 export function useSelection(type) {
     const {
         useStoreIsReady,
+
         getFilterType,
-        getValuesFilterTires,
+        getValuesFilter,
         getValuesFilterCar,
-        getRangeFilterTires,
+        getRangeFilter,
+        getVehicleIds,
+
         setPaginatorFilterTires,
+        setPaginatorFilterWheels,
         setRangeFilterTires,
+        setRangeFilterWheels,
         setRangeIsActive,
     } = useStore()
 
     const [items, setItems] = useState([])
     const [specifications, setSpecifications] = useState({})
     const [loading, setLoading] = useState(true)
+    const queryParams = useSearchParams()
 
     useEffect(() => {
         switch (getFilterType()) {
             case "PARAM":
-                getItemsForParamsFilter()
+                getItemsFromParamValues()
                 break
         }
     }, [getFilterType()])
@@ -36,34 +43,73 @@ export function useSelection(type) {
     /**
      * Получить продукцию по выбранным параметрам
      */
-    const getItemsForParamsFilter = async () => {
-        let response = await BackendApi.get(`/api/catalog/${type}` + prepareParams(getValuesFilterTires(), getRangeFilterTires()))
+    const getItemsFromParamValues = async () => {
+
+        let response = await BackendApi.get(`/api/catalog/${type}`, prepareQueryItems())
         prepareResponseItemsForParams(response)
-        setRangeFilterTires({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
-        setRangeFilterTires({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
         setRangeIsActive(true)
     }
 
-    const prepareParams = (params, range = null) => {
-        let query = ''
+    /**
+     * Получить продукцию по выбранным спецификациям
+     */
+    const getItemsFromSpecifications = async () => {
 
-        if (Object.keys(params).length > 0) {
-            query = Object.keys(params)
-                .map((key, index) => (index === 0 ? '?filters=' : '') + `${key}|${params[key]}`)
-                .join(';')
+        let response = await BackendApi.get(`/api/catalog/vehicle/${type}`, prepareQueryItems())
+    }
+
+    const prepareQueryItems = () => {
+        let filters = ''
+
+        switch (getFilterType()) {
+            case "PARAM":
+                let params = getValuesFilter(type)
+                filters = Object.keys(params).length > 0
+                    ? Object.keys(params)
+                        .map(key => `${key}|${params[key]}`)
+                        .join(';')
+                    : ''
+
+                break
+            case "CAR":
+                let specifications = getVehicleIds(type)
+                filters = specifications.length > 0
+                    ? `vehicle|${specifications.join(',')}`
+                    : ''
         }
 
+        let range = getRangeFilter(type)
         if (range?.current[0] !== 0 || range?.current[1] !== 0) {
-            query += (query.length === 0 ? '?filters=' : ';') + `price|${range.current[0]},${range.current[1]}`
+            filters += (filters.length === 0 ? '' : ';') + `price|${range.current[0]},${range.current[1]}`
         }
 
-        return query
+        let searchParams = new URLSearchParams(window.location.search)
+
+        return {filters, ...Object.fromEntries(searchParams)}
     }
 
     const prepareResponseItemsForParams = (response) => {
         if (response.code === 200) {
             setItems(response.data)
-            if (type === TypeProductEnum.TIRE) setPaginatorFilterTires({first: response.meta.from, rows: response.meta.per_page, total: response.meta.total})
+            switch (type) {
+                case TypeProductEnum.TIRE:
+                    setPaginatorFilterTires({
+                        first: response.meta.from,
+                        rows: response.meta.per_page,
+                        total: response.meta.total
+                    })
+                    setRangeFilterTires({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
+                    setRangeFilterTires({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
+                    break
+                case TypeProductEnum.DISK:
+                    setPaginatorFilterWheels({
+                        first: response.meta.from,
+                        rows: response.meta.per_page,
+                        total: response.meta.total
+                    })
+                    setRangeFilterWheels({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
+                    setRangeFilterWheels({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
+            }
             setLoading(false)
         }
     }
@@ -75,10 +121,11 @@ export function useSelection(type) {
         setSpecifications(response.data ?? {})
     }
 
+
     return {
         items,
         specifications,
-        getItemsForParamsFilter,
+        getItemsFromParamValues,
         getSpecifications,
         useStoreIsReady,
         loading

@@ -25,8 +25,8 @@ const INITIAL_FILTER = {
     range_is_active: true,
     /** Флаг статуса показывать фильтр или скрыть*/
     is_hidden: true,
-    tires: Object.assign({}, INITIAL_FILTER_PRODUCT),
-    wheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
+    tire: Object.assign({}, INITIAL_FILTER_PRODUCT),
+    disk: Object.assign({}, INITIAL_FILTER_PRODUCT),
     car: Object.assign({}, INITIAL_FILTER_CAR),
 }
 
@@ -37,16 +37,11 @@ export const useFilterSlice = (set, get) => ({
         getRangeIsActive: () => get().filter.range_is_active,
         getIsHidden: () => get().filter.is_hidden,
 
-        getListFilterTires: () => get().filter.tires.list ?? {},
-        getValuesFilterTires: () => get().filter.tires.values,
-        getRangeFilterTires: () => get().filter.tires.range,
-        getPaginatorTires: () => get().filter.tires.paginator,
-        getVehicleIdsTires: () => get().filter.tires.vehicleIds ?? [],
-
-        getListFilterWheels: () => get().filter.wheels.list,
-        getValuesFilterWheels: () => get().filter.wheels.values,
-        getRangeFilterWheels: () => get().filter.wheels.range,
-        getPaginatorWheels: () => get().filter.wheels.paginator,
+        getListFilter: (type) => get().filter[type].list ?? {},
+        getValuesFilter: (type) => get().filter[type].values,
+        getRangeFilter: (type) => get().filter[type].range,
+        getPaginator: (type) => get().filter[type].paginator,
+        getVehicleIds: (type) => get().filter[type].vehicleIds ?? [],
 
         getListFilterCar: () => get().filter.car.list ?? {},
         getValuesFilterCar: () => get().filter.car.values,
@@ -63,7 +58,7 @@ export const useFilterSlice = (set, get) => ({
          * @param {string} payload.value - Значение параметра.
          */
         setValueFilterTires: (payload) => set((state) => {
-            let newValues = {...state.filter.tires.values}
+            let newValues = {...state.filter.tire.values}
 
             if (payload.value !== null) {
                 newValues[payload.type] = payload.value
@@ -71,7 +66,7 @@ export const useFilterSlice = (set, get) => ({
                 delete newValues[payload.type]
             }
 
-            return {filter: {...state.filter, tires: {...state.filter.tires, values: newValues}}}
+            return {filter: {...state.filter, tire: {...state.filter.tire, values: newValues}}}
 
         }),
         /**
@@ -83,14 +78,13 @@ export const useFilterSlice = (set, get) => ({
         setRangeFilterTires: (payload) => set((state) => ({
             filter: {
                 ...state.filter,
-                tires: {
-                    ...state.filter.tires,
-                    range: {...state.filter.tires.range, [payload.type]: payload.value}
+                tire: {
+                    ...state.filter.tire,
+                    range: {...state.filter.tire.range, [payload.type]: payload.value}
                 }
             }
         })),
         /**
-         *
          * @param {number} payload.first
          * @param {number} payload.rows
          * @param {number} payload.total
@@ -98,9 +92,21 @@ export const useFilterSlice = (set, get) => ({
         setPaginatorFilterTires: (payload) => set((state) => ({
             filter: {
                 ...state.filter,
-                tires: {
-                    ...state.filter.tires,
+                tire: {
+                    ...state.filter.tire,
                     paginator: payload
+                }
+            }
+        })),
+        /**
+         * @param {array} payload
+         */
+        setVehicleIdsFilterTires: (payload) => set((state) => ({
+            filter: {
+                ...state.filter,
+                tire: {
+                    ...state.filter.tire,
+                    vehicleIds: payload
                 }
             }
         })),
@@ -124,56 +130,78 @@ export const useFilterSlice = (set, get) => ({
         }),
 
         /** Фильтры дисков */
-        filterWheels: Object.assign({}, INITIAL_FILTER_PRODUCT),
-        paramsWheels: {},
-
         /**
-         * Обновляет параметры фильтра для дисков.
+         * Обновляет параметры фильтра для шин.
          * @param {Object} payload - Объект с данными для обновления фильтра.
          * @param {string} payload.type - Ключ параметра (например, "width", "profile").
          * @param {string} payload.value - Значение параметра.
          */
-        setParamFilterWheels: (payload) => set((state) => {
-            let newParams = {...state.filterWheels.params}
+        setValueFilterWheels: (payload) => set((state) => {
+            let newValues = {...state.filter.disk.values}
 
             if (payload.value !== null) {
-                newParams[payload.type] = payload.value
+                newValues[payload.type] = payload.value
             } else {
-                delete newParams[payload.type]
+                delete newValues[payload.type]
             }
 
-            return {...state, filterWheels: {...state.filterWheels, params: newParams}}
+            return {filter: {...state.filter, disk: {...state.filter.disk, values: newValues}}}
+
         }),
         /**
-         * Обновляет прайс по дискам
+         * Обновляет прайс по шинам
          * @param {Object} payload
          * @param {string} payload.type
          * @param {array} payload.value
          */
         setRangeFilterWheels: (payload) => set((state) => ({
-            ...state,
-            filterWheels: {
-                ...state.filterWheels,
-                range: {
-                    ...state.filterWheels.range,
-                    [payload.type]: payload.value
+            filter: {
+                ...state.filter,
+                disk: {
+                    ...state.filter.disk,
+                    range: {...state.filter.disk.range, [payload.type]: payload.value}
+                }
+            }
+        })),
+        /**
+         *
+         * @param {number} payload.first
+         * @param {number} payload.rows
+         * @param {number} payload.total
+         */
+        setPaginatorFilterWheels: (payload) => set((state) => ({
+            filter: {
+                ...state.filter,
+                disk: {
+                    ...state.filter.disk,
+                    paginator: payload
+                }
+            }
+        })),
+        /**
+         * @param {array} payload
+         */
+        setVehicleIdsFilterWheels: (payload) => set((state) => ({
+            filter: {
+                ...state.filter,
+                disk: {
+                    ...state.filter.disk,
+                    vehicleIds: payload
                 }
             }
         })),
 
+        
+
         /** Асинхронные запросы к базе за списком значений для фильтра */
-        loadListFilterTire: async () => {
-            const res = await BackendApi.get("/api/list/filter/tire");
+        loadListFilter: async (type) => {
+            const res = await BackendApi.get(`/api/list/filter/${type}`);
             if (res.code === 200) set((state) => ({
                 filter: {
                     ...state.filter,
-                    tires: {...state.filter.tires, list: res.data}
+                    [type]: {...state.filter[type], list: res.data}
                 }
-            }));
-        },
-        loadDiskParams: async () => {
-            const res = await BackendApi.get("/api/list/filter/disk");
-            if (res.code === 200) set({paramsWheels: res.data});
+            }))
         },
         loadListCarParams: async () => {
             const res = await BackendApi.get("/api/list/filter/vehicle/car/info", get().filter.car.values);
@@ -188,7 +216,7 @@ export const useFilterSlice = (set, get) => ({
         /**
          * Обнуляем параметр сущности
          * @param {Object} payload - Объект с данными для обновления фильтра.
-         * @param {string} payload.entity - Сущность tires, wheels, car
+         * @param {string} payload.entity - Сущность tire, disk, car
          * @param {string} payload.param - Параметр сущности values, vehicleIds.
          *
          */
@@ -196,14 +224,14 @@ export const useFilterSlice = (set, get) => ({
             if (typeof payload == 'undefined') {
                 let newFilter = Object.assign({}, INITIAL_FILTER);
 
-                delete newFilter.tires.list
-                delete newFilter.wheels.list
+                delete newFilter.tire.list
+                delete newFilter.disk.list
 
                 return {
                     filter: {
                         ...state.filter,
-                        tires: {...state.filter.tires, ...newFilter.tires},
-                        wheels: {...state.filter.wheels, ...newFilter.wheels},
+                        tire: {...state.filter.tire, ...newFilter.tire},
+                        disk: {...state.filter.disk, ...newFilter.disk},
                         car: newFilter.car
                     }
                 }

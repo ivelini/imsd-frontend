@@ -15,16 +15,14 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
  */
 export function RangeComponent({ type }) {
     const {
-        getRangeFilterTires,
-        getRangeFilterWheels,
+        getRangeFilter,
         setRangeFilterTires,
         setRangeFilterWheels,
         getRangeIsActive
     } = useStore();
 
-    const values = type === TypeProductEnum.TIRE
-        ? getRangeFilterTires()
-        : getRangeFilterWheels()
+    const values = getRangeFilter(type)
+
 
     const setRangeFilter = type === TypeProductEnum.TIRE
         ? setRangeFilterTires

@@ -21,6 +21,6 @@ export default function Sidebar({type, onApplyFilter}) {
 
     return (<>
         <MobileHeader onApplyFilter={onApplyFilter} />
-        <Filter type={type}  onApplyFilter={onApplyFilter}/>
+        <Filter type={type}  onApplyFilter={onApplyFilter} />
     </>)
 }

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import TiresSelectionComponent from "@/components/selection/TiresSelectionComponent";
+import SelectionComponent from "@/components/selection/SelectionComponent";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 export const metadata = {
   title: 'Подбор шин по параметрам'
@@ -7,7 +8,7 @@ export const metadata = {
 
 export default function TiresSelection() {
     return <Suspense fallback={null}>
-        <TiresSelectionComponent />
+        <SelectionComponent type={TypeProductEnum.TIRE}/>
     </Suspense>
 
 }

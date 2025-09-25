@@ -6,48 +6,54 @@ import Sidebar from "@/components/selection/Sidebar";
 import ParamItems from "@/app/(selection)/_components/page/param/ParamItems";
 import SpecificationsContent from "@/app/(selection)/_components/page/car/SpecificationsContent";
 import SpecifiactionItems from "@/app/(selection)/_components/page/car/SpecificationItems";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
 import {useSelection} from "@/hooks/useSelection";
 import {useEffect, useState} from "react";
 import {useStore} from "@/store/useStore";
 
 /**
  * Компонент для отображения результатов подбора шин.
- *
- * - Использует useSelection("TIRES") для загрузки данных.
- * - Показывает либо товары по параметрам, либо по авто.
- * - Включает пагинацию, сайдбар и спиннер загрузки.
+ * @param {string} type тип продукции
  */
-export default function TiresSelectionComponent() {
+export default function SelectionComponent({type}) {
     const [isReady, setReady] = useState(false);
     const {
         items,
-        getItemsForParamsFilter,
+        getItemsFromParamValues,
         specifications,
         getSpecifications,
         useStoreIsReady,
         loading,
-    } = useSelection(TypeProductEnum.TIRE);
+    } = useSelection(type);
 
-    const {getFilterType, getPaginatorTires, getVehicleIdsTires, setIsHidden} = useStore()
+    const {getFilterType, getPaginator, getVehicleIds, setIsHidden} = useStore()
 
     useEffect(() => {
-        getItemsForParamsFilter()
+        getItemsFromParamValues()
         setReady(useStoreIsReady)
     }, []);
 
+    //Запрос товаров при изменении спецификации
+    useEffect(() => {
+
+    }, [getVehicleIds(type)])
+
     const handleApplyFilter = () => {
-        if (getFilterType() === "PARAM") getItemsForParamsFilter()
+        if (getFilterType() === "PARAM") getItemsFromParamValues()
         if (getFilterType() === "CAR") getSpecifications()
         if (window.screen.width <= 768) setIsHidden(false)
+    }
+
+    const handleChangePage = (data) => {
+        window.history.pushState(null, "", `${window.location.pathname}?page=${data.page + 1}`);
+        getItemsFromParamValues()
     }
 
     return (isReady && <>
             <h2>
                 Подбор шин{" "}
-                {getPaginatorTires().total > 0 && getFilterType() === "PARAM" ? (
+                {getPaginator(type).total > 0 && getFilterType() === "PARAM" ? (
                     <span style={{color: "gray", fontSize: "18px"}}>
-                    Найдено {getPaginatorTires().total} товаров
+                    Найдено {getPaginator(type).total} товаров
                   </span>
                 ) : (
                     <span>по параметрам автомобиля</span>
@@ -55,14 +61,14 @@ export default function TiresSelectionComponent() {
             </h2>
 
             <div className="main-content-catalog">
-                <Sidebar type={TypeProductEnum.TIRE} onApplyFilter={() => handleApplyFilter()}/>
+                <Sidebar type={type} onApplyFilter={() => handleApplyFilter()}/>
 
                 <div className="catalog-with-products">
                     {getFilterType() === "CAR" && (
                         <>
-                            <SpecificationsContent type={TypeProductEnum.TIRE} specifications={specifications}/>
-                            {Object.keys(getVehicleIdsTires()).length > 0
-                                ? <SpecifiactionItems type={TypeProductEnum.TIRE}/>
+                            <SpecificationsContent type={type} specifications={specifications}/>
+                            {Object.keys(getVehicleIds(type)).length > 0
+                                ? <SpecifiactionItems type={type}/>
                                 : <div style={{margin: "0 auto"}}>
                                     {loading ?
                                         <ProgressSpinner/> : "Для точного подбора товара уточните дополнительные параметры"}
@@ -82,14 +88,15 @@ export default function TiresSelectionComponent() {
                             )}
 
                             <ParamItems items={items}/>
-                            {items.length > 0 && getPaginatorTires().total > getPaginatorTires().rows && (
-                                <Paginator
-                                    first={getPaginatorTires().first}
-                                    rows={getPaginatorTires().rows}
-                                    totalRecords={getPaginatorTires().total}
-                                    onPageChange={onPageChange}
+                            {items.length > 0
+                                && getPaginator(type).total > getPaginator(type).rows
+                                && <Paginator
+                                    first={getPaginator(type).first}
+                                    rows={getPaginator(type).rows}
+                                    totalRecords={getPaginator(type).total}
+                                    onPageChange={handleChangePage}
                                 />
-                            )}
+                            }
                         </>
                     )}
                 </div>

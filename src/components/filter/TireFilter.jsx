@@ -13,19 +13,19 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
  */
 export function TireFilter() {
     const {
-        getListFilterTires,
-        getValuesFilterTires,
-        loadListFilterTire,
+        getListFilter,
+        getValuesFilter,
+        loadListFilter,
         setValueFilterTires,
         setRangeIsActive,
         setRangeFilterTires
     } = useStore();
     
-    const list = getListFilterTires()
-    const values = getValuesFilterTires()
+    const list = getListFilter(TypeProductEnum.TIRE)
+    const values = getValuesFilter(TypeProductEnum.TIRE)
 
     useEffect(() => {
-        loadListFilterTire();
+        loadListFilter(TypeProductEnum.TIRE);
     }, []);
 
     const handleChange = (type, value) => {
