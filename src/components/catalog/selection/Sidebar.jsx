@@ -1,5 +1,5 @@
 "use client"
-import Filter from "@/components/filter/Filter"
+import Filter from "@/components/catalog/filter/Filter"
 import MobileHeader from "./MobileHeader"
 import {useEffect, useState} from "react"
 import {useSearchParams} from "next/navigation"

@@ -16,13 +16,13 @@ import {
     deliveryPointsExists,
     deliveryPointsNotExists
 } from "@/lib/TextInformation";
-import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
+import EuroLabel from "@/components/catalog/selection/param/EuroLabel";
 
 import {Badge} from "primereact/badge";
 import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
 import {usePathname} from "next/navigation";
 
-const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false});
+const CartButtonInHorisontalItem = dynamic(() => import('@/components/catalog/selection/param/CartButtonInHorisontalItem'), {ssr: false});
 
 /**
  *

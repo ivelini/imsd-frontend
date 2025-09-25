@@ -2,10 +2,10 @@
 
 import {ProgressSpinner} from "primereact/progressspinner";
 import {Paginator} from "primereact/paginator";
-import Sidebar from "@/components/selection/Sidebar";
-import ParamItems from "@/app/(selection)/_components/page/param/ParamItems";
-import SpecificationsContent from "@/app/(selection)/_components/page/car/SpecificationsContent";
-import SpecifiactionItems from "@/app/(selection)/_components/page/car/SpecificationItems";
+import Sidebar from "@/components/catalog/selection/Sidebar";
+import ParamItems from "@/components/catalog/selection/param/ParamItems";
+import SpecificationsContent from "@/components/catalog/selection/car/SpecificationsContent";
+import SpecifiactionItems from "@/components/catalog/selection/car/SpecificationItems";
 import {useSelection} from "@/hooks/useSelection";
 import {useEffect, useState} from "react";
 import {useStore} from "@/store/useStore";
@@ -18,11 +18,14 @@ export default function SelectionComponent({type}) {
     const [isReady, setReady] = useState(false);
     const {
         items,
+        itemsVehicle,
         getItemsFromParamValues,
+        getItemsFromSpecifications,
         specifications,
         getSpecifications,
         useStoreIsReady,
         loading,
+        setSpecifications
     } = useSelection(type);
 
     const {getFilterType, getPaginator, getVehicleIds, setIsHidden} = useStore()
@@ -34,12 +37,17 @@ export default function SelectionComponent({type}) {
 
     //Запрос товаров при изменении спецификации
     useEffect(() => {
-
+        getItemsFromSpecifications()
     }, [getVehicleIds(type)])
 
-    const handleApplyFilter = () => {
+    /**
+     *
+     * @param {boolean} payload.isClearFilter
+     */
+    const handleApplyFilter = (payload) => {
         if (getFilterType() === "PARAM") getItemsFromParamValues()
-        if (getFilterType() === "CAR") getSpecifications()
+        if (getFilterType() === "CAR" && !payload?.isClearFilter) getSpecifications()
+        if(payload?.isClearFilter) setSpecifications({})
         if (window.screen.width <= 768) setIsHidden(false)
     }
 
@@ -61,14 +69,14 @@ export default function SelectionComponent({type}) {
             </h2>
 
             <div className="main-content-catalog">
-                <Sidebar type={type} onApplyFilter={() => handleApplyFilter()}/>
+                <Sidebar type={type} onApplyFilter={(payload) => handleApplyFilter(payload)}/>
 
                 <div className="catalog-with-products">
                     {getFilterType() === "CAR" && (
                         <>
                             <SpecificationsContent type={type} specifications={specifications}/>
                             {Object.keys(getVehicleIds(type)).length > 0
-                                ? <SpecifiactionItems type={type}/>
+                                ? <SpecifiactionItems type={type} itemsVehicle={itemsVehicle} />
                                 : <div style={{margin: "0 auto"}}>
                                     {loading ?
                                         <ProgressSpinner/> : "Для точного подбора товара уточните дополнительные параметры"}

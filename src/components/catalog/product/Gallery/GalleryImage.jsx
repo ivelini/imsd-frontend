@@ -1,6 +1,6 @@
 import Image from "next/image";
-import CaruselImages from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/Gallery/CaruselImages";
-import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
+import CaruselImages from "@/components/catalog/product/Gallery/CaruselImages";
+
 
 export default function GalleryImage({images}) {
     return (<>

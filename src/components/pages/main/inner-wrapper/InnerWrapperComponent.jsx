@@ -1,4 +1,4 @@
-import FilterComponent from "@/app/_components/page/inner-wrapper/filter/FilterComponent";
+import FilterComponent from "@/components/pages/main/inner-wrapper/filter/FilterComponent";
 import Link from "next/link";
 
 export default function InnerWrapperComponent() {

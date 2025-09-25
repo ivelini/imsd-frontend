@@ -1,15 +1,17 @@
-import ContentComponent from "./_components/ContentComponent";
-import LocationReloadComponent from "../../../../../../components/LocationReloadComponent";
-import HorisontalMenu from "./HorisontalMenu";
-import InfoProduct from "./InfoProduct";
+import ContentComponent from "@/components/catalog/product/ContentComponent";
+import LocationReloadComponent from "@/components/LocationReloadComponent";
+import HorisontalMenu from "@/components/catalog/product/HorisontalMenu";
+import InfoProduct from "@/components/catalog/product/InfoProduct";
 import {TypeProductEnum} from "@/lib/TypeProductEnum";
 import {
     deliveryCityExistPoints,
     deliveryCityNotExistPoints,
-    deliveryMainCityIncludeMapInfo, deliveryPointsExists, deliveryPointsNotExists,
+    deliveryMainCityIncludeMapInfo,
+    deliveryPointsExists,
+    deliveryPointsNotExists,
 } from "@/lib/TextInformation";
 import StocksForManagerComponent
-    from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/StocksForManagerComponent";
+    from "@/components/catalog/product/StocksForManagerComponent";
 import {notFound} from "next/navigation";
 
 /**

@@ -2,9 +2,7 @@
 
 import {useStore} from "@/store/useStore";
 import {useEffect, useState} from "react";
-import ContentComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/ContentComponent";
 import BackendApi from "@/lib/BackendApi";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 

@@ -10,7 +10,7 @@ import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessC
 import dynamic from "next/dynamic";
 import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
 
-const CartButtonInHorisontalItem = dynamic(() => import('@/app/(selection)/_components/page/param/CartButtonInHorisontalItem'), {ssr: false});
+const CartButtonInHorisontalItem = dynamic(() => import('@/components/catalog/selection/param/CartButtonInHorisontalItem'), {ssr: false});
 
 /**
  *

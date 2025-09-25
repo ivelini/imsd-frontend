@@ -7,10 +7,11 @@ import AutoFilter from "./AutoFilter.jsx";
 import LocationComponent from "@/components/ui/LocationComponent";
 import {useStore} from "@/store/useStore";
 import { useRouter } from "next/navigation.js";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 
 const FilterComponent = () => {
-    const {filterTires, filterWheels} = useStore()
+    const {useStoreIsReady,getValuesFilter, getValuesFilterCar} = useStore()
     const [storeIsReady, setStoreIsReady] = useState(false)
     const router = useRouter()
 
@@ -22,15 +23,14 @@ const FilterComponent = () => {
     const [switcher, setSwitcher] = useState({type: SWTIRES, param: SWPARAMS})
 
     useEffect(() => {
-        if(!filterTires) return
-        setStoreIsReady(true)
-    }, [filterTires]);
+        setStoreIsReady(useStoreIsReady)
+    }, []);
 
     let buttonIsActive = false
 
     if(switcher.type === SWTIRES) {
-        buttonIsActive = switcher.param === SWPARAMS && Object.keys(filterTires.params).length > 0 ||
-            switcher.param === SWCAR && Object.keys(filterTires.car).length === 4;
+        buttonIsActive = switcher.param === SWPARAMS && Object.keys(getValuesFilter(TypeProductEnum.TIRE)).length > 0 ||
+            switcher.param === SWCAR && Object.keys(getValuesFilterCar()).length === 4;
     }
 
     if(switcher.type === SWDISKS) {

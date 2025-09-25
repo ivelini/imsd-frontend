@@ -191,7 +191,6 @@ export const useFilterSlice = (set, get) => ({
             }
         })),
 
-        
 
         /** Асинхронные запросы к базе за списком значений для фильтра */
         loadListFilter: async (type) => {
@@ -226,13 +225,14 @@ export const useFilterSlice = (set, get) => ({
 
                 delete newFilter.tire.list
                 delete newFilter.disk.list
+                newFilter.car.list.vendor = state.filter.car.list.vendor
 
                 return {
                     filter: {
                         ...state.filter,
                         tire: {...state.filter.tire, ...newFilter.tire},
                         disk: {...state.filter.disk, ...newFilter.disk},
-                        car: newFilter.car
+                        car: newFilter.car,
                     }
                 }
             } else {

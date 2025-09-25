@@ -36,7 +36,7 @@ export default function Filter({ type, onApplyFilter }) {
 
     const handleResetAllFilters = () => {
         clearFilter()
-        onApplyFilter()
+        onApplyFilter({isClearFilter: true})
     };
 
     return (

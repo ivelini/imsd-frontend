@@ -1,9 +1,9 @@
 import Link from "next/link";
 import LocationComponent from "@/components/ui/LocationComponent";
-import CartComponent from "@/app/_components/layout/cart/CartComponent";
-import SearchInCatalogComponent from "@/app/_components/layout/SearchInCatalogComponent";
-import LoginIconComponent from "@/app/_components/layout/LoginIconComponent";
-import OverlaySidebarComponent from "@/app/_components/layout/OverlaySidebarComponent";
+import CartComponent from "@/components/cart/CartComponent";
+import SearchInCatalogComponent from "@/components/layout/SearchInCatalogComponent";
+import LoginIconComponent from "@/components/layout/LoginIconComponent";
+import OverlaySidebarComponent from "@/components/layout/OverlaySidebarComponent";
 
 export default function HeaderSection() {
 

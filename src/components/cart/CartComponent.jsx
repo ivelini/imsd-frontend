@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
-const CountProductsInCart = dynamic(() => import('@/app/_components/layout/cart/CountProductsInCart'), { ssr: false })
+const CountProductsInCart = dynamic(() => import('@/components/cart/CountProductsInCart'), { ssr: false })
 
 export default function CartComponent() {
     return (<>

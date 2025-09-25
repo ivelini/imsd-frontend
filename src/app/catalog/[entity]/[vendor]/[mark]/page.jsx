@@ -1,4 +1,4 @@
-import HorisontalItem from "@/app/(selection)/_components/page/param/HorisontalItem"
+import HorisontalItem from "@/components/catalog/selection/param/HorisontalItem"
 import { TypeProductEnum } from "@/lib/TypeProductEnum"
 import LocationReloadComponent from "@/components/LocationReloadComponent";
 

@@ -28,6 +28,7 @@ export function useSelection(type) {
     } = useStore()
 
     const [items, setItems] = useState([])
+    const [itemsVehicle, setItemsVehicle] = useState({})
     const [specifications, setSpecifications] = useState({})
     const [loading, setLoading] = useState(true)
     const queryParams = useSearchParams()
@@ -46,16 +47,42 @@ export function useSelection(type) {
     const getItemsFromParamValues = async () => {
 
         let response = await BackendApi.get(`/api/catalog/${type}`, prepareQueryItems())
-        prepareResponseItemsForParams(response)
-        setRangeIsActive(true)
+
+        if (response.code === 200) {
+            setItems(response.data)
+            switch (type) {
+                case TypeProductEnum.TIRE:
+                    setPaginatorFilterTires({
+                        first: response.meta.from,
+                        rows: response.meta.per_page,
+                        total: response.meta.total
+                    })
+                    setRangeFilterTires({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
+                    setRangeFilterTires({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
+                    break
+                case TypeProductEnum.DISK:
+                    setPaginatorFilterWheels({
+                        first: response.meta.from,
+                        rows: response.meta.per_page,
+                        total: response.meta.total
+                    })
+                    setRangeFilterWheels({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
+                    setRangeFilterWheels({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
+            }
+            setLoading(false)
+            setRangeIsActive(true)
+        }
     }
 
     /**
      * Получить продукцию по выбранным спецификациям
      */
     const getItemsFromSpecifications = async () => {
+        if(getVehicleIds(type).length === 0) return
 
         let response = await BackendApi.get(`/api/catalog/vehicle/${type}`, prepareQueryItems())
+
+        setItemsVehicle(response.data ?? {})
     }
 
     const prepareQueryItems = () => {
@@ -88,46 +115,27 @@ export function useSelection(type) {
         return {filters, ...Object.fromEntries(searchParams)}
     }
 
-    const prepareResponseItemsForParams = (response) => {
-        if (response.code === 200) {
-            setItems(response.data)
-            switch (type) {
-                case TypeProductEnum.TIRE:
-                    setPaginatorFilterTires({
-                        first: response.meta.from,
-                        rows: response.meta.per_page,
-                        total: response.meta.total
-                    })
-                    setRangeFilterTires({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
-                    setRangeFilterTires({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
-                    break
-                case TypeProductEnum.DISK:
-                    setPaginatorFilterWheels({
-                        first: response.meta.from,
-                        rows: response.meta.per_page,
-                        total: response.meta.total
-                    })
-                    setRangeFilterWheels({type: 'all', value: response.meta?.range_price?.all ?? [0, 0]})
-                    setRangeFilterWheels({type: 'current', value: response.meta?.range_price?.currentFilter ?? [0, 0]})
-            }
-            setLoading(false)
-        }
-    }
     /**
      * Получить спецификацию для выбранных параметров
      */
     const getSpecifications = async () => {
+        if(getValuesFilterCar().modification === undefined) return
+
         let response = await BackendApi.get(`/api/list/filter/vehicle/${type}/specifications`, getValuesFilterCar())
+
         setSpecifications(response.data ?? {})
     }
 
 
     return {
         items,
+        itemsVehicle,
         specifications,
         getItemsFromParamValues,
+        getItemsFromSpecifications,
         getSpecifications,
         useStoreIsReady,
-        loading
+        loading,
+        setSpecifications
     }
 }

@@ -1,4 +1,4 @@
-import Breadcrumbs from "./_component/Breadcrumbs"
+import Breadcrumbs from "@/components/catalog/breadcrumbs/Breadcrumbs"
 
 /**
  * @param {Object} params 

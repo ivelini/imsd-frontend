@@ -2,82 +2,48 @@ import {useEffect, useState} from "react";
 import { Dropdown } from 'primereact/dropdown';
 import BackendApi from "@/lib/BackendApi";
 import {useStore} from "@/store/useStore";
+import {useSelection} from "@/hooks/useSelection";
+import {TypeProductEnum} from "@/lib/TypeProductEnum";
+import FilterDropdown from "@/components/catalog/filter/FilterDropdown";
 
 
 const TireFilter = () => {
-    const {filterTires, setParamFilterTires, clearFilter} = useStore()
+    const {
+        getValuesFilter,
+        getListFilter,
+        setValueFilterTires,
+        clearFilter
+    } = useStore()
+    const {} = useSelection(TypeProductEnum.TIRE)
 
-    const [params, setParams] = useState({})    // Параметры для показа фильтра
+    const list = getListFilter(TypeProductEnum.TIRE)
+    const values = getValuesFilter(TypeProductEnum.TIRE)
 
     useEffect(() => {
-        (async () => {
-            let response = await BackendApi.get('/api/list/filter/tire')
-
-            if(response.code === 200) {
-                setParams(await response.data)
-            }
-        })()
         clearFilter()
     }, [])
+
+    const handleChange = (type, value) => {
+        setValueFilterTires({ type, value })
+        setRangeFilterTires({type: 'current', value: [0,0]})
+        setRangeFilterTires({type: 'all', value: [0,0]})
+        setRangeIsActive(false);
+    };
+
 
     return (<>
         <div className="filter-content-item disk" style={{"display": "block"}}>
             <div className="select-row three-cells">
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.width?.find(item => item.id === filterTires.params.width)}
-                        onChange={(e) => setParamFilterTires({type: 'width', value: e.value.id})}
-                        options={[{ id: null, name: 'Любая' }, ...(params?.width ?? [])]}
-                        optionLabel="name"
-                        placeholder="Ширина"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Ширина" options={list.width} value={values.width} onChange={(v) => handleChange("width", v.id)} />
                 </div>
 
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.height?.find(item => item.id === filterTires.params.height)}
-                        onChange={(e) => setParamFilterTires({type: 'height', value: e.value.id})}
-                        options={[{ id: null, name: 'Любой' }, ...(params?.height ?? [])]}
-                        optionLabel="name"
-                        placeholder="Профиль"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Профиль" options={list.height} value={values.height} onChange={(v) => handleChange("height", v.id)} />
                 </div>
 
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.diameter?.find(item => item.id === filterTires.params.diameter)}
-                        onChange={(e) => setParamFilterTires({type: 'diameter', value: e.value.id})}
-                        options={[{ id: null, name: 'Любой' }, ...(params?.diameter ?? [])]}
-                        optionLabel="name"
-                        placeholder="Диаметр"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Диаметр" options={list.diameter} value={values.diameter} onChange={(v) => handleChange("diameter", v.id)} />
                 </div>
             </div>
 

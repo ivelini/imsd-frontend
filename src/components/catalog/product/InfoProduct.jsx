@@ -1,9 +1,9 @@
-import CostAndCartComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/CostAndCartComponent";
+import CostAndCartComponent from "@/components/catalog/product/CostAndCartComponent";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
-import GalleryImage from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/Gallery/GalleryImage";
-import EuroLabel from "@/app/(selection)/_components/page/param/EuroLabel";
+import GalleryImage from "@/components/catalog/product/Gallery/GalleryImage";
+import EuroLabel from "@/components/catalog/selection/param/EuroLabel";
 import {deliveryPointsExists, deliveryPointsNotExists} from "@/lib/TextInformation";
-import BadgePopUpComponent from "@/app/catalog/[entity]/[vendor]/[mark]/[product]/_components/BadgePopUpComponent";
+import BadgePopUpComponent from "@/components/catalog/product/BadgePopUpComponent";
 import PromotionIconComponent from "@/components/ui/PromotionIconComponent";
 
 

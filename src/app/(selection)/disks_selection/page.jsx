@@ -1,4 +1,4 @@
-import SelectionComponent from "@/components/selection/SelectionComponent";
+import SelectionComponent from "@/components/catalog/selection/SelectionComponent";
 import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 
