@@ -8,17 +8,17 @@ import FooterSection from "@/app/_components/layout/FooterSection";
 import Script from "next/script";
 
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
 
     return (
         <html lang="en">
-            <head>
-                <meta charSet="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <head>
+            <meta charSet="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `
               (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){
               (m[i].a=m[i].a||[]).push(arguments)};
               m[i].l=1*new Date();
@@ -36,28 +36,38 @@ export default function RootLayout({ children }) {
                   accurateTrackBounce:true,
                   trackLinks:true
               });
-            `}}/>
-                <noscript>
-                    <div>
-                        <img
-                            src="https://mc.yandex.ru/watch/36278095"
-                            style={{ position: "absolute", left: "-9999px" }}
-                            alt=""
-                        />
-                    </div>
-                </noscript>
-            </head>
-            <body>
-                <div className="app">
-                    <div className="wrapper">
-                        <HeaderSection />
-
-                        {children}
-
-                        <FooterSection />
-                    </div>
+            `
+                }}/>
+            <noscript>
+                <div>
+                    <img
+                        src="https://mc.yandex.ru/watch/36278095"
+                        style={{position: "absolute", left: "-9999px"}}
+                        alt=""
+                    />
                 </div>
-            </body>
+            </noscript>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-EKJLM8DLJ9"></script>
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-EKJLM8DLJ9');`
+                }}/>
+        </head>
+        <body>
+        <div className="app">
+            <div className="wrapper">
+                <HeaderSection/>
+
+                {children}
+
+                <FooterSection/>
+            </div>
+        </div>
+        </body>
         </html>
     )
 }
