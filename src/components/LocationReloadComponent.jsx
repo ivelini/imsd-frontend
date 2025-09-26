@@ -10,6 +10,7 @@ export default function LocationReloadComponent() {
     const { getSelectedCity } = useStore()
 
     useEffect(() => {
+        if (typeof window === "undefined") return
 
         let url = new URL(window.location.href)
 
