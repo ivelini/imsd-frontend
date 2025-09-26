@@ -11,7 +11,10 @@ const TireFilter = () => {
     const {
         getValuesFilter,
         getListFilter,
+        loadListFilter,
         setValueFilterTires,
+        setRangeFilterTires,
+        setRangeIsActive,
         clearFilter
     } = useStore()
     const {} = useSelection(TypeProductEnum.TIRE)
@@ -20,6 +23,7 @@ const TireFilter = () => {
     const values = getValuesFilter(TypeProductEnum.TIRE)
 
     useEffect(() => {
+        loadListFilter(TypeProductEnum.TIRE);
         clearFilter()
     }, [])
 
@@ -49,80 +53,20 @@ const TireFilter = () => {
 
             <div className="select-row">
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.season?.find(item => item.id === filterTires.params.season)}
-                        onChange={(e) => setParamFilterTires({type: 'season', value: e.value.id})}
-                        options={[{ id: null, name: 'Любая' }, ...(params?.season ?? [])]}
-                        optionLabel="name"
-                        placeholder="Сезонность"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Сезонность" options={list.season} value={values.season} onChange={(v) => handleChange("season", v.id)} />
                 </div>
 
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.is_spike?.find(item => item.id === filterTires.params.is_spike)}
-                        onChange={(e) => setParamFilterTires({type: 'is_spike', value: e.value.id == null ? e.value.id :Boolean(e.value.id)})}
-                        options={[{ id: null, name: 'Любой' }, ...(params?.is_spike ?? [])]}
-                        optionLabel="name"
-                        placeholder="Тип шин"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Тип шин" options={list.is_spike} value={values.is_spike} onChange={(v) => handleChange("is_spike", v.id)} />
                 </div>
             </div>
 
             <div className="select-row">
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.vendor?.find(item => item.id === filterTires.params.vendor)}
-                        onChange={(e) => setParamFilterTires({type: 'vendor', value: e.value.id})}
-                        options={[{id: null, name: 'Любой'}, ...(params?.vendor ?? [])]}
-                        optionLabel="name"
-                        placeholder="Производитель"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Производитель" options={list.vendor} value={values.vendor} onChange={(v) => handleChange("vendor", v.id)} />
                 </div>
                 <div className="custom-select-wrapper">
-                    <Dropdown
-                        value={params.country?.find(item => item.id === filterTires.params.country)}
-                        onChange={(e) => setParamFilterTires({type: 'country', value: e.value.id})}
-                        options={[{id: null, name: 'Любая'}, ...(params?.country ?? [])]}
-                        optionLabel="name"
-                        placeholder="Страна"
-                        className="custom-select"
-                        dropdownIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                        collapseIcon={() => (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
-                                <path d="M8 1L4.5 5L1 0.999999" stroke="#C5C5C5" strokeLinecap="round"></path>
-                            </svg>)}
-                    />
+                    <FilterDropdown label="Страна" options={list.country} value={values.country} onChange={(v) => handleChange("country", v.id)} />
                 </div>
             </div>
         </div>

@@ -31,8 +31,16 @@ export default function SelectionComponent({type}) {
     const {getFilterType, getPaginator, getVehicleIds, setIsHidden} = useStore()
 
     useEffect(() => {
-        getItemsFromParamValues()
-        setReady(useStoreIsReady)
+        let fromMain = sessionStorage.getItem("from_main")
+
+        if(fromMain) {
+            sessionStorage.removeItem("from_main")
+            if (getFilterType() === "PARAM") getItemsFromParamValues()
+            if (getFilterType() === "CAR") getSpecifications()
+        } else {
+            getItemsFromParamValues()
+            setReady(useStoreIsReady)
+        }
     }, []);
 
     //Запрос товаров при изменении спецификации

@@ -11,16 +11,21 @@ import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 
 const FilterComponent = () => {
-    const {useStoreIsReady,getValuesFilter, getValuesFilterCar} = useStore()
+    const {
+        useStoreIsReady,
+        setFilterType,
+        getValuesFilter,
+        getValuesFilterCar
+    } = useStore()
     const [storeIsReady, setStoreIsReady] = useState(false)
     const router = useRouter()
 
-    const SWTIRES = 'SWTIRES' // Выбор шины
-    const SWDISKS = 'SWDISKS' // Выбор дисков
+    const SWTIRES = TypeProductEnum.TIRE // Выбор шины
+    const SWDISKS = TypeProductEnum.DISK // Выбор дисков
     const SWPARAMS = 'SWPARAMS' // Выбор по параметрам
     const SWCAR = 'SWCAR' // Выбор по автомобилю
 
-    const [switcher, setSwitcher] = useState({type: SWTIRES, param: SWPARAMS})
+    const [switcher, setSwitcher] = useState({type: TypeProductEnum.TIRE, param: SWPARAMS})
 
     useEffect(() => {
         setStoreIsReady(useStoreIsReady)
@@ -28,22 +33,24 @@ const FilterComponent = () => {
 
     let buttonIsActive = false
 
-    if(switcher.type === SWTIRES) {
+    if(switcher.type === TypeProductEnum.TIRE) {
         buttonIsActive = switcher.param === SWPARAMS && Object.keys(getValuesFilter(TypeProductEnum.TIRE)).length > 0 ||
             switcher.param === SWCAR && Object.keys(getValuesFilterCar()).length === 4;
     }
 
-    if(switcher.type === SWDISKS) {
-        buttonIsActive = switcher.param === SWPARAMS && Object.keys(filterWheels.params).length > 0 ||
-            switcher.param === SWCAR && Object.keys(filterWheels.car).length === 4;
+    if(switcher.type === TypeProductEnum.DISK) {
+        buttonIsActive = switcher.param === SWPARAMS && Object.keys(getValuesFilter(TypeProductEnum.DISK)).length > 0 ||
+            switcher.param === SWCAR && Object.keys(getValuesFilterCar()).length === 4;
     }
 
     const handleClick = () => {
-        if(switcher.type == 'SWTIRES') {
+        sessionStorage.setItem('from_main', true)
+
+        if(switcher.type === TypeProductEnum.TIRE) {
             router.push('/tires_selection')
         }
 
-        if(switcher.type == 'SWDISKS') {
+        if(switcher.type === TypeProductEnum.DISK) {
             router.push('/disks_selection')
         }
     }
@@ -51,9 +58,9 @@ const FilterComponent = () => {
     return storeIsReady && (<>
         <section className="filter-block">
             <div className="container filter-block-menu">
-                <div className={`filter-item for-wheels ${switcher.type !== SWTIRES && 'inactive'}`} onClick={() => {
-                    if (switcher.type !== SWTIRES) {
-                        setSwitcher({type: SWTIRES, param: SWPARAMS})
+                <div className={`filter-item for-wheels ${switcher.type !== TypeProductEnum.TIRE && 'inactive'}`} onClick={() => {
+                    if (switcher.type !== TypeProductEnum.TIRE) {
+                        setSwitcher({type: TypeProductEnum.TIRE, param: SWPARAMS})
                     }
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="24" viewBox="0 0 38 24" fill="none">
@@ -64,9 +71,9 @@ const FilterComponent = () => {
                     </svg>
                     <p>Шины</p>
                 </div>
-                <div className={`filter-item for-disk ${switcher.type !== SWDISKS && 'inactive'}`} onClick={() => {
-                    if (switcher.type !== SWDISKS) {
-                        setSwitcher({type: SWDISKS, param: SWPARAMS})
+                <div className={`filter-item for-disk ${switcher.type !== TypeProductEnum.DISK && 'inactive'}`} onClick={() => {
+                    if (switcher.type !== TypeProductEnum.DISK) {
+                        setSwitcher({type: TypeProductEnum.DISK, param: SWPARAMS})
                     }
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -83,22 +90,30 @@ const FilterComponent = () => {
                     <div className="switcher-wrap">
                         <p className={`filter-switcher-option ${switcher.param !== SWPARAMS && 'filter-switcher-option_disabled'}`}
                            onClick={() => {
-                               if (switcher.param !== SWPARAMS) setSwitcher({...switcher, param: SWPARAMS})
+                               if (switcher.param !== SWPARAMS) {
+                                   setSwitcher({...switcher, param: SWPARAMS})
+                                   setFilterType('PARAM')
+                               }
                            }}>По параметрам</p>
                         <div className={`switcher ${switcher.param === SWCAR && 'active'}`}
                              id="filter-top-switcher"
                              onClick={() => {
                                  if (switcher.param !== SWCAR) {
                                      setSwitcher({...switcher, param: SWCAR})
+                                     setFilterType('CAR')
                                  } else {
                                      setSwitcher({...switcher, param: SWPARAMS})
+                                     setFilterType('PARAM')
                                  }
                              }}>
                             <div className="switcher-circle"></div>
                         </div>
                         <p className={`filter-switcher-option ${switcher.param !== SWCAR && 'filter-switcher-option_disabled'}`}
                            onClick={() => {
-                               if (switcher.param !== SWCAR) setSwitcher({...switcher, param: SWCAR})
+                               if (switcher.param !== SWCAR) {
+                                   setSwitcher({...switcher, param: SWCAR})
+                                   setFilterType('CAR')
+                               }
                            }}>По автомобилю</p>
                     </div>
 
@@ -108,7 +123,7 @@ const FilterComponent = () => {
 
                 {switcher.param === SWCAR
                     ? <AutoFilter type={switcher.type}/>
-                    : (switcher.type === SWTIRES
+                    : (switcher.type === TypeProductEnum.TIRE
                         ? <TireFilter />
                         : <DiskFilter />
                     )
