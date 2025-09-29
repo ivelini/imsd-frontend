@@ -1,48 +1,27 @@
-"use client"
+import Breadcrumbs from "@/components/catalog/breadcrumbs/Breadcrumbs";
+import {Suspense} from "react";
+import SelectionComponent from "@/components/catalog/selection/SelectionComponent";
 
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import {useStore} from "@/store/useStore";
-import {useEffect, useState} from "react";
-import BackendApi from "@/lib/BackendApi";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
+export async function generateMetadata({params}) {
+    const {vendor} = await params;
 
+    return {
+        title: 'Производитель',
+        description: 'Описание производителя'
+    }
+}
 
-export default function Vendor() {
-    const router = useRouter() 
-    const searchParams = useSearchParams();
+export default async function Vendor({ params }) {
+    const { entity, vendor, mark } = params
 
-    /**
-     * @type {{ entity?: string, vendor?: string }}
-     */
-    const params = useParams();
-    const {setParamFilterTires, setParamFilterWheels, clearFilter} = useStore()
-
-    useEffect(() => {
-        clearFilter({entity: 'filterTires', param: 'params'})
-        clearFilter({entity: 'filterWheels', param: 'params'})
-
-        if(searchParams.get('vendor') !== null) {
-
-            (async () => {
-                const response = await BackendApi.get('/api/list/filter/vendor', {
-                    type: params.entity,
-                    slug: params.vendor
-                })
-
-                if (response.code === 200) {
-                    let data = (await response).data
-
-                    if(params.entity === TypeProductEnum.TIRE + 's') setParamFilterTires({type:'vendor', value: data[0].id})
-                    if(params.entity === TypeProductEnum.DISK + 's') setParamFilterWheels({type:'vendor', value: data[0].id})
-
-                    router.push(`/${params.entity}_selection`)
-                }
-            })()
-        } else {
-            router.push(`/${params.entity}_selection`)
-        }
-
-    }, [])
-
-
+    return (<>
+        <Breadcrumbs entity={entity} vendor={vendor} mark={mark} />
+        <section className="catalog-section container">
+            <Suspense fallback={null}>
+                <SelectionComponent type={entity.slice(0, entity.length - 1)} isSetQuery={false}>
+                    Тут будет описание производителя
+                </SelectionComponent>
+            </Suspense>
+        </section>
+    </>)
 }

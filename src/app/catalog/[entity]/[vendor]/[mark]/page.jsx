@@ -47,7 +47,7 @@ export default async function Mark({ params, searchParams }) {
     let response = null
     let url = new URL(`${process.env.BACKEND_URL}/api/catalog/tire/${vendor}/${mark}`)
 
-    if (entity === TypeProductEnum.DISK) {
+    if (entity === TypeProductEnum.DISK + 's') {
         url = new URL(`${process.env.BACKEND_URL}/api/catalog/disk/${vendor}/${mark}`)
     }
 

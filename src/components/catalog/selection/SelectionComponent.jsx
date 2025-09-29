@@ -13,8 +13,9 @@ import {useStore} from "@/store/useStore";
 /**
  * Компонент для отображения результатов подбора шин.
  * @param {string} type тип продукции
+ * @param children
  */
-export default function SelectionComponent({type}) {
+export default function SelectionComponent({children, type, isSetQuery = true}) {
     const [isReady, setReady] = useState(false);
     const {
         items,
@@ -25,7 +26,8 @@ export default function SelectionComponent({type}) {
         getSpecifications,
         useStoreIsReady,
         loading,
-        setSpecifications
+        setSpecifications,
+        setQueryString
     } = useSelection(type);
 
     const {getFilterType, getPaginator, getVehicleIds, setIsHidden} = useStore()
@@ -41,6 +43,8 @@ export default function SelectionComponent({type}) {
             getItemsFromParamValues()
             setReady(useStoreIsReady)
         }
+
+        isSetQuery && setQueryString()
     }, []);
 
     //Запрос товаров при изменении спецификации
@@ -57,6 +61,8 @@ export default function SelectionComponent({type}) {
         if (getFilterType() === "CAR" && !payload?.isClearFilter) getSpecifications()
         if(payload?.isClearFilter) setSpecifications({})
         if (window.screen.width <= 768) setIsHidden(false)
+
+        setQueryString()
     }
 
     const handleChangePage = (data) => {
@@ -80,6 +86,7 @@ export default function SelectionComponent({type}) {
                 <Sidebar type={type} onApplyFilter={(payload) => handleApplyFilter(payload)}/>
 
                 <div className="catalog-with-products">
+                    {children}
                     {getFilterType() === "CAR" && (
                         <>
                             <SpecificationsContent type={type} specifications={specifications}/>

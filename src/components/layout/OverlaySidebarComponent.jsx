@@ -71,7 +71,7 @@ export default function OverlaySidebarComponent({children}) {
                     <div className="catalog-page-link-group">
                         <br/><br/>
                         <h3 className="link-group-title">Шины</h3>
-                        <a onClick={() => handleClickLink('/tires_selection?filterType=param&filterIsOpen=true')}
+                        <a onClick={() => handleClickLink('/catalog/tires')}
                            className="link-group-item">Поиск шин по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -79,7 +79,7 @@ export default function OverlaySidebarComponent({children}) {
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/tires_selection?filterType=car&filterIsOpen=true')}
+                        <a onClick={() => handleClickLink('/catalog/tires/car')}
                            className="link-group-item">Поиск шин по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -91,7 +91,7 @@ export default function OverlaySidebarComponent({children}) {
                     <div className="catalog-page-link-group">
                         <br/>
                         <h3 className="link-group-title">Диски</h3>
-                        <a onClick={() => handleClickLink('/disks_selection?filterType=param&filterIsOpen=true')}
+                        <a onClick={() => handleClickLink('/catalog/disks')}
                            className="link-group-item">Поиск дисков по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -99,7 +99,7 @@ export default function OverlaySidebarComponent({children}) {
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/disks_selection?filterType=car&filterIsOpen=true')}
+                        <a onClick={() => handleClickLink('/catalog/disks/car')}
                            className="link-group-item">Поиск дисков по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">

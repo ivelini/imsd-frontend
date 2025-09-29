@@ -45,14 +45,7 @@ const FilterComponent = () => {
 
     const handleClick = () => {
         sessionStorage.setItem('from_main', true)
-
-        if(switcher.type === TypeProductEnum.TIRE) {
-            router.push('/tires_selection')
-        }
-
-        if(switcher.type === TypeProductEnum.DISK) {
-            router.push('/disks_selection')
-        }
+        router.push(`/catalog/${switcher.type}s`)
     }
 
     return storeIsReady && (<>

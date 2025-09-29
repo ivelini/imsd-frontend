@@ -4,13 +4,14 @@ import {useEffect, useState} from "react";
 import BackendApi from "@/lib/BackendApi";
 import {useStore} from "@/store/useStore";
 import {TypeProductEnum} from "@/lib/TypeProductEnum";
-import {useParams, useSearchParams} from "next/navigation";
+import {useParams, useRouter, useSearchParams} from "next/navigation";
 
 /**
  * Хук для выборки продукции (шины или диски).
  */
 
 export function useSelection(type) {
+    const router = useRouter();
     const {
         useStoreIsReady,
 
@@ -78,7 +79,7 @@ export function useSelection(type) {
      * Получить продукцию по выбранным спецификациям
      */
     const getItemsFromSpecifications = async () => {
-        if(getVehicleIds(type).length === 0) return
+        if (getVehicleIds(type).length === 0) return
 
         let response = await BackendApi.get(`/api/catalog/vehicle/${type}`, prepareQueryItems())
 
@@ -119,13 +120,29 @@ export function useSelection(type) {
      * Получить спецификацию для выбранных параметров
      */
     const getSpecifications = async () => {
-        if(getValuesFilterCar().modification === undefined) return
+        if (getValuesFilterCar().modification === undefined) return
 
         let response = await BackendApi.get(`/api/list/filter/vehicle/${type}/specifications`, getValuesFilterCar())
 
         setSpecifications(response.data ?? {})
     }
 
+    /**
+     * Установить параметры фильтра в строку запроса
+     */
+    const setQueryString = () => {
+        let query = ''
+        switch (getFilterType()) {
+            case "PARAM":
+                query = (new URLSearchParams(getValuesFilter(type))).toString()
+                router.replace(`/catalog/${type}s?${query}`)
+                break
+            case "CAR":
+                query =(new URLSearchParams(getValuesFilterCar(type))).toString()
+                router.replace(`/catalog/${type}s/car?${query}`)
+                break
+        }
+    }
 
     return {
         items,
@@ -136,6 +153,7 @@ export function useSelection(type) {
         getSpecifications,
         useStoreIsReady,
         loading,
-        setSpecifications
+        setSpecifications,
+        setQueryString
     }
 }
