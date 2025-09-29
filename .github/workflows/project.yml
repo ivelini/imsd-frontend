@@ -45,11 +45,12 @@ jobs:
           npm install
           npm run build
           
-          pm2 stop ${{ env.APP_NAME }}
+          pm2 delete ${{ env.APP_NAME }}
           rm -rf ${{ env.WORKDIR }}
           mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
           cd ${{ env.WORKDIR }}
-          pm2 restart ${{ env.APP_NAME }}
+          pm2 start npm --name ${{ env.APP_NAME }} -- run start:dev
+          pm2 save
 
   deploy-master:
     runs-on: ubuntu-latest
@@ -87,8 +88,9 @@ jobs:
             npm install
             npm run build
             
-            pm2 stop ${{ env.APP_NAME }}
+            pm2 delete ${{ env.APP_NAME }}
             rm -rf ${{ env.WORKDIR }}
             mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
             cd ${{ env.WORKDIR }}
-            pm2 restart ${{ env.APP_NAME }}
+            pm2 start npm --name ${{ env.APP_NAME }} -- run start:prod
+            pm2 save

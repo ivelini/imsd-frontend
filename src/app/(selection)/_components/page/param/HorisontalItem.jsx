@@ -6,7 +6,7 @@ import Image from 'next/image';
 import {useStore} from "@/store/useStore";
 import Link from "next/link";
 import SeasonIconComponent from "@/components/ui/SeasonIconComponent";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ProductInCartSuccessComponent from "@/components/ui/ProductInCartSuccessComponent";
 import PopUpComponent from "@/components/ui/PopUpComponent";
 import {
@@ -66,6 +66,13 @@ export default function HorisontalItem({item}) {
     const [isPopUppAddCartVisible, setIsPoUppAddCartVisible] = useState(false)
     const [isPopUppDeliveryVisible, setIsPopUppDeliveryVisible] = useState(false)
     const [isPopUppDeliveryPointsVisible, setIsPopUppDeliveryPointsVisible] = useState(false)
+    const [screenWidth, setScreenWidth] = useState(999)
+
+
+    useEffect(() => {
+        setScreenWidth(window.screen.width)
+
+    }, []);
 
     const handleAddCart = () => {
         addCart({
@@ -128,17 +135,6 @@ export default function HorisontalItem({item}) {
         }
     }
 
-    /**
-     * Получить параметры изображения в зависимости от размера экрана
-     */
-    const getWidthImage = () => {
-        if (window.screen.width <= 596) {
-            return 238
-        }
-
-        return 172
-    }
-
     const badgeStyle = {
         borderRadius: '5px',
         padding: '0 5px',
@@ -184,13 +180,13 @@ export default function HorisontalItem({item}) {
                 <div>
                     <Image
                         src={item.main_image.url}
-                        width={getWidthImage()}
-                        height={getWidthImage()}
+                        width={screenWidth <= 596 ? 238 : 172}
+                        height={screenWidth <= 596 ? 238 : 172}
                         alt={item.name}
                         unoptimized
                         style={{
-                            width: window.screen.width <= 596 ? 'auto' : getWidthImage() + 'px',
-                            height: window.screen.width <= 596 ? 'auto' : getWidthImage() + 'px',
+                            width: screenWidth <= 596 ? 'auto' : (screenWidth <= 596 ? 238 : 172) + 'px',
+                            height: screenWidth <= 596 ? 'auto' : (screenWidth <= 596 ? 238 : 172) + 'px',
                         }}
                     />
                 </div>
@@ -210,7 +206,7 @@ export default function HorisontalItem({item}) {
                             pathname: item.url,
                             query: getCityQueryParam()
                         }}
-                        onClick={() => window.sessionStorage.setItem(`scrollY-${pathname}`, window.scrollY.toString())}
+                        onClick={() => sessionStorage.setItem(`scrollY-${pathname}`, window.scrollY.toString())}
                         >
                             {item.name}
                         </Link>
@@ -277,7 +273,7 @@ export default function HorisontalItem({item}) {
                                 </Badge>
                             </p>
                         </div>
-                        {window.screen.width > 599 && (
+                        {screenWidth > 599 && (
                             <div className="catalog-product-flex-item catalog-product-purchase-actions">
                                 <CartButtonInHorisontalItem
                                     item={item}
