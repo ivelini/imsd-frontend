@@ -8,7 +8,7 @@ import {InputMask} from 'primereact/inputmask';
 import {Accordion, AccordionTab} from 'primereact/accordion';
 import {RadioButton} from "primereact/radiobutton";
 import BackendApi from "@/lib/BackendApi";
-import OrderStoreSuccess from "@/app/cart/order/_components/OrderStoreSuccess";
+import OrderStoreSuccess from "@/components/cart/OrderStoreSuccess";
 import Link from "next/link";
 import ToastMessageServerComponent from "@/components/ui/ToastMessageServerComponent";
 

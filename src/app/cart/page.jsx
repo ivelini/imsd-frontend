@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import CartItem from "@/app/cart/_components/CartItem";
+import CartItem from "@/components/cart/CartItem";
 import { useStore } from "@/store/useStore";
 import Link from "next/link";
 import BackendApi from "@/lib/BackendApi";

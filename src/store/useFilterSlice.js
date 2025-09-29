@@ -104,6 +104,7 @@ export const useFilterSlice = (set, get) => ({
         setVehicleIdsFilterTires: (payload) => set((state) => ({
             filter: {
                 ...state.filter,
+                type: "PARAM",
                 tire: {
                     ...state.filter.tire,
                     vehicleIds: payload
@@ -125,7 +126,7 @@ export const useFilterSlice = (set, get) => ({
                 delete newCar[payload.type]
             }
 
-            return {filter: {...state.filter, car: {...state.filter.car, values: newCar}}}
+            return {filter: {...state.filter, type: "CAR", car: {...state.filter.car, values: newCar}}}
 
         }),
 
@@ -145,7 +146,7 @@ export const useFilterSlice = (set, get) => ({
                 delete newValues[payload.type]
             }
 
-            return {filter: {...state.filter, disk: {...state.filter.disk, values: newValues}}}
+            return {filter: {...state.filter, type: "PARAM", disk: {...state.filter.disk, values: newValues}}}
 
         }),
         /**
