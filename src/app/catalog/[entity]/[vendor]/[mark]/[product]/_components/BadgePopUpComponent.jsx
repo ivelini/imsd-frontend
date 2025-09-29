@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import PopUpComponent from "@/components/ui/PopUpComponent";
 import {Badge} from "primereact/badge";
 
@@ -15,7 +15,6 @@ export default function BadgePopUpComponent({title, value, content, isInline = f
         background: '#f5f5f5',
         color: '#383838',
         textAlign: 'center',
-        width: window.screen.width <= 600 ? '200px' : '120px',
         height: 'auto'
     }
 
@@ -27,6 +26,10 @@ export default function BadgePopUpComponent({title, value, content, isInline = f
         height: 'auto',
         fontWeight: 'bold',
     }
+
+    useEffect(() => {
+        badgeStyle.width = window.screen.width <= 600 ? '200px' : '120px'
+    }, [])
 
     return (<>
 
