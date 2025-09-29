@@ -1,7 +1,7 @@
-import InnerWrapperComponent from "@/app/_components/page/inner-wrapper/InnerWrapperComponent";
-import CaruselComponent from "@/app/_components/page/CaruselComponent";
-import ArticleBlock from "@/app/article/_component/ArticleBlock";
-import AttentionBlocksComponent from "@/app/_components/page/AttentionBlocksComponent";
+import InnerWrapperComponent from "@/components/pages/main/inner-wrapper/InnerWrapperComponent";
+import CaruselComponent from "@/components/pages/main/CaruselComponent";
+import ArticleBlock from "@/components/pages/article/ArticleBlock";
+import AttentionBlocksComponent from "@/components/pages/main/AttentionBlocksComponent";
 
 
 export const metadata = {
@@ -21,6 +21,15 @@ export default async function Home() {
     return (<>
         <InnerWrapperComponent/>
         <AttentionBlocksComponent/>
+
+        <div className="wheels-section container">
+            <h2>Лучшие предложения шин</h2>
+            <CaruselComponent items={data.tire_carousel}/>
+        </div>
+        <div className="disk-section container">
+            <h2 className="pr">Лучшие предложения дисков</h2>
+            <CaruselComponent items={data.wheel_carousel}/>
+        </div>
         <section className="news-section container">
             <h2>Новости</h2>
             <div className="news-list">
@@ -33,14 +42,6 @@ export default async function Home() {
                 )}
             </div>
         </section>
-        <div className="wheels-section container">
-            <h2>Лучшие предложения шин</h2>
-            <CaruselComponent items={data.tire_carousel}/>
-        </div>
-        <div className="disk-section container">
-            <h2 className="pr">Лучшие предложения дисков</h2>
-            <CaruselComponent items={data.wheel_carousel}/>
-        </div>
         <section className="container section section-content">
             <h2>{data.about_us.title}</h2>
             <div className="container section section-content" dangerouslySetInnerHTML={{__html: data.about_us.content}}/>

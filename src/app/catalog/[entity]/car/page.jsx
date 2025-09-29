@@ -7,13 +7,13 @@ export async function generateMetadata({params}) {
 
     if (entity === TypeProductEnum.TIRE + 's') {
         return {
-            title: 'Подбор шин по параметрам',
-            description: 'Подбор шин по параметрам'
+            title: 'Подбор шин по авто',
+            description: 'Подбор шин по авто'
         }
     }
     return {
-        title: 'Подбор дисков по параметрам',
-        description: 'Подбор дисков по параметрам'
+        title: 'Подбор дисков по авто',
+        description: 'Подбор дисков по авто'
     }
 }
 /**
@@ -23,9 +23,5 @@ export async function generateMetadata({params}) {
 export default function Entity({params}) {
     const {entity} = params
 
-    return (<section className="catalog-section container">
-        <Suspense fallback={null}>
-            <SelectionComponent type={entity.slice(0, entity.length - 1)}/>
-        </Suspense>
-    </section>)
+    return (<>По авто</>)
 }
