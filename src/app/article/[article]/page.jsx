@@ -1,5 +1,4 @@
 import Image from "next/image";
-import {TypeProductEnum} from "@/lib/TypeProductEnum";
 
 export async function generateMetadata({params}) {
     const {article} = await params
