@@ -10,11 +10,12 @@ import {useStore} from "@/store/useStore";
 export default function OverlaySidebarComponent({children}) {
     const router = useRouter();
     const [visible, setVisible] = useState(false)
-    const {getToken} = useStore()
+    const {getToken, setFilterType} = useStore()
 
-    const handleClickLink = (route) => {
-        window.location.href = route
-
+    const handleClickLink = (route, type) => {
+        setFilterType(type)
+        router.push(route)
+        setVisible(false)
     }
 
     return (<>
@@ -71,7 +72,7 @@ export default function OverlaySidebarComponent({children}) {
                     <div className="catalog-page-link-group">
                         <br/><br/>
                         <h3 className="link-group-title">Шины</h3>
-                        <a onClick={() => handleClickLink('/catalog/tires')}
+                        <a onClick={() => handleClickLink('/catalog/tires', "PARAM")}
                            className="link-group-item">Поиск шин по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -79,7 +80,7 @@ export default function OverlaySidebarComponent({children}) {
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/catalog/tires/car')}
+                        <a onClick={() => handleClickLink('/catalog/tires/car', "CAR")}
                            className="link-group-item">Поиск шин по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -91,7 +92,7 @@ export default function OverlaySidebarComponent({children}) {
                     <div className="catalog-page-link-group">
                         <br/>
                         <h3 className="link-group-title">Диски</h3>
-                        <a onClick={() => handleClickLink('/catalog/disks')}
+                        <a onClick={() => handleClickLink('/catalog/disks', "PARAM")}
                            className="link-group-item">Поиск дисков по характеристикам
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">
@@ -99,7 +100,7 @@ export default function OverlaySidebarComponent({children}) {
                                       strokeLinejoin="round"/>
                             </svg>
                         </a>
-                        <a onClick={() => handleClickLink('/catalog/disks/car')}
+                        <a onClick={() => handleClickLink('/catalog/disks/car', "CAR")}
                            className="link-group-item">Поиск дисков по автомобилю
                             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10"
                                  fill="none">

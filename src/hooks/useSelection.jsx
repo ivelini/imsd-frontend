@@ -138,7 +138,7 @@ export function useSelection(type) {
                 router.replace(`/catalog/${type}s?${query}`)
                 break
             case "CAR":
-                query =(new URLSearchParams(getValuesFilterCar(type))).toString()
+                query =(new URLSearchParams(getValuesFilterCar())).toString()
                 router.replace(`/catalog/${type}s/car?${query}`)
                 break
         }

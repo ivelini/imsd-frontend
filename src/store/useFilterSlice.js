@@ -66,7 +66,7 @@ export const useFilterSlice = (set, get) => ({
                 delete newValues[payload.type]
             }
 
-            return {filter: {...state.filter, tire: {...state.filter.tire, values: newValues}}}
+            return {filter: {...state.filter, type:"PARAM", tire: {...state.filter.tire, values: newValues}}}
 
         }),
         /**

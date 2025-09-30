@@ -14,6 +14,7 @@ import {useStore} from "@/store/useStore";
  * Компонент для отображения результатов подбора шин.
  * @param {string} type тип продукции
  * @param children
+ * @param isSetQuery
  */
 export default function SelectionComponent({children, type, isSetQuery = true}) {
     const [isReady, setReady] = useState(false);
