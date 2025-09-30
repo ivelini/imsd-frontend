@@ -1,6 +1,6 @@
 "use client"
 
-import ArticleBlock from "@/app/article/_component/ArticleBlock";
+import ArticleBlock from "@/components/pages/article/ArticleBlock";
 import {Paginator} from "primereact/paginator";
 import {useEffect, useState} from "react";
 import BackendApi from "@/lib/BackendApi";
