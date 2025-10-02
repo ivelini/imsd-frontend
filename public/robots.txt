@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /cart
+Disallow: /login
+Allow: /
+Host: https://aalyans.ru
+Sitemap: https://aalyans.ru/sitemap.xml
