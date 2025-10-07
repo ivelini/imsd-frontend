@@ -98,3 +98,49 @@
 .p-dialog .p-dialog-header-icons {
     margin: 20px !important;
 }
+
+.p-scrollpanel-content {
+    width: 100%;
+}
+/* Отключаем вертикальный скролл, оставляем только горизонтальный */
+.h-scrollpanel .p-scrollpanel-wrapper {
+    overflow-y: hidden;          /* важно */
+}
+
+/* Делаем контент шире контейнера и в одну строку */
+.hsp-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 8px 0px;
+}
+
+/* Карточка */
+.hsp-item {
+    display: inline-flex;              /* чтобы ширина зависела от контента */
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 16px;                   /* отступы внутри карточки */
+    border: 1px solid var(--surface-border, #ccc);
+    border-radius: 10px;
+    background: var(--surface-card, #fff);
+    white-space: nowrap;               /* не переносим текст */
+    font-size: 14px;
+    cursor: pointer;
+    color: #000000;
+}
+
+.hsp-item.badge {
+    border: 2px solid #dd062a;
+    background: #dd062a;
+    color: #fff;
+}
+
+.hsp-item a {
+    color: #000000;
+}
+
+.hsp-item.badge a {
+    color: #fff;
+}

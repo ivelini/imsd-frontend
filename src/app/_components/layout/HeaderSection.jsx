@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {ScrollPanel} from 'primereact/scrollpanel';
 import LocationComponent from "@/components/ui/LocationComponent";
 import CartComponent from "@/app/_components/layout/cart/CartComponent";
 import SearchInCatalogComponent from "@/app/_components/layout/SearchInCatalogComponent";
@@ -53,9 +54,25 @@ export default function HeaderSection() {
                     </div>
                 </div>
             </div>
-            <div className="search-query-blk">
-                <p className="search-query"></p>
-            </div>
+            <ScrollPanel style={{width: '100%', height: '50px'}} className="h-scrollpanel">
+                <div className="hsp-row">
+                    <div className="hsp-item">
+                        <Link href={'/tires_selection'}>Шины</Link>
+                    </div>
+                    <div className="hsp-item">
+                        <Link href={'/disks_selection'}>Диски</Link>
+                    </div>
+                    <div className="hsp-item badge">
+                        <Link href={'/article/sinomontaz'}>Шиномонтаж</Link>
+                    </div>
+                    <div className="hsp-item">
+                        <Link href={'/article/datciki-davleniia-v-sine-autel'}>Датчики давления</Link>
+                    </div>
+                    <div className="hsp-item">
+                        <Link href={'/contacts'}>Контакты</Link>
+                    </div>
+                </div>
+            </ScrollPanel>
         </header>
     </>)
 }
