@@ -1,4 +1,4 @@
-import ArticlesComponent from "@/app/article/_component/ArticlesComponent";
+import ArticlesComponent from "@/components/pages/article/ArticlesComponent"
 
 export const metadata = {
     title: 'Новости и акции интернет магазина aalyans74.ru'

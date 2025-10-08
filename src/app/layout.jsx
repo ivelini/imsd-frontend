@@ -3,9 +3,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import '@/styles/prime.custom.css'
 import 'primeicons/primeicons.css';
 
-import HeaderSection from "@/app/_components/layout/HeaderSection";
-import FooterSection from "@/app/_components/layout/FooterSection";
-import Script from "next/script";
+import HeaderSection from "@/components/layout/HeaderSection";
+import FooterSection from "@/components/layout/FooterSection";
 
 
 export default function RootLayout({children}) {

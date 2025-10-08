@@ -1,4 +1,4 @@
 export class TypeProductEnum {
-    static TIRES = 'tires'
-    static DISKS = 'disks'
+    static TIRE = 'tire'
+    static DISK = 'disk'
 }

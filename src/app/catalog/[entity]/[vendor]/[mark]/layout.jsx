@@ -1,4 +1,4 @@
-import Breadcrumbs from "./_component/Breadcrumbs"
+import Breadcrumbs from "@/components/catalog/breadcrumbs/Breadcrumbs"
 
 /**
  * @param {Object} params 
@@ -7,6 +7,8 @@ import Breadcrumbs from "./_component/Breadcrumbs"
  * @param {string} params.mark
  */
 export default async function MarkLayout({ children, params }) {
+
+    console.log(await params)
     const { entity, vendor, mark } = await params
     
     return (<>

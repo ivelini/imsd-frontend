@@ -1,7 +1,7 @@
-import InnerWrapperComponent from "@/app/_components/page/inner-wrapper/InnerWrapperComponent";
-import CaruselComponent from "@/app/_components/page/CaruselComponent";
-import ArticleBlock from "@/app/article/_component/ArticleBlock";
-import AttentionBlocksComponent from "@/app/_components/page/AttentionBlocksComponent";
+import InnerWrapperComponent from "@/components/pages/main/inner-wrapper/InnerWrapperComponent";
+import CaruselComponent from "@/components/pages/main/CaruselComponent";
+import ArticleBlock from "@/components/pages/article/ArticleBlock";
+import AttentionBlocksComponent from "@/components/pages/main/AttentionBlocksComponent";
 
 
 export const metadata = {
