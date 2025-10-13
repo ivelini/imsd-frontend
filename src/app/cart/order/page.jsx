@@ -330,10 +330,10 @@ export default function OrderPage() {
                             <img src="/assets/img/order_check_a.svg" alt=""/>
                             <span>Наличными при получении</span>
                         </div>
-                        {/* <div className="order_form_method_item">
+                         <div className="order_form_method_item">
                             <img src="/assets/img/order_check.svg" alt="" />
                             <span>Картами Visa, MasterCard, Мир. Система быстрых платежей</span>
-                        </div> */}
+                        </div>
 
                         <div className="order_form_method_btn">
                             <button className={`order_form_method_btn_submit ${!isFill() && 'disabled'}`}
