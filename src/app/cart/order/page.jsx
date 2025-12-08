@@ -366,7 +366,7 @@ export default function OrderPage() {
                     </Accordion>
                     <div className="order_total_list">
                         <div>
-                            Вы можете вернуть товар в течении 14 дней
+                            Вы можете вернуть товар в течении 14 дней.
                         </div>
                         <div>
                             Бесплатно заменим бракованный товар и возместим расходы
