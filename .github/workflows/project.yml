@@ -3,10 +3,10 @@ name: project
 on: push
 
 env:
-  SSH_HOST: 109.71.242.118
+  SSH_HOST: 91.142.94.133
   SSH_PORT: 22
   SSH_USER: ilya
-  SSH_KEY: ${{ secrets.TIMEWEB2 }}
+  SSH_KEY: ${{ secrets.MIRANVPS }}
 
 jobs:
   deploy-dev:
