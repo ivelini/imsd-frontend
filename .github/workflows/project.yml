@@ -57,9 +57,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     env:
-      WORKDIR: /var/www/ilya/data/www/aalyans.ru
-      BUILD_DIR: /var/www/ilya/data/www/aalyans.ru_build
-      ENV_FILE: /var/www/ilya/data/www/build/.env.shop.frontend.prod
+      WORKDIR: /var/www/aalyans_ru/data/www/aalyans.ru
+      BUILD_DIR: /var/www/aalyans_ru/data/www/aalyans.ru_build
+      ENV_FILE: /var/www/aalyans_ru/data/www/build/.env.shop.frontend.prod
       APP_NAME: aalyans.ru-app
 
     steps:
