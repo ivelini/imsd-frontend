@@ -5,7 +5,7 @@ on: push
 env:
   SSH_HOST: 91.142.94.133
   SSH_PORT: 45222
-  SSH_USER: ilya
+  SSH_USER: aalyans_ru
   SSH_KEY: ${{ secrets.MIRANVPS }}
 
 jobs:
@@ -14,9 +14,9 @@ jobs:
     if: github.ref == 'refs/heads/dev'
 
     env:
-      WORKDIR: /var/www/ilya/data/www/aalyans74.ru
-      BUILD_DIR: /var/www/ilya/data/www/aalyans74.ru_build
-      ENV_FILE: /var/www/ilya/data/www/build/.env.shop.frontend.dev
+      WORKDIR: /var/www/aalyans_ru/data/www/aalyans74.ru
+      BUILD_DIR: /var/www/aalyans_ru/data/www/aalyans74.ru_build
+      ENV_FILE: /var/www/aalyans_ru/data/www/build/.env.shop.frontend.dev
       APP_NAME: aalyans74.ru-app
 
     steps:
