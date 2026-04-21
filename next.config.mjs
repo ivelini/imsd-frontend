@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-        domains: ['api.aalyans74.ru', 'aalyans74.ru', 'api.aalyans.ru', 'aalyans.ru'],
+        domains: ['api.aalyans.ivelini.ru', 'aalyans.ivelini.ru', 'api.aalyans.ru', 'aalyans.ru'],
     }
 };
 
