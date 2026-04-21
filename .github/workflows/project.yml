@@ -3,10 +3,10 @@ name: project
 on: push
 
 env:
-  SSH_HOST: 109.71.242.118
-  SSH_PORT: 22
-  SSH_USER: ilya
-  SSH_KEY: ${{ secrets.TIMEWEB2 }}
+  SSH_HOST: 91.142.94.133
+  SSH_PORT: 45222
+  SSH_USER: aalyans_ru
+  SSH_KEY: ${{ secrets.MIRANVPS }}
 
 jobs:
   deploy-dev:
@@ -14,53 +14,50 @@ jobs:
     if: github.ref == 'refs/heads/dev'
 
     env:
-      WORKDIR: /var/www/ilya/data/www/aalyans74.ru
-      BUILD_DIR: /var/www/ilya/data/www/aalyans74.ru_build
-      ENV_FILE: /var/www/ilya/data/www/build/.env.shop.frontend.dev
-      APP_NAME: aalyans74.ru-app
+      WORKDIR: /var/www/aalyans_ru/data/www/aalyans.ivelini.ru
+      BUILD_DIR: /var/www/aalyans_ru/data/www/aalyans.ivelini.ru_build
+      ENV_FILE: /var/www/aalyans_ru/data/www/build/.env.shop.frontend.dev
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Deploy to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ env.SSH_HOST }}
-        port: ${{ env.SSH_PORT }}
-        username: ${{ env.SSH_USER }}
-        key: ${{ env.SSH_KEY }}
-        source: ./*, !.gitignore, !.github, !.git, !.gitattributes, !./docker, !./docker-compose.yml, !./node_modules, !./vendor, !./resources/admin/.env
-        target: ${{ env.BUILD_DIR }}
+      - name: Deploy to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.SSH_HOST }}
+          port: ${{ env.SSH_PORT }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          source: ./*, !.gitignore, !.github, !.git, !.gitattributes, !./docker, !./docker-compose.yml, !./node_modules, !./vendor, !./resources/admin/.env
+          target: ${{ env.BUILD_DIR }}
 
-    - name: SSH run remote command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ env.SSH_HOST }}
-        port: ${{ env.SSH_PORT }}
-        username: ${{ env.SSH_USER }}
-        key: ${{ env.SSH_KEY }}
-        script: |
-          cd ${{ env.BUILD_DIR }}
-          cp ${{ env.ENV_FILE }} ./.env
-          npm install
-          npm run build
-          
-          pm2 delete ${{ env.APP_NAME }}
-          rm -rf ${{ env.WORKDIR }}
-          mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
-          cd ${{ env.WORKDIR }}
-          pm2 start npm --name ${{ env.APP_NAME }} -- run start:dev
-          pm2 save
+      - name: SSH run remote command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SSH_HOST }}
+          port: ${{ env.SSH_PORT }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          script: |
+            cd ${{ env.BUILD_DIR }}
+            cp ${{ env.ENV_FILE }} ./.env
+            npm install
+            npm run build
+
+            rm -rf ${{ env.WORKDIR }}
+            mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
+            cd ${{ env.WORKDIR }}
+
+            sudo systemctl restart aalyans_ivelini_ru
 
   deploy-master:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
 
     env:
-      WORKDIR: /var/www/ilya/data/www/aalyans.ru
-      BUILD_DIR: /var/www/ilya/data/www/aalyans.ru_build
-      ENV_FILE: /var/www/ilya/data/www/build/.env.shop.frontend.prod
-      APP_NAME: aalyans.ru-app
+      WORKDIR: /var/www/aalyans_ru/data/www/aalyans.ru
+      BUILD_DIR: /var/www/aalyans_ru/data/www/aalyans.ru_build
+      ENV_FILE: /var/www/aalyans_ru/data/www/build/.env.shop.frontend.prod
 
     steps:
       - uses: actions/checkout@v4
@@ -88,9 +85,8 @@ jobs:
             npm install
             npm run build
             
-            pm2 delete ${{ env.APP_NAME }}
             rm -rf ${{ env.WORKDIR }}
             mv ${{ env.BUILD_DIR }} ${{ env.WORKDIR }}
             cd ${{ env.WORKDIR }}
-            pm2 start npm --name ${{ env.APP_NAME }} -- run start:prod
-            pm2 save
+            
+            sudo systemctl restart aalyans_ru
