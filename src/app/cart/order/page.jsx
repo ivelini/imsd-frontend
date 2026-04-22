@@ -328,11 +328,7 @@ export default function OrderPage() {
                     <div className="order_form_title"><span>3</span> Способ оплаты</div>
                         <div className="order_form_method_item active">
                             <img src="/assets/img/order_check_a.svg" alt=""/>
-                            <span>Наличными при получении</span>
-                        </div>
-                         <div className="order_form_method_item">
-                            <img src="/assets/img/order_check.svg" alt="" />
-                            <span>Картами Visa, MasterCard, Мир. Система быстрых платежей</span>
+                            <span>Наличными при получении. Картами Visa, MasterCard, Мир. Система быстрых платежей</span>
                         </div>
 
                         <div className="order_form_method_btn">
@@ -370,10 +366,10 @@ export default function OrderPage() {
                     </Accordion>
                     <div className="order_total_list">
                         <div>
-                            Вы можете вернуть товар в течении 14 дней
+                            Вы можете вернуть товар в течении 14 дней.
                         </div>
                         <div>
-                            Бесплатно заменим бракованный товар и возместим расходы
+                            Бесплатно заменим бракованный товар и возместим расходы.
                         </div>
                     </div>
                 </div>
